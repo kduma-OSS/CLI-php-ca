@@ -21,4 +21,9 @@ class KeyRepository extends Repository
     {
         return ['private.key', 'public.key'];
     }
+
+    public function forFingerprint(string $fingerprint): ?Key
+    {
+        return $this->query()->filter(fn (Key $key) => $key->fingerprint === $fingerprint)->first();
+    }
 }
