@@ -1,0 +1,22 @@
+{
+    "database_path": "./db/int-ca",
+    "certification_authority": {
+        "random_serial_numbers": false,
+        "distinguished_name": "C=WW, O=PHP PKI CA Project, CN=My Int CA",
+        "certificate_distribution_points": [
+            "http://pki.example.com/int-ca.crt",
+            "http://pki-alt.example.com/int-ca.crt"
+        ],
+        "crl_distribution_points": [
+            "http://pki.example.com/int-ca.crl",
+            "http://pki-alt.example.com/int-ca.crl"
+        ]
+    },
+    "certificate_templates": {
+        "end-entity": {
+            "ca": false,
+            "path_length_constraint": null,
+            "validity": "+1 years"
+        }
+    }
+}

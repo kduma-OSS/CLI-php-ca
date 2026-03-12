@@ -1,0 +1,32 @@
+{
+    "database_path": "./db/root-ca",
+    "certification_authority": {
+        "random_serial_numbers": true,
+        "distinguished_name": "C=WW, O=PHP PKI CA Project, CN=My Root CA",
+        "certificate_distribution_points": [
+            "http://pki.example.com/root-ca.crt",
+            "http://pki-alt.example.com/root-ca.crt"
+        ],
+        "crl_distribution_points": [
+            "http://pki.example.com/root-ca.crl",
+            "http://pki-alt.example.com/root-ca.crl"
+        ]
+    },
+    "certificate_templates": {
+        "end-entity": {
+            "ca": false,
+            "path_length_constraint": null,
+            "validity": "+1 years"
+        },
+        "intermediate-ca": {
+            "ca": true,
+            "path_length_constraint": 0,
+            "validity": "+10 years"
+        },
+        "subordinary-ca": {
+            "ca": true,
+            "path_length_constraint": null,
+            "validity": "+10 years"
+        }
+    }
+}
