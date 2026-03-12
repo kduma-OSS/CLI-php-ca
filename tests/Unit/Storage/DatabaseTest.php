@@ -1,6 +1,7 @@
 <?php
 
 use App\Storage\Database;
+use App\Storage\Entities\CaMetadata;
 use App\Storage\Entities\Certificate;
 use App\Storage\Entities\Key;
 use Carbon\CarbonImmutable;
@@ -167,6 +168,15 @@ test('hasFile rejects disallowed filename in repository', function () {
     $this->db->keys()->save(new Key('my-key', 2048, 'AA:BB:CC:DD', CarbonImmutable::parse('2024-01-01T00:00:00Z')));
     $this->db->keys()->hasFile('my-key', 'secret.pem');
 })->throws(InvalidArgumentException::class, 'File [secret.pem] is not allowed in [keys]');
+
+test('putFile rejects disallowed filename in singleton repository', function () {
+    $this->db->ca()->putFile('evil.txt', 'data');
+})->throws(InvalidArgumentException::class, 'File [evil.txt] is not allowed in [ca]');
+
+test('deleteFile rejects disallowed filename in singleton repository', function () {
+    $this->db->ca()->deleteFile('evil.txt');
+})->throws(InvalidArgumentException::class, 'File [evil.txt] is not allowed in [ca]');
+
 // --- JSON format ---
 
 test('metadata json has sorted keys and trailing newline', function () {
@@ -193,44 +203,45 @@ test('metadata json has sorted keys and trailing newline', function () {
 // --- CA metadata and files ---
 
 test('can save and read CA metadata', function () {
-    $this->db->saveCaMetadata(['name' => 'My Root CA', 'type' => 'root']);
+    $this->db->ca()->saveMetadata(new CaMetadata(key_id: 'my-key-123'));
 
-    $meta = $this->db->caMetadata();
-    expect($meta)->toBe(['name' => 'My Root CA', 'type' => 'root']);
+    $meta = $this->db->ca()->metadata();
+    expect($meta)->toBeInstanceOf(CaMetadata::class)
+        ->and($meta->key_id)->toBe('my-key-123');
 });
 
-test('caMetadata returns null when no ca.json exists', function () {
-    expect($this->db->caMetadata())->toBeNull();
+test('CA metadata returns null when no metadata exists', function () {
+    expect($this->db->ca()->metadata())->toBeNull();
 });
 
 test('can save and read CA certificate', function () {
     $pem = "-----BEGIN CERTIFICATE-----\nCA cert\n-----END CERTIFICATE-----\n";
-    $this->db->saveCaCertificate($pem);
-    expect($this->db->caCertificate())->toBe($pem);
+    $this->db->ca()->saveCertificate($pem);
+    expect($this->db->ca()->certificate())->toBe($pem);
 });
 
-test('caCertificate returns null when not set', function () {
-    expect($this->db->caCertificate())->toBeNull();
+test('CA certificate returns null when not set', function () {
+    expect($this->db->ca()->certificate())->toBeNull();
 });
 
 test('can save and read CA key', function () {
     $pem = "-----BEGIN PRIVATE KEY-----\nCA key\n-----END PRIVATE KEY-----\n";
-    $this->db->saveCaKey($pem);
-    expect($this->db->caKey())->toBe($pem);
+    $this->db->ca()->saveKey($pem);
+    expect($this->db->ca()->key())->toBe($pem);
 });
 
-test('caKey returns null when not set', function () {
-    expect($this->db->caKey())->toBeNull();
+test('CA key returns null when not set', function () {
+    expect($this->db->ca()->key())->toBeNull();
 });
 
 test('can save and read CA CSR', function () {
     $pem = "-----BEGIN CERTIFICATE REQUEST-----\nCA csr\n-----END CERTIFICATE REQUEST-----\n";
-    $this->db->saveCaCsr($pem);
-    expect($this->db->caCsr())->toBe($pem);
+    $this->db->ca()->saveCsr($pem);
+    expect($this->db->ca()->csr())->toBe($pem);
 });
 
-test('caCsr returns null when not set', function () {
-    expect($this->db->caCsr())->toBeNull();
+test('CA CSR returns null when not set', function () {
+    expect($this->db->ca()->csr())->toBeNull();
 });
 
 // --- Two independent databases ---
