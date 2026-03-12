@@ -3,14 +3,15 @@
 namespace App\Commands\KeyManagement;
 
 use App\Commands\Concerns\LoadsCaConfiguration;
+use App\Commands\Concerns\LoadsPrivateKey;
 use App\Storage\Entities\Key;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
-use phpseclib3\Crypt\RSA;
 
 class ImportPrivateKeyCommand extends Command
 {
     use LoadsCaConfiguration;
+    use LoadsPrivateKey;
 
     /**
      * The name and signature of the console command.
@@ -60,25 +61,10 @@ class ImportPrivateKeyCommand extends Command
         $password = $this->option('password') ?? false;
 
         try {
-            $private_key = RSA::loadPrivateKey($pem, $password);
+            $private_key = $this->loadPrivateKey($pem, $password);
         } catch (\Exception $e) {
-            if ($password !== false) {
-                $this->error('Failed to load private key: ' . $e->getMessage());
-                return self::FAILURE;
-            }
-
-            $password = $this->secret('Enter password for private key');
-            if (!$password) {
-                $this->error('Password cannot be empty');
-                return self::FAILURE;
-            }
-
-            try {
-                $private_key = RSA::loadPrivateKey($pem, $password);
-            } catch (\Exception $e) {
-                $this->error('Failed to load private key: ' . $e->getMessage());
-                return self::FAILURE;
-            }
+            $this->error('Failed to load private key: ' . $e->getMessage());
+            return self::FAILURE;
         }
 
         $public_key = $private_key->getPublicKey();
