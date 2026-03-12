@@ -3,14 +3,14 @@
 namespace App\Storage\Entities;
 
 use App\Storage\Entity;
+use Carbon\CarbonImmutable;
 
 class Key extends Entity
 {
     public function __construct(
         string $id,
-        public readonly string $algorithm,
         public readonly ?int $size,
-        public readonly string $createdAt,
+        public readonly CarbonImmutable $createdAt,
     ) {
         parent::__construct($id);
     }
@@ -19,9 +19,8 @@ class Key extends Entity
     {
         return new static(
             id: $id,
-            algorithm: $data['algorithm'],
             size: $data['size'] ?? null,
-            createdAt: $data['created_at'],
+            createdAt: CarbonImmutable::parse($data['created_at']),
         );
     }
 
@@ -30,7 +29,7 @@ class Key extends Entity
         return [
             'algorithm' => $this->algorithm,
             'size' => $this->size,
-            'created_at' => $this->createdAt,
+            'created_at' => $this->createdAt->toIso8601String(),
         ];
     }
 }

@@ -3,6 +3,7 @@
 use App\Storage\Database;
 use App\Storage\Entities\Certificate;
 use App\Storage\Entities\Key;
+use Carbon\CarbonImmutable;
 
 beforeEach(function () {
     $this->tempDir = sys_get_temp_dir().'/php-ca-test-'.uniqid();
@@ -21,9 +22,8 @@ afterEach(function () {
 test('can save and retrieve a key', function () {
     $key = new Key(
         id: 'webserver-key',
-        algorithm: 'RSA',
         size: 4096,
-        createdAt: '2024-01-15T10:00:00Z',
+        createdAt: CarbonImmutable::parse('2024-01-15T10:00:00Z'),
     );
 
     $this->db->keys()->save($key);
@@ -31,9 +31,8 @@ test('can save and retrieve a key', function () {
     $found = $this->db->keys()->find('webserver-key');
     expect($found)->not->toBeNull()
         ->and($found->id)->toBe('webserver-key')
-        ->and($found->algorithm)->toBe('RSA')
         ->and($found->size)->toBe(4096)
-        ->and($found->createdAt)->toBe('2024-01-15T10:00:00Z');
+        ->and($found->createdAt->toIso8601String())->toBe(CarbonImmutable::parse('2024-01-15T10:00:00Z')->toIso8601String());
 });
 
 test('find returns null for nonexistent key', function () {
@@ -45,8 +44,8 @@ test('findOrFail throws for nonexistent key', function () {
 })->throws(RuntimeException::class);
 
 test('can list all keys', function () {
-    $this->db->keys()->save(new Key('key-a', 'RSA', 2048, '2024-01-01T00:00:00Z'));
-    $this->db->keys()->save(new Key('key-b', 'EC', null, '2024-02-01T00:00:00Z'));
+    $this->db->keys()->save(new Key('key-a', 2048, CarbonImmutable::parse('2024-01-01T00:00:00Z')));
+    $this->db->keys()->save(new Key('key-b', null, CarbonImmutable::parse('2024-02-01T00:00:00Z')));
 
     $all = $this->db->keys()->all();
     expect($all)->toHaveCount(2);
@@ -54,7 +53,7 @@ test('can list all keys', function () {
 });
 
 test('can delete a key', function () {
-    $this->db->keys()->save(new Key('to-delete', 'RSA', 2048, '2024-01-01T00:00:00Z'));
+    $this->db->keys()->save(new Key('to-delete', 2048, CarbonImmutable::parse('2024-01-01T00:00:00Z')));
     expect($this->db->keys()->exists('to-delete'))->toBeTrue();
 
     $result = $this->db->keys()->delete('to-delete');
@@ -69,7 +68,7 @@ test('delete returns false for nonexistent key', function () {
 test('exists returns correct values', function () {
     expect($this->db->keys()->exists('test-key'))->toBeFalse();
 
-    $this->db->keys()->save(new Key('test-key', 'RSA', 2048, '2024-01-01T00:00:00Z'));
+    $this->db->keys()->save(new Key('test-key', 2048, CarbonImmutable::parse('2024-01-01T00:00:00Z')));
     expect($this->db->keys()->exists('test-key'))->toBeTrue();
 });
 
@@ -82,8 +81,8 @@ test('can save and retrieve a certificate', function () {
         commonName: 'example.com',
         type: 'server',
         serialNumber: 'AABBCCDD',
-        notBefore: '2024-01-01T00:00:00Z',
-        notAfter: '2025-01-01T00:00:00Z',
+        notBefore: CarbonImmutable::parse('2024-01-01T00:00:00Z'),
+        notAfter: CarbonImmutable::parse('2025-01-01T00:00:00Z'),
         subjectAltNames: ['example.com', 'www.example.com'],
         extensions: ['digitalSignature', 'keyEncipherment'],
     );
@@ -102,13 +101,13 @@ test('can save and retrieve a certificate', function () {
 
 test('forKey filters certificates by key', function () {
     $this->db->certificates()->save(new Certificate(
-        'cert-a', 'key-1', 'a.com', 'server', 'AA', '2024-01-01T00:00:00Z', '2025-01-01T00:00:00Z',
+        'cert-a', 'key-1', 'a.com', 'server', 'AA', CarbonImmutable::parse('2024-01-01T00:00:00Z'), CarbonImmutable::parse('2025-01-01T00:00:00Z'),
     ));
     $this->db->certificates()->save(new Certificate(
-        'cert-b', 'key-2', 'b.com', 'server', 'BB', '2024-01-01T00:00:00Z', '2025-01-01T00:00:00Z',
+        'cert-b', 'key-2', 'b.com', 'server', 'BB', CarbonImmutable::parse('2024-01-01T00:00:00Z'), CarbonImmutable::parse('2025-01-01T00:00:00Z'),
     ));
     $this->db->certificates()->save(new Certificate(
-        'cert-c', 'key-1', 'c.com', 'server', 'CC', '2024-01-01T00:00:00Z', '2025-01-01T00:00:00Z',
+        'cert-c', 'key-1', 'c.com', 'server', 'CC', CarbonImmutable::parse('2024-01-01T00:00:00Z'), CarbonImmutable::parse('2025-01-01T00:00:00Z'),
     ));
 
     $forKey1 = $this->db->certificates()->forKey('key-1');
@@ -123,7 +122,7 @@ test('forKey filters certificates by key', function () {
 // --- PEM files ---
 
 test('can write and read PEM files for keys', function () {
-    $this->db->keys()->save(new Key('my-key', 'RSA', 2048, '2024-01-01T00:00:00Z'));
+    $this->db->keys()->save(new Key('my-key', 2048, CarbonImmutable::parse('2024-01-01T00:00:00Z')));
     $pemContent = "-----BEGIN PRIVATE KEY-----\nMIItest...\n-----END PRIVATE KEY-----\n";
 
     $this->db->keys()->putFile('my-key', 'private.pem', $pemContent);
@@ -135,7 +134,7 @@ test('can write and read PEM files for keys', function () {
 
 test('can write and read PEM files for certificates', function () {
     $cert = new Certificate(
-        'my-cert', 'my-key', 'example.com', 'server', 'AA', '2024-01-01T00:00:00Z', '2025-01-01T00:00:00Z',
+        'my-cert', 'my-key', 'example.com', 'server', 'AA', CarbonImmutable::parse('2024-01-01T00:00:00Z'), CarbonImmutable::parse('2025-01-01T00:00:00Z'),
     );
     $this->db->certificates()->save($cert);
 
@@ -153,7 +152,7 @@ test('can write and read PEM files for certificates', function () {
 // --- JSON format ---
 
 test('metadata json has sorted keys and trailing newline', function () {
-    $key = new Key('format-test', 'RSA', 2048, '2024-01-01T00:00:00Z');
+    $key = new Key('format-test', 2048, CarbonImmutable::parse('2024-01-01T00:00:00Z'));
     $this->db->keys()->save($key);
 
     $jsonPath = $this->tempDir.'/keys/format-test/metadata.json';
@@ -224,14 +223,14 @@ test('two database instances are independent', function () {
 
     $db2 = new Database($dir2);
 
-    $this->db->keys()->save(new Key('shared-name', 'RSA', 2048, '2024-01-01T00:00:00Z'));
-    $db2->keys()->save(new Key('shared-name', 'EC', null, '2024-06-01T00:00:00Z'));
+    $this->db->keys()->save(new Key('shared-name', 2048, CarbonImmutable::parse('2024-01-01T00:00:00Z')));
+    $db2->keys()->save(new Key('shared-name', null, CarbonImmutable::parse('2024-06-01T00:00:00Z')));
 
     $fromDb1 = $this->db->keys()->find('shared-name');
     $fromDb2 = $db2->keys()->find('shared-name');
 
-    expect($fromDb1->algorithm)->toBe('RSA');
-    expect($fromDb2->algorithm)->toBe('EC');
+    expect($fromDb1->size)->toBe(2048);
+    expect($fromDb2->size)->toBeNull();
 
     (new Illuminate\Filesystem\Filesystem)->deleteDirectory($dir2);
 });
@@ -240,11 +239,11 @@ test('two database instances are independent', function () {
 
 test('query returns collection for chaining', function () {
     $this->db->certificates()->save(new Certificate(
-        'active-cert', 'key-1', 'a.com', 'server', 'AA', '2024-01-01T00:00:00Z', '2025-01-01T00:00:00Z',
+        'active-cert', 'key-1', 'a.com', 'server', 'AA', CarbonImmutable::parse('2024-01-01T00:00:00Z'), CarbonImmutable::parse('2025-01-01T00:00:00Z'),
     ));
     $this->db->certificates()->save(new Certificate(
-        'revoked-cert', 'key-1', 'b.com', 'server', 'BB', '2024-01-01T00:00:00Z', '2025-01-01T00:00:00Z',
-        revokedAt: '2024-06-01T00:00:00Z',
+        'revoked-cert', 'key-1', 'b.com', 'server', 'BB', CarbonImmutable::parse('2024-01-01T00:00:00Z'), CarbonImmutable::parse('2025-01-01T00:00:00Z'),
+        revokedAt: CarbonImmutable::parse('2024-06-01T00:00:00Z'),
     ));
 
     $active = $this->db->certificates()->query()
