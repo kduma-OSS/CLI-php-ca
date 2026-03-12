@@ -18,6 +18,11 @@ class CertificateRepository extends Repository
         return Certificate::class;
     }
 
+    protected function allowedFiles(): array
+    {
+        return ['certificate.pem', 'request.pem'];
+    }
+
     public function forKey(string $keyId): Collection
     {
         return $this->query()->filter(fn (Certificate $cert) => $cert->keyId === $keyId)->values();

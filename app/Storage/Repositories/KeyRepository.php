@@ -16,4 +16,9 @@ class KeyRepository extends Repository
     {
         return Key::class;
     }
+
+    protected function allowedFiles(): array
+    {
+        return ['private.key', 'public.key'];
+    }
 }

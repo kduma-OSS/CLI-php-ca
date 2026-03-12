@@ -127,11 +127,11 @@ test('can write and read PEM files for keys', function () {
     $this->db->keys()->save(new Key('my-key', 2048, 'AA:BB:CC:DD', CarbonImmutable::parse('2024-01-01T00:00:00Z')));
     $pemContent = "-----BEGIN PRIVATE KEY-----\nMIItest...\n-----END PRIVATE KEY-----\n";
 
-    $this->db->keys()->putFile('my-key', 'private.pem', $pemContent);
+    $this->db->keys()->putFile('my-key', 'private.key', $pemContent);
 
-    expect($this->db->keys()->hasFile('my-key', 'private.pem'))->toBeTrue();
-    expect($this->db->keys()->getFile('my-key', 'private.pem'))->toBe($pemContent);
-    expect($this->db->keys()->getFile('my-key', 'nonexistent.pem'))->toBeNull();
+    expect($this->db->keys()->hasFile('my-key', 'private.key'))->toBeTrue();
+    expect($this->db->keys()->getFile('my-key', 'private.key'))->toBe($pemContent);
+    expect($this->db->keys()->getFile('my-key', 'public.key'))->toBeNull();
 });
 
 test('can write and read PEM files for certificates', function () {
@@ -151,6 +151,22 @@ test('can write and read PEM files for certificates', function () {
     expect($this->db->certificates()->hasFile('my-cert', 'request.pem'))->toBeTrue();
 });
 
+// --- Allowed files validation ---
+
+test('putFile rejects disallowed filename in repository', function () {
+    $this->db->keys()->save(new Key('my-key', 2048, 'AA:BB:CC:DD', CarbonImmutable::parse('2024-01-01T00:00:00Z')));
+    $this->db->keys()->putFile('my-key', 'evil.txt', 'data');
+})->throws(InvalidArgumentException::class, 'File [evil.txt] is not allowed in [keys]');
+
+test('getFile rejects disallowed filename in repository', function () {
+    $this->db->keys()->save(new Key('my-key', 2048, 'AA:BB:CC:DD', CarbonImmutable::parse('2024-01-01T00:00:00Z')));
+    $this->db->keys()->getFile('my-key', '../metadata.json');
+})->throws(InvalidArgumentException::class, 'File [../metadata.json] is not allowed in [keys]');
+
+test('hasFile rejects disallowed filename in repository', function () {
+    $this->db->keys()->save(new Key('my-key', 2048, 'AA:BB:CC:DD', CarbonImmutable::parse('2024-01-01T00:00:00Z')));
+    $this->db->keys()->hasFile('my-key', 'secret.pem');
+})->throws(InvalidArgumentException::class, 'File [secret.pem] is not allowed in [keys]');
 // --- JSON format ---
 
 test('metadata json has sorted keys and trailing newline', function () {

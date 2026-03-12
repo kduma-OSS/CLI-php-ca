@@ -18,6 +18,8 @@ abstract class Repository
 
     abstract protected function entityClass(): string;
 
+    abstract protected function allowedFiles(): array;
+
     protected function collectionPath(): string
     {
         return $this->basePath.'/'.$this->collection();
@@ -120,8 +122,19 @@ abstract class Repository
         return $this->all();
     }
 
+    private function validateFilename(string $filename): void
+    {
+        if (! in_array($filename, $this->allowedFiles(), true)) {
+            throw new InvalidArgumentException(
+                "File [{$filename}] is not allowed in [{$this->collection()}]. Allowed: " . implode(', ', $this->allowedFiles()) . "."
+            );
+        }
+    }
+
     public function putFile(string $id, string $filename, string $content): void
     {
+        $this->validateFilename($filename);
+
         $recordPath = $this->recordPath($id);
 
         if (! $this->files->isDirectory($recordPath)) {
@@ -133,6 +146,8 @@ abstract class Repository
 
     public function getFile(string $id, string $filename): ?string
     {
+        $this->validateFilename($filename);
+
         $filePath = $this->recordPath($id).'/'.$filename;
 
         if (! $this->files->exists($filePath)) {
@@ -144,6 +159,8 @@ abstract class Repository
 
     public function hasFile(string $id, string $filename): bool
     {
+        $this->validateFilename($filename);
+
         return $this->files->exists($this->recordPath($id).'/'.$filename);
     }
 
