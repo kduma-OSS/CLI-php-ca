@@ -18,7 +18,7 @@ class CheckCertificateExistenceCommand extends Command
     {
         $ca = $this->getCaConfig()->database()->ca();
 
-        $has = $ca->metadata()?->certificate !== null && $ca->hasFile('certificate.pem');
+        $has = $ca->metadata()?->certificate !== null && $ca->hasFile('certificate.crt');
 
         if ($has) {
             $this->info('Certificate exists');

@@ -216,32 +216,22 @@ test('CA metadata returns null when no metadata exists', function () {
 
 test('can save and read CA certificate', function () {
     $pem = "-----BEGIN CERTIFICATE-----\nCA cert\n-----END CERTIFICATE-----\n";
-    $this->db->ca()->saveCertificate($pem);
-    expect($this->db->ca()->certificate())->toBe($pem);
+    $this->db->ca()->putFile('certificate.crt', $pem);
+    expect($this->db->ca()->getFile('certificate.crt'))->toBe($pem);
 });
 
 test('CA certificate returns null when not set', function () {
-    expect($this->db->ca()->certificate())->toBeNull();
-});
-
-test('can save and read CA key', function () {
-    $pem = "-----BEGIN PRIVATE KEY-----\nCA key\n-----END PRIVATE KEY-----\n";
-    $this->db->ca()->saveKey($pem);
-    expect($this->db->ca()->key())->toBe($pem);
-});
-
-test('CA key returns null when not set', function () {
-    expect($this->db->ca()->key())->toBeNull();
+    expect($this->db->ca()->getFile('certificate.crt'))->toBeNull();
 });
 
 test('can save and read CA CSR', function () {
     $pem = "-----BEGIN CERTIFICATE REQUEST-----\nCA csr\n-----END CERTIFICATE REQUEST-----\n";
-    $this->db->ca()->saveCsr($pem);
-    expect($this->db->ca()->csr())->toBe($pem);
+    $this->db->ca()->putFile('csr.req', $pem);
+    expect($this->db->ca()->getFile('csr.req'))->toBe($pem);
 });
 
 test('CA CSR returns null when not set', function () {
-    expect($this->db->ca()->csr())->toBeNull();
+    expect($this->db->ca()->getFile('csr.req'))->toBeNull();
 });
 
 // --- Two independent databases ---

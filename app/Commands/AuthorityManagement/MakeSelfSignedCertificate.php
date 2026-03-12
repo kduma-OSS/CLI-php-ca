@@ -117,7 +117,7 @@ class MakeSelfSignedCertificate extends Command
         $x509->setEndDate($validTo);
         $result = $x509->sign($rootIssuer, $rootSubject);
 
-        $ca->saveCertificate($x509->saveX509($result));
+        $ca->putFile('certificate.crt', $x509->saveX509($result));
         $ca->saveMetadata(new CaMetadata(
             key_id: $key_id,
             certificate: new CaCertificateDetails(
