@@ -6,7 +6,7 @@ use App\Commands\Concerns\LoadsCaConfiguration;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
-class HasKey extends Command
+class CheckPrivateKeyExistenceCommand extends Command
 {
     use LoadsCaConfiguration;
 
@@ -15,7 +15,7 @@ class HasKey extends Command
      *
      * @var string
      */
-    protected $signature = 'key:has {id} {--ca= : Configuration file}';
+    protected $signature = 'key:exists {id} {--ca= : Configuration file}';
 
     /**
      * The console command description.

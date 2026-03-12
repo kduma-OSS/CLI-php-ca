@@ -8,23 +8,22 @@ use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 use phpseclib3\Crypt\RSA;
 
-class AddKey extends Command
+class CreatePrivateKeyCommand extends Command
 {
     use LoadsCaConfiguration;
-
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'key:add {id} {pem?} {--ca= : Configuration file} {--password= : Password}';
+    protected $signature = 'key:create {id} {--ca=:Configuration file} {--key-size=4096 : Key size} {--encrypted : Encrypt private key} {--password= : Password}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Import an existing PEM private key into the CA database';
+    protected $description = 'Generate a new private key';
 
     /**
      * Execute the console command.
@@ -35,55 +34,29 @@ class AddKey extends Command
 
         $id = $this->argument('id');
 
-        if ($config->database()->keys()->exists($id)) {
+        if($config->database()->keys()->exists($id)) {
             $this->error("Key with id {$id} already exists");
             return self::FAILURE;
         }
 
-        $path = $this->argument('pem');
-
-        if ($path) {
-            if (!file_exists($path)) {
-                $this->error("File not found: {$path}");
-                return self::FAILURE;
-            }
-            $pem = file_get_contents($path);
-        } else {
-            $pem = file_get_contents('php://stdin');
-        }
-
-        if (!$pem) {
-            $this->error('No PEM data provided');
-            return self::FAILURE;
-        }
-
+        $key_size = (int)$this->option('key-size');
         $password = $this->option('password') ?? false;
 
-        try {
-            $private_key = RSA::loadPrivateKey($pem, $password);
-        } catch (\Exception $e) {
-            if ($password !== false) {
-                $this->error('Failed to load private key: ' . $e->getMessage());
-                return self::FAILURE;
-            }
-
+        if($this->option('encrypted') && !$password) {
             $password = $this->secret('Enter password for private key');
-            if (!$password) {
+            if(!$password) {
                 $this->error('Password cannot be empty');
                 return self::FAILURE;
             }
-
-            try {
-                $private_key = RSA::loadPrivateKey($pem, $password);
-            } catch (\Exception $e) {
-                $this->error('Failed to load private key: ' . $e->getMessage());
+            if($password !== $this->secret('Confirm password')) {
+                $this->error('Passwords do not match');
                 return self::FAILURE;
             }
         }
 
+        $private_key = RSA::createKey($key_size);
         $public_key = $private_key->getPublicKey();
         $fingerprint = $public_key->getFingerprint();
-        $key_size = $public_key->getLength();
 
         $entity = new Key(
             id: $id,
