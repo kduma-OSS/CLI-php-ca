@@ -4,6 +4,7 @@ namespace App\Storage;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
+use InvalidArgumentException;
 use RuntimeException;
 
 abstract class Repository
@@ -24,6 +25,10 @@ abstract class Repository
 
     protected function recordPath(string $id): string
     {
+        if (! preg_match('/^[a-zA-Z0-9_-]+$/', $id)) {
+            throw new InvalidArgumentException("Invalid ID [{$id}]. Only letters, digits, hyphens and underscores are allowed.");
+        }
+
         return $this->collectionPath().'/'.$id;
     }
 
