@@ -7,7 +7,7 @@ use App\Storage\Infrastructure\Repository;
 
 class KeyRepository extends Repository
 {
-    protected function collection(): string
+    protected function storageName(): string
     {
         return 'keys';
     }

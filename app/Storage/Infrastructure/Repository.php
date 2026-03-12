@@ -2,27 +2,15 @@
 
 namespace App\Storage\Infrastructure;
 
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
 use RuntimeException;
 
-abstract class Repository
+abstract class Repository extends BaseRepository
 {
-    public function __construct(
-        protected Filesystem $files,
-        protected string $basePath,
-    ) {}
-
-    abstract protected function collection(): string;
-
-    abstract protected function entityClass(): string;
-
-    abstract protected function allowedFiles(): array;
-
     protected function collectionPath(): string
     {
-        return $this->basePath.'/'.$this->collection();
+        return $this->basePath.'/'.$this->storageName();
     }
 
     protected function recordPath(string $id): string
@@ -81,7 +69,7 @@ abstract class Repository
         $entity = $this->find($id);
 
         if ($entity === null) {
-            throw new RuntimeException("Entity [{$id}] not found in [{$this->collection()}].");
+            throw new RuntimeException("Entity [{$id}] not found in [{$this->storageName()}].");
         }
 
         return $entity;
@@ -95,10 +83,7 @@ abstract class Repository
             $this->files->makeDirectory($recordPath, 0755, true);
         }
 
-        $data = $this->sortArrayKeys($entity->toArray());
-        $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)."\n";
-
-        $this->files->put($this->metadataPath($entity->id), $json);
+        $this->files->put($this->metadataPath($entity->id), $this->encodeMetadata($entity->toArray()));
     }
 
     public function delete(string $id): bool
@@ -120,15 +105,6 @@ abstract class Repository
     public function query(): Collection
     {
         return $this->all();
-    }
-
-    private function validateFilename(string $filename): void
-    {
-        if (! in_array($filename, $this->allowedFiles(), true)) {
-            throw new InvalidArgumentException(
-                "File [{$filename}] is not allowed in [{$this->collection()}]. Allowed: " . implode(', ', $this->allowedFiles()) . "."
-            );
-        }
     }
 
     public function putFile(string $id, string $filename, string $content): void
@@ -162,18 +138,5 @@ abstract class Repository
         $this->validateFilename($filename);
 
         return $this->files->exists($this->recordPath($id).'/'.$filename);
-    }
-
-    private function sortArrayKeys(array $array): array
-    {
-        ksort($array);
-
-        foreach ($array as $key => $value) {
-            if (is_array($value) && ! array_is_list($value)) {
-                $array[$key] = $this->sortArrayKeys($value);
-            }
-        }
-
-        return $array;
     }
 }

@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 
 class CertificateRepository extends Repository
 {
-    protected function collection(): string
+    protected function storageName(): string
     {
         return 'certificates';
     }

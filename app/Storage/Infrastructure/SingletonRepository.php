@@ -2,25 +2,11 @@
 
 namespace App\Storage\Infrastructure;
 
-use Illuminate\Filesystem\Filesystem;
-use InvalidArgumentException;
-
-abstract class SingletonRepository
+abstract class SingletonRepository extends BaseRepository
 {
-    public function __construct(
-        protected Filesystem $files,
-        protected string $basePath,
-    ) {}
-
-    abstract protected function directory(): string;
-
-    abstract protected function entityClass(): string;
-
-    abstract protected function allowedFiles(): array;
-
     protected function path(): string
     {
-        return $this->basePath.'/'.$this->directory();
+        return $this->basePath.'/'.$this->storageName();
     }
 
     protected function metadataPath(): string
@@ -53,19 +39,7 @@ abstract class SingletonRepository
     {
         $this->ensureDirectory();
 
-        $data = $this->sortArrayKeys($entity->toArray());
-        $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)."\n";
-
-        $this->files->put($this->metadataPath(), $json);
-    }
-
-    private function validateFilename(string $filename): void
-    {
-        if (! in_array($filename, $this->allowedFiles(), true)) {
-            throw new InvalidArgumentException(
-                "File [{$filename}] is not allowed in [{$this->directory()}]. Allowed: " . implode(', ', $this->allowedFiles()) . "."
-            );
-        }
+        $this->files->put($this->metadataPath(), $this->encodeMetadata($entity->toArray()));
     }
 
     public function putFile(string $filename, string $content): void
@@ -108,18 +82,5 @@ abstract class SingletonRepository
         }
 
         return $this->files->delete($filePath);
-    }
-
-    private function sortArrayKeys(array $array): array
-    {
-        ksort($array);
-
-        foreach ($array as $key => $value) {
-            if (is_array($value) && ! array_is_list($value)) {
-                $array[$key] = $this->sortArrayKeys($value);
-            }
-        }
-
-        return $array;
     }
 }

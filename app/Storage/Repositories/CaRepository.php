@@ -7,7 +7,7 @@ use App\Storage\Infrastructure\SingletonRepository;
 
 class CaRepository extends SingletonRepository
 {
-    protected function directory(): string
+    protected function storageName(): string
     {
         return 'ca';
     }
