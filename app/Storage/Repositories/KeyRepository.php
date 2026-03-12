@@ -3,7 +3,7 @@
 namespace App\Storage\Repositories;
 
 use App\Storage\Entities\Key;
-use App\Storage\Repository;
+use App\Storage\Infrastructure\Repository;
 
 class KeyRepository extends Repository
 {

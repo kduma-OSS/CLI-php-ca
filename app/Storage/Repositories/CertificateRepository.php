@@ -3,7 +3,7 @@
 namespace App\Storage\Repositories;
 
 use App\Storage\Entities\Certificate;
-use App\Storage\Repository;
+use App\Storage\Infrastructure\Repository;
 use Illuminate\Support\Collection;
 
 class CertificateRepository extends Repository

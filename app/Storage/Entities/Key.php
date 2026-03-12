@@ -2,7 +2,7 @@
 
 namespace App\Storage\Entities;
 
-use App\Storage\Entity;
+use App\Storage\Infrastructure\Entity;
 use Carbon\CarbonImmutable;
 
 class Key extends Entity

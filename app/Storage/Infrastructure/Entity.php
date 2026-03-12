@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Storage;
+namespace App\Storage\Infrastructure;
 
 use Illuminate\Contracts\Support\Arrayable;
 use JsonSerializable;

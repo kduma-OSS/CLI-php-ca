@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Storage;
+namespace App\Storage\Infrastructure;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
