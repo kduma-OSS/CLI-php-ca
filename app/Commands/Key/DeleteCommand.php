@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Commands\KeyManagement;
+namespace App\Commands\Key;
 
 use App\Commands\Concerns\LoadsCaConfiguration;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
-class DeletePrivateKeyCommand extends Command
+class DeleteCommand extends Command
 {
     use LoadsCaConfiguration;
 

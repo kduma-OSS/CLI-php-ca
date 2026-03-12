@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Commands\AuthorityManagement;
+namespace App\Commands\Authority\Certificate;
 
 use App\Commands\Concerns\LoadsCaConfiguration;
 use App\Commands\Concerns\LoadsPrivateKey;
@@ -13,7 +13,7 @@ use phpseclib3\Crypt\Random;
 use phpseclib3\File\X509;
 use phpseclib3\Math\BigInteger;
 
-class MakeSelfSignedCertificate extends Command
+class SelfSignedCertificate extends Command
 {
     use LoadsCaConfiguration;
     use LoadsPrivateKey;

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Commands\AuthorityManagement;
+namespace App\Commands\Authority\Certificate;
 
 use App\Commands\Concerns\LoadsCaConfiguration;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
-class CheckCertificateExistenceCommand extends Command
+class ExistsCommand extends Command
 {
     use LoadsCaConfiguration;
 

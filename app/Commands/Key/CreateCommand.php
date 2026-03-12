@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Commands\KeyManagement;
+namespace App\Commands\Key;
 
 use App\Commands\Concerns\LoadsCaConfiguration;
 use App\Storage\Entities\Key;
@@ -8,7 +8,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 use phpseclib3\Crypt\RSA;
 
-class CreatePrivateKeyCommand extends Command
+class CreateCommand extends Command
 {
     use LoadsCaConfiguration;
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Commands\KeyManagement;
+namespace App\Commands\Key;
 
 use App\Commands\Concerns\LoadsCaConfiguration;
 use App\Commands\Concerns\LoadsPrivateKey;
@@ -8,7 +8,7 @@ use App\Storage\Entities\Key;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
-class ImportPrivateKeyCommand extends Command
+class ImportCommand extends Command
 {
     use LoadsCaConfiguration;
     use LoadsPrivateKey;
