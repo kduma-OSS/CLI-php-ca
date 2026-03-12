@@ -10,6 +10,7 @@ class Key extends Entity
     public function __construct(
         string $id,
         public readonly ?int $size,
+        public readonly string $fingerprint,
         public readonly CarbonImmutable $createdAt,
     ) {
         parent::__construct($id);
@@ -20,6 +21,7 @@ class Key extends Entity
         return new static(
             id: $id,
             size: $data['size'] ?? null,
+            fingerprint: $data['fingerprint'],
             createdAt: CarbonImmutable::parse($data['created_at']),
         );
     }
@@ -27,8 +29,8 @@ class Key extends Entity
     public function toArray(): array
     {
         return [
-            'algorithm' => $this->algorithm,
             'size' => $this->size,
+            'fingerprint' => $this->fingerprint,
             'created_at' => $this->createdAt->toIso8601String(),
         ];
     }
