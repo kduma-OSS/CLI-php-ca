@@ -23,6 +23,7 @@ test('can save and retrieve a key', function () {
     $key = new Key(
         id: 'webserver-key',
         size: 4096,
+        fingerprint: 'AA:BB:CC:DD',
         createdAt: CarbonImmutable::parse('2024-01-15T10:00:00Z'),
     );
 
@@ -32,6 +33,7 @@ test('can save and retrieve a key', function () {
     expect($found)->not->toBeNull()
         ->and($found->id)->toBe('webserver-key')
         ->and($found->size)->toBe(4096)
+        ->and($found->fingerprint)->toBe('AA:BB:CC:DD')
         ->and($found->createdAt->toIso8601String())->toBe(CarbonImmutable::parse('2024-01-15T10:00:00Z')->toIso8601String());
 });
 
@@ -44,8 +46,8 @@ test('findOrFail throws for nonexistent key', function () {
 })->throws(RuntimeException::class);
 
 test('can list all keys', function () {
-    $this->db->keys()->save(new Key('key-a', 2048, CarbonImmutable::parse('2024-01-01T00:00:00Z')));
-    $this->db->keys()->save(new Key('key-b', null, CarbonImmutable::parse('2024-02-01T00:00:00Z')));
+    $this->db->keys()->save(new Key('key-a', 2048, 'AA:BB:CC:DD', CarbonImmutable::parse('2024-01-01T00:00:00Z')));
+    $this->db->keys()->save(new Key('key-b', null, 'EE:FF:00:11', CarbonImmutable::parse('2024-02-01T00:00:00Z')));
 
     $all = $this->db->keys()->all();
     expect($all)->toHaveCount(2);
@@ -53,7 +55,7 @@ test('can list all keys', function () {
 });
 
 test('can delete a key', function () {
-    $this->db->keys()->save(new Key('to-delete', 2048, CarbonImmutable::parse('2024-01-01T00:00:00Z')));
+    $this->db->keys()->save(new Key('to-delete', 2048, 'AA:BB:CC:DD', CarbonImmutable::parse('2024-01-01T00:00:00Z')));
     expect($this->db->keys()->exists('to-delete'))->toBeTrue();
 
     $result = $this->db->keys()->delete('to-delete');
@@ -68,7 +70,7 @@ test('delete returns false for nonexistent key', function () {
 test('exists returns correct values', function () {
     expect($this->db->keys()->exists('test-key'))->toBeFalse();
 
-    $this->db->keys()->save(new Key('test-key', 2048, CarbonImmutable::parse('2024-01-01T00:00:00Z')));
+    $this->db->keys()->save(new Key('test-key', 2048, 'AA:BB:CC:DD', CarbonImmutable::parse('2024-01-01T00:00:00Z')));
     expect($this->db->keys()->exists('test-key'))->toBeTrue();
 });
 
@@ -122,7 +124,7 @@ test('forKey filters certificates by key', function () {
 // --- PEM files ---
 
 test('can write and read PEM files for keys', function () {
-    $this->db->keys()->save(new Key('my-key', 2048, CarbonImmutable::parse('2024-01-01T00:00:00Z')));
+    $this->db->keys()->save(new Key('my-key', 2048, 'AA:BB:CC:DD', CarbonImmutable::parse('2024-01-01T00:00:00Z')));
     $pemContent = "-----BEGIN PRIVATE KEY-----\nMIItest...\n-----END PRIVATE KEY-----\n";
 
     $this->db->keys()->putFile('my-key', 'private.pem', $pemContent);
@@ -152,7 +154,7 @@ test('can write and read PEM files for certificates', function () {
 // --- JSON format ---
 
 test('metadata json has sorted keys and trailing newline', function () {
-    $key = new Key('format-test', 2048, CarbonImmutable::parse('2024-01-01T00:00:00Z'));
+    $key = new Key('format-test', 2048, 'AA:BB:CC:DD', CarbonImmutable::parse('2024-01-01T00:00:00Z'));
     $this->db->keys()->save($key);
 
     $jsonPath = $this->tempDir.'/keys/format-test/metadata.json';
@@ -223,8 +225,8 @@ test('two database instances are independent', function () {
 
     $db2 = new Database($dir2);
 
-    $this->db->keys()->save(new Key('shared-name', 2048, CarbonImmutable::parse('2024-01-01T00:00:00Z')));
-    $db2->keys()->save(new Key('shared-name', null, CarbonImmutable::parse('2024-06-01T00:00:00Z')));
+    $this->db->keys()->save(new Key('shared-name', 2048, 'AA:BB:CC:DD', CarbonImmutable::parse('2024-01-01T00:00:00Z')));
+    $db2->keys()->save(new Key('shared-name', null, 'EE:FF:00:11', CarbonImmutable::parse('2024-06-01T00:00:00Z')));
 
     $fromDb1 = $this->db->keys()->find('shared-name');
     $fromDb2 = $db2->keys()->find('shared-name');
