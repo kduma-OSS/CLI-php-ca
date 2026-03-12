@@ -16,8 +16,9 @@
         }
     ],
     "require": {
-        "php": "^8.2",
-        "laravel-zero/framework": "^12.0.2"
+        "php": "^8.4",
+        "laravel-zero/framework": "^12.0.2",
+        "phpseclib/phpseclib": "^3.0"
     },
     "require-dev": {
         "laravel/pint": "^1.25.1",
