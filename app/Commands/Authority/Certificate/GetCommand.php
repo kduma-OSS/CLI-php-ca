@@ -30,7 +30,14 @@ class GetCommand extends Command
      */
     public function handle(): int
     {
-        $ca = $this->getCaConfig()->database()->ca();
+        try {
+            $config = $this->getCaConfig();
+        } catch (\RuntimeException $e) {
+            $this->error($e->getMessage());
+            return self::FAILURE;
+        }
+
+        $ca = $config->database()->ca();
 
         $content = $ca->getFile(CaFile::Certificate);
 

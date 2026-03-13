@@ -30,7 +30,13 @@ class PublicCommand extends Command
      */
     public function handle(): int
     {
-        $config = $this->getCaConfig();
+        try {
+            $config = $this->getCaConfig();
+        } catch (\RuntimeException $e) {
+            $this->error($e->getMessage());
+            return self::FAILURE;
+        }
+
         $repository = $config->database()->keys();
 
         $content = $repository->getFile($this->argument('id'), KeyFile::PublicKey);

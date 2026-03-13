@@ -29,7 +29,12 @@ class ExistsCommand extends Command
      */
     public function handle(): int
     {
-        $config = $this->getCaConfig();
+        try {
+            $config = $this->getCaConfig();
+        } catch (\RuntimeException $e) {
+            $this->error($e->getMessage());
+            return self::FAILURE;
+        }
 
         $has = $config->database()->keys()->exists($this->argument('id'));
 

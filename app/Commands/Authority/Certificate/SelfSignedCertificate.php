@@ -39,7 +39,12 @@ class SelfSignedCertificate extends Command
      */
     public function handle(): int
     {
-        $config = $this->getCaConfig();
+        try {
+            $config = $this->getCaConfig();
+        } catch (\RuntimeException $e) {
+            $this->error($e->getMessage());
+            return self::FAILURE;
+        }
 
         $ca = $config->database()->ca();
 
