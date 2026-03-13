@@ -7,8 +7,10 @@ use phpseclib3\Crypt\RSA\PrivateKey as RSAPrivateKey;
 
 trait LoadsPrivateKey
 {
-    protected function loadPrivateKey(string $pem, string|false $password): RSAPrivateKey
+    protected function loadPrivateKey(string $pem): RSAPrivateKey
     {
+        $password = $this->option('password') ?? false;
+
         try {
             return RSA::loadPrivateKey($pem, $password);
         } catch (\Exception $e) {

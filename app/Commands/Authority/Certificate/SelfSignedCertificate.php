@@ -77,10 +77,10 @@ class SelfSignedCertificate extends Command
         }
 
         $pem = $config->database()->keys()->getFile($key_id, KeyFile::PrivateKey);
-        $password = $this->option('password') ?? false;
+
 
         try {
-            $key = $this->loadPrivateKey($pem, $password);
+            $key = $this->loadPrivateKey($pem);
         } catch (\Exception $e) {
             $this->error('Failed to load private key: ' . $e->getMessage());
             return self::FAILURE;

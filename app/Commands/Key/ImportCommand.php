@@ -59,10 +59,8 @@ class ImportCommand extends Command
             return self::FAILURE;
         }
 
-        $password = $this->option('password') ?? false;
-
         try {
-            $private_key = $this->loadPrivateKey($pem, $password);
+            $private_key = $this->loadPrivateKey($pem);
         } catch (\Exception $e) {
             $this->error('Failed to load private key: ' . $e->getMessage());
             return self::FAILURE;
