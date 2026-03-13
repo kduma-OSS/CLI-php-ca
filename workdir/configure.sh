@@ -8,7 +8,7 @@ ensure_key() {
     if ! ../php-ca key:exists ca --ca="$ca_file" --quiet; then
         echo "no"
         printf "[%s] Generating new private key: " "$ca_file"
-        if ! ../php-ca key:create ca --ca="$ca_file" --key-size="$key_size"; then
+        if ! ../php-ca key:create ca --ca="$ca_file" --key-size="$key_size" --decrypted; then
             echo "failed"
             return 1
         else
@@ -38,6 +38,9 @@ ensure_self_signed_ca() {
         echo "yes"
     fi
 }
+
+ensure_key php-pki-config.json 1024 || exit 1
+ensure_self_signed_ca php-pki-config.json "CN=Test CA" "+1 month" || exit 1
 
 ensure_key root-ca.json 4096 || exit 1
 ensure_self_signed_ca root-ca.json "C=WW, O=PHP PKI CA Project, CN=My Root CA" "+25 years" || exit 1
