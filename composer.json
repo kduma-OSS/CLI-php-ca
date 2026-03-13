@@ -1,18 +1,18 @@
 {
-    "name": "laravel-zero/laravel-zero",
-    "description": "The Laravel Zero Framework.",
-    "keywords": ["framework", "laravel", "laravel zero", "console", "cli"],
-    "homepage": "https://laravel-zero.com",
+    "name": "kduma/php-ca",
+    "description": "GIT Flow tools for Laravel ",
+    "keywords": ["kduma","certificate authority","ca"],
+    "homepage": "https://github.com/kduma-OSS/CLI-php-ca",
     "type": "project",
     "license": "MIT",
     "support": {
-        "issues": "https://github.com/laravel-zero/laravel-zero/issues",
-        "source": "https://github.com/laravel-zero/laravel-zero"
+        "issues": "https://github.com/kduma-OSS/CLI-php-ca/issues",
+        "source": "https://github.com/kduma-OSS/CLI-php-ca"
     },
     "authors": [
         {
-            "name": "Nuno Maduro",
-            "email": "enunomaduro@gmail.com"
+            "name": "Krystian Duma",
+            "email": "git@krystian.duma.sh"
         }
     ],
     "require": {
@@ -21,9 +21,11 @@
         "phpseclib/phpseclib": "^3.0"
     },
     "require-dev": {
+        "kduma/git-flow-tool": "^0.0.5",
         "laravel/pint": "^1.25.1",
         "mockery/mockery": "^1.6.12",
-        "pestphp/pest": "^3.8.4|^4.1.2"
+        "pestphp/pest": "^3.8.4|^4.1.2",
+        "phpacker/phpacker": "^0.6.4"
     },
     "autoload": {
         "psr-4": {

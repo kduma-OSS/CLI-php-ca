@@ -1,0 +1,4 @@
+{
+    "versionProvider": "flat-file?filename=VERSION.txt",
+    "gitFlow": "branch[develop]=develop&branch[master]=master&prefix[feature]=feature/&prefix[release]=release/&prefix[hotfix]=hotfix/&prefix[support]=support/&prefix[versionTag]=v&suffix[versionTag]=-src"
+}
