@@ -22,7 +22,7 @@ class ExistsCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            stdErr(fn () => error($e->getMessage()));
+            error($e->getMessage());
             return self::FAILURE;
         }
 
@@ -31,9 +31,9 @@ class ExistsCommand extends Command
         $has = $ca->hasFile(CaFile::Csr);
 
         if ($has) {
-            stdErr(fn () => info('CSR exists'));
+            info('CSR exists');
         } else {
-            stdErr(fn () => error('CSR does not exist'));
+            error('CSR does not exist');
         }
 
         return $has ? self::SUCCESS : self::FAILURE;

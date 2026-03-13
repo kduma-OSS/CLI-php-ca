@@ -34,16 +34,16 @@ class ExistsCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            stdErr(fn () => error($e->getMessage()));
+            error($e->getMessage());
             return self::FAILURE;
         }
 
         $has = $config->database()->keys()->exists($this->argument('id'));
 
         if ($has) {
-            stdErr(fn () => info('Key exists'));
+            info('Key exists');
         } else {
-            stdErr(fn () => error('Key does not exist'));
+            error('Key does not exist');
         }
 
         return $has ? self::SUCCESS : self::FAILURE;

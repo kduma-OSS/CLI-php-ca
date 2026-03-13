@@ -45,27 +45,27 @@ class SelfSignedCertificate extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            stdErr(fn () => error($e->getMessage()));
+            error($e->getMessage());
             return self::FAILURE;
         }
 
         $ca = $config->database()->ca();
 
         if ($ca->metadata()?->certificate !== null && !$this->option('force')) {
-            stdErr(fn () => error('A certificate already exists. Use --force to overwrite.'));
+            error('A certificate already exists. Use --force to overwrite.');
             return self::FAILURE;
         }
 
         $distinguished_name = $this->argument('distinguished_name');
         if (! (new X509)->setDN($distinguished_name)) {
-            stdErr(fn () => error('Invalid distinguished name format.'));
+            error('Invalid distinguished name format.');
             return self::FAILURE;
         }
 
         $serial_number = $this->option('serial-number');
         if ($serial_number !== null) {
             if (! ctype_xdigit($serial_number)) {
-                stdErr(fn () => error('Serial number must be a valid hexadecimal string.'));
+                error('Serial number must be a valid hexadecimal string.');
                 return self::FAILURE;
             }
         } else if($config->certificationAuthority->randomSerialNumbers) {
@@ -79,7 +79,7 @@ class SelfSignedCertificate extends Command
 
         $key_id = $this->argument('key_id');
         if (! $config->database()->keys()->exists($key_id)) {
-            stdErr(fn () => error("Key [{$key_id}] does not exist."));
+            error("Key [{$key_id}] does not exist.");
 
             return self::FAILURE;
         }
@@ -90,7 +90,7 @@ class SelfSignedCertificate extends Command
         try {
             $key = $this->loadPrivateKey($pem);
         } catch (\Exception $e) {
-            stdErr(fn () => error('Failed to load private key: ' . $e->getMessage()));
+            error('Failed to load private key: ' . $e->getMessage());
             return self::FAILURE;
         }
 
@@ -98,7 +98,7 @@ class SelfSignedCertificate extends Command
         if ($path_length_constraint !== null) {
             $path_length_constraint = (int) $path_length_constraint;
             if ($path_length_constraint < 0) {
-                stdErr(fn () => error('Path length constraint must be greater than or equal to zero.'));
+                error('Path length constraint must be greater than or equal to zero.');
                 return self::FAILURE;
             }
         }

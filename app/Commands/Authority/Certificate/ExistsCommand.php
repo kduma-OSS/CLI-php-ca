@@ -22,7 +22,7 @@ class ExistsCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            stdErr(fn () => error($e->getMessage()));
+            error($e->getMessage());
             return self::FAILURE;
         }
 
@@ -31,9 +31,9 @@ class ExistsCommand extends Command
         $has = $ca->metadata()?->certificate !== null && $ca->hasFile(CaFile::Certificate);
 
         if ($has) {
-            stdErr(fn () => info('Certificate exists'));
+            info('Certificate exists');
         } else {
-            stdErr(fn () => error('Certificate does not exist'));
+            error('Certificate does not exist');
         }
 
         return $has ? self::SUCCESS : self::FAILURE;

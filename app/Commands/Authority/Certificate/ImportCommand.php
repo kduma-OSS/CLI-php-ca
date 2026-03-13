@@ -40,14 +40,14 @@ class ImportCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            stdErr(fn () => error($e->getMessage()));
+            error($e->getMessage());
             return self::FAILURE;
         }
 
         $ca = $config->database()->ca();
 
         if ($ca->metadata()?->certificate !== null && !$this->option('force')) {
-            stdErr(fn () => error('A certificate already exists. Use --force to overwrite.'));
+            error('A certificate already exists. Use --force to overwrite.');
             return self::FAILURE;
         }
 
@@ -55,7 +55,7 @@ class ImportCommand extends Command
 
         if ($path) {
             if (!file_exists($path)) {
-                stdErr(fn () => error("File not found: {$path}"));
+                error("File not found: {$path}");
                 return self::FAILURE;
             }
             $pem = file_get_contents($path);
@@ -64,7 +64,7 @@ class ImportCommand extends Command
         }
 
         if (!$pem) {
-            stdErr(fn () => error('No PEM data provided'));
+            error('No PEM data provided');
             return self::FAILURE;
         }
 
@@ -73,12 +73,12 @@ class ImportCommand extends Command
         try {
             $cert = $x509->loadX509($pem);
         } catch (\Exception $e) {
-            stdErr(fn () => error('Failed to load certificate: ' . $e->getMessage()));
+            error('Failed to load certificate: ' . $e->getMessage());
             return self::FAILURE;
         }
 
         if ($cert === false) {
-            stdErr(fn () => error('Failed to parse certificate.'));
+            error('Failed to parse certificate.');
             return self::FAILURE;
         }
 
@@ -99,7 +99,7 @@ class ImportCommand extends Command
         $key = $config->database()->keys()->forFingerprint($fingerprint);
 
         if ($key === null) {
-            stdErr(fn () => error("No matching key found in database for fingerprint [{$fingerprint}]."));
+            error("No matching key found in database for fingerprint [{$fingerprint}].");
             return self::FAILURE;
         }
 

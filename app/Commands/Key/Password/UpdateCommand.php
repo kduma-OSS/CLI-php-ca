@@ -37,14 +37,14 @@ class UpdateCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            stdErr(fn () => error($e->getMessage()));
+            error($e->getMessage());
             return self::FAILURE;
         }
 
         $id = $this->argument('id');
 
         if (! $config->database()->keys()->exists($id)) {
-            stdErr(fn () => error("Key [{$id}] does not exist."));
+            error("Key [{$id}] does not exist.");
             return self::FAILURE;
         }
 
@@ -53,7 +53,7 @@ class UpdateCommand extends Command
         try {
             $privateKey = $this->loadPrivateKey($pem);
         } catch (\Exception $e) {
-            stdErr(fn () => error('Failed to load private key: ' . $e->getMessage()));
+            error('Failed to load private key: ' . $e->getMessage());
             return self::FAILURE;
         }
 
@@ -63,9 +63,9 @@ class UpdateCommand extends Command
             $newPassword = $this->option('new-password') ?? false;
 
             if (! $newPassword) {
-                $newPassword = stdErr(fn () => password(label: 'Enter new password for private key', required: true));
-                if ($newPassword !== stdErr(fn () => password(label: 'Confirm new password', required: true))) {
-                    stdErr(fn () => error('Passwords do not match'));
+                $newPassword = password(label: 'Enter new password for private key', required: true);
+                if ($newPassword !== password(label: 'Confirm new password', required: true)) {
+                    error('Passwords do not match');
                     return self::FAILURE;
                 }
             }

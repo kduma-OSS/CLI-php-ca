@@ -39,7 +39,7 @@ class CreateCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            stdErr(fn () => error($e->getMessage()));
+            error($e->getMessage());
             return self::FAILURE;
         }
 
@@ -47,24 +47,24 @@ class CreateCommand extends Command
 
         $hasCertificate = $ca->metadata()?->certificate !== null && $ca->hasFile(CaFile::Certificate);
         if ($hasCertificate && !$this->option('ignore-existing-certificate')) {
-            stdErr(fn () => error('A certificate already exists. Use --ignore-existing-certificate to create a CSR anyway.'));
+            error('A certificate already exists. Use --ignore-existing-certificate to create a CSR anyway.');
             return self::FAILURE;
         }
 
         if ($ca->hasFile(CaFile::Csr) && !$this->option('force')) {
-            stdErr(fn () => error('A CSR already exists. Use --force to overwrite.'));
+            error('A CSR already exists. Use --force to overwrite.');
             return self::FAILURE;
         }
 
         $distinguished_name = $this->argument('distinguished_name');
         if (! (new X509)->setDN($distinguished_name)) {
-            stdErr(fn () => error('Invalid distinguished name format.'));
+            error('Invalid distinguished name format.');
             return self::FAILURE;
         }
 
         $key_id = $this->argument('key_id');
         if (! $config->database()->keys()->exists($key_id)) {
-            stdErr(fn () => error("Key [{$key_id}] does not exist."));
+            error("Key [{$key_id}] does not exist.");
 
             return self::FAILURE;
         }
@@ -74,7 +74,7 @@ class CreateCommand extends Command
         try {
             $key = $this->loadPrivateKey($pem);
         } catch (\Exception $e) {
-            stdErr(fn () => error('Failed to load private key: ' . $e->getMessage()));
+            error('Failed to load private key: ' . $e->getMessage());
             return self::FAILURE;
         }
 

@@ -38,14 +38,14 @@ class ImportCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            stdErr(fn () => error($e->getMessage()));
+            error($e->getMessage());
             return self::FAILURE;
         }
 
         $id = $this->argument('id');
 
         if ($config->database()->keys()->exists($id)) {
-            stdErr(fn () => error("Key with id {$id} already exists"));
+            error("Key with id {$id} already exists");
             return self::FAILURE;
         }
 
@@ -53,7 +53,7 @@ class ImportCommand extends Command
 
         if ($path) {
             if (!file_exists($path)) {
-                stdErr(fn () => error("File not found: {$path}"));
+                error("File not found: {$path}");
                 return self::FAILURE;
             }
             $pem = file_get_contents($path);
@@ -62,14 +62,14 @@ class ImportCommand extends Command
         }
 
         if (!$pem) {
-            stdErr(fn () => error('No PEM data provided'));
+            error('No PEM data provided');
             return self::FAILURE;
         }
 
         try {
             $private_key = $this->loadPrivateKey($pem, $password);
         } catch (\Exception $e) {
-            stdErr(fn () => error('Failed to load private key: ' . $e->getMessage()));
+            error('Failed to load private key: ' . $e->getMessage());
             return self::FAILURE;
         }
 

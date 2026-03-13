@@ -53,7 +53,7 @@ class PrivateCommand extends Command
 
         if ($this->option('decrypted')) {
             try {
-                $key = $this->loadPrivateKey($content);
+                $key = stdErr(fn () => $this->loadPrivateKey($content));
             } catch (\Exception $e) {
                 stdErr(fn () => error('Failed to decrypt private key: '.$e->getMessage()));
 

@@ -34,25 +34,25 @@ class DeleteCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            stdErr(fn () => error($e->getMessage()));
+            error($e->getMessage());
             return self::FAILURE;
         }
 
         $id = $this->argument('id');
 
         if (!$config->database()->keys()->exists($id)) {
-            stdErr(fn () => error("Key with id {$id} does not exist"));
+            error("Key with id {$id} does not exist");
             return self::FAILURE;
         }
 
-        if (!$this->option('force') && !stdErr(fn () => confirm("Are you sure you want to delete key '{$id}'?"))) {
-            stdErr(fn () => info('Cancelled'));
+        if (!$this->option('force') && !confirm("Are you sure you want to delete key '{$id}'?")) {
+            info('Cancelled');
             return self::INVALID;
         }
 
         $config->database()->keys()->delete($id);
 
-        stdErr(fn () => info("Key '{$id}' has been deleted"));
+        info("Key '{$id}' has been deleted");
 
         return self::SUCCESS;
     }

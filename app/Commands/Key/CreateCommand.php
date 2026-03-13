@@ -36,14 +36,14 @@ class CreateCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            stdErr(fn () => error($e->getMessage()));
+            error($e->getMessage());
             return self::FAILURE;
         }
 
         $id = $this->argument('id');
 
         if($config->database()->keys()->exists($id)) {
-            stdErr(fn () => error("Key with id {$id} already exists"));
+            error("Key with id {$id} already exists");
             return self::FAILURE;
         }
 
@@ -54,9 +54,9 @@ class CreateCommand extends Command
             $password = $this->option('password') ?? false;
 
             if (! $password) {
-                $password = stdErr(fn () => password(label: 'Enter password for private key', required: true));
-                if ($password !== stdErr(fn () => password(label: 'Confirm password', required: true))) {
-                    stdErr(fn () => error('Passwords do not match'));
+                $password = password(label: 'Enter password for private key', required: true);
+                if ($password !== password(label: 'Confirm password', required: true)) {
+                    error('Passwords do not match');
                     return self::FAILURE;
                 }
             }
