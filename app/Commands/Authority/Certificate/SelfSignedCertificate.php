@@ -7,8 +7,8 @@ use App\Commands\Concerns\LoadsPrivateKey;
 use App\Storage\Entities\CaCertificateDetails;
 use App\Storage\Entities\CaMetadata;
 use App\Storage\Enums\CaFile;
-use App\Support\CertificateFingerprint;
 use App\Storage\Enums\KeyFile;
+use App\Support\CertificateFingerprint;
 use Carbon\CarbonImmutable;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
@@ -46,19 +46,22 @@ class SelfSignedCertificate extends Command
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
             error($e->getMessage());
+
             return self::FAILURE;
         }
 
         $ca = $config->database()->ca();
 
-        if ($ca->metadata()?->certificate !== null && !$this->option('force')) {
+        if ($ca->metadata()?->certificate !== null && ! $this->option('force')) {
             error('A certificate already exists. Use --force to overwrite.');
+
             return self::FAILURE;
         }
 
         $distinguished_name = $this->argument('distinguished_name');
         if (! (new X509)->setDN($distinguished_name)) {
             error('Invalid distinguished name format.');
+
             return self::FAILURE;
         }
 
@@ -66,10 +69,11 @@ class SelfSignedCertificate extends Command
         if ($serial_number !== null) {
             if (! ctype_xdigit($serial_number)) {
                 error('Serial number must be a valid hexadecimal string.');
+
                 return self::FAILURE;
             }
-        } else if($config->certificationAuthority->randomSerialNumbers) {
-            $serial_number = new BigInteger(Random::string(20) & ("\x7F" . str_repeat("\xFF", 19)), 256)->toHex();
+        } elseif ($config->certificationAuthority->randomSerialNumbers) {
+            $serial_number = new BigInteger(Random::string(20) & ("\x7F".str_repeat("\xFF", 19)), 256)->toHex();
         } else {
             $existingSerial = $ca->metadata()?->certificate?->serial_number;
             $serial_number = $existingSerial !== null
@@ -84,13 +88,20 @@ class SelfSignedCertificate extends Command
             return self::FAILURE;
         }
 
-        $pem = $config->database()->keys()->getFile($key_id, KeyFile::PrivateKey);
+        $keyEntity = $config->database()->keys()->find($key_id);
+        if ($keyEntity !== null && ! $keyEntity->private) {
+            error("Key [{$key_id}] is a public-only key. Self-signed certificate creation requires a private key.");
 
+            return self::FAILURE;
+        }
+
+        $pem = $config->database()->keys()->getFile($key_id, KeyFile::PrivateKey);
 
         try {
             $key = $this->loadPrivateKey($pem);
         } catch (\Exception $e) {
-            error('Failed to load private key: ' . $e->getMessage());
+            error('Failed to load private key: '.$e->getMessage());
+
             return self::FAILURE;
         }
 
@@ -99,6 +110,7 @@ class SelfSignedCertificate extends Command
             $path_length_constraint = (int) $path_length_constraint;
             if ($path_length_constraint < 0) {
                 error('Path length constraint must be greater than or equal to zero.');
+
                 return self::FAILURE;
             }
         }
@@ -111,7 +123,7 @@ class SelfSignedCertificate extends Command
         $rootIssuer->setPrivateKey($key);
         $rootIssuer->setDN($rootSubject->getDN());
 
-        $validFrom = new CarbonImmutable();
+        $validFrom = new CarbonImmutable;
         $validTo = new CarbonImmutable($this->option('validity'));
 
         $x509 = new X509;

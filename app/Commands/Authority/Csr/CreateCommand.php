@@ -40,25 +40,29 @@ class CreateCommand extends Command
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
             error($e->getMessage());
+
             return self::FAILURE;
         }
 
         $ca = $config->database()->ca();
 
         $hasCertificate = $ca->metadata()?->certificate !== null && $ca->hasFile(CaFile::Certificate);
-        if ($hasCertificate && !$this->option('ignore-existing-certificate')) {
+        if ($hasCertificate && ! $this->option('ignore-existing-certificate')) {
             error('A certificate already exists. Use --ignore-existing-certificate to create a CSR anyway.');
+
             return self::FAILURE;
         }
 
-        if ($ca->hasFile(CaFile::Csr) && !$this->option('force')) {
+        if ($ca->hasFile(CaFile::Csr) && ! $this->option('force')) {
             error('A CSR already exists. Use --force to overwrite.');
+
             return self::FAILURE;
         }
 
         $distinguished_name = $this->argument('distinguished_name');
         if (! (new X509)->setDN($distinguished_name)) {
             error('Invalid distinguished name format.');
+
             return self::FAILURE;
         }
 
@@ -69,12 +73,20 @@ class CreateCommand extends Command
             return self::FAILURE;
         }
 
+        $keyEntity = $config->database()->keys()->find($key_id);
+        if ($keyEntity !== null && ! $keyEntity->private) {
+            error("Key [{$key_id}] is a public-only key. CSR creation requires a private key.");
+
+            return self::FAILURE;
+        }
+
         $pem = $config->database()->keys()->getFile($key_id, KeyFile::PrivateKey);
 
         try {
             $key = $this->loadPrivateKey($pem);
         } catch (\Exception $e) {
-            error('Failed to load private key: ' . $e->getMessage());
+            error('Failed to load private key: '.$e->getMessage());
+
             return self::FAILURE;
         }
 

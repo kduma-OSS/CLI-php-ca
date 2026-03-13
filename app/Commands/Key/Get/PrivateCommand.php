@@ -38,10 +38,18 @@ class PrivateCommand extends Command
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
             stdErr(fn () => error($e->getMessage()));
+
             return self::FAILURE;
         }
 
         $repository = $config->database()->keys();
+
+        $keyEntity = $repository->find($this->argument('id'));
+        if ($keyEntity !== null && ! $keyEntity->private) {
+            stdErr(fn () => error('Key ['.$this->argument('id').'] is a public-only key and has no private key.'));
+
+            return self::FAILURE;
+        }
 
         $content = $repository->getFile($this->argument('id'), KeyFile::PrivateKey);
 

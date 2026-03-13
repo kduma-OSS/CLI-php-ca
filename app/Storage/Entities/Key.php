@@ -12,6 +12,7 @@ class Key extends Entity
         public readonly ?int $size,
         public readonly string $fingerprint,
         public readonly CarbonImmutable $createdAt,
+        public readonly bool $private = true,
     ) {
         parent::__construct($id);
     }
@@ -23,15 +24,17 @@ class Key extends Entity
             size: $data['size'] ?? null,
             fingerprint: $data['fingerprint'],
             createdAt: CarbonImmutable::parse($data['created_at']),
+            private: $data['private'] ?? true,
         );
     }
 
     public function toArray(): array
     {
-        return [
-            'size' => $this->size,
-            'fingerprint' => $this->fingerprint,
+        return array_filter([
             'created_at' => $this->createdAt->toIso8601String(),
-        ];
+            'fingerprint' => $this->fingerprint,
+            'private' => $this->private ? null : false,
+            'size' => $this->size,
+        ], fn ($v) => $v !== null);
     }
 }

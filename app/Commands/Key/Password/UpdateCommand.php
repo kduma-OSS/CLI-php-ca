@@ -8,7 +8,8 @@ use App\Storage\Enums\KeyFile;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
-use function Laravel\Prompts\{error, password};
+use function Laravel\Prompts\error;
+use function Laravel\Prompts\password;
 
 class UpdateCommand extends Command
 {
@@ -38,6 +39,7 @@ class UpdateCommand extends Command
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
             error($e->getMessage());
+
             return self::FAILURE;
         }
 
@@ -45,6 +47,14 @@ class UpdateCommand extends Command
 
         if (! $config->database()->keys()->exists($id)) {
             error("Key [{$id}] does not exist.");
+
+            return self::FAILURE;
+        }
+
+        $keyEntity = $config->database()->keys()->find($id);
+        if ($keyEntity !== null && ! $keyEntity->private) {
+            error("Key [{$id}] is a public-only key and has no private key.");
+
             return self::FAILURE;
         }
 
@@ -53,7 +63,8 @@ class UpdateCommand extends Command
         try {
             $privateKey = $this->loadPrivateKey($pem);
         } catch (\Exception $e) {
-            error('Failed to load private key: ' . $e->getMessage());
+            error('Failed to load private key: '.$e->getMessage());
+
             return self::FAILURE;
         }
 
@@ -66,6 +77,7 @@ class UpdateCommand extends Command
                 $newPassword = password(label: 'Enter new password for private key', required: true);
                 if ($newPassword !== password(label: 'Confirm new password', required: true)) {
                     error('Passwords do not match');
+
                     return self::FAILURE;
                 }
             }
