@@ -27,21 +27,21 @@ class CsrCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            error($e->getMessage());
+            stdErr(fn () => error($e->getMessage()));
 
             return self::FAILURE;
         }
 
         $caMetadata = $config->database()->ca()->metadata();
         if ($caMetadata?->key_id === null) {
-            error('CA key is not configured.');
+            stdErr(fn () => error('CA key is not configured.'));
 
             return self::FAILURE;
         }
 
         $privateKeyPem = $config->database()->keys()->getFile($caMetadata->key_id, KeyFile::PrivateKey);
         if ($privateKeyPem === null) {
-            error("CA private key [{$caMetadata->key_id}] not found.");
+            stdErr(fn () => error("CA private key [{$caMetadata->key_id}] not found."));
 
             return self::FAILURE;
         }
@@ -49,7 +49,7 @@ class CsrCommand extends Command
         try {
             $issuerKey = $this->loadPrivateKey($privateKeyPem);
         } catch (\Exception $e) {
-            error('Failed to load CA private key: '.$e->getMessage());
+            stdErr(fn () => error('Failed to load CA private key: '.$e->getMessage()));
 
             return self::FAILURE;
         }
@@ -57,7 +57,7 @@ class CsrCommand extends Command
         $path = $this->argument('pem');
         if ($path) {
             if (! file_exists($path)) {
-                error("File not found: {$path}");
+                stdErr(fn () => error("File not found: {$path}"));
 
                 return self::FAILURE;
             }
@@ -67,7 +67,7 @@ class CsrCommand extends Command
         }
 
         if (! $csrPem) {
-            error('No CSR PEM data provided.');
+            stdErr(fn () => error('No CSR PEM data provided.'));
 
             return self::FAILURE;
         }
@@ -79,8 +79,8 @@ class CsrCommand extends Command
             $x509->loadCSR($csrPem);
             $csrDn = $x509->getDN(X509::DN_STRING);
 
-            if (! confirm("Issue certificate with DN: {$csrDn}?")) {
-                error('Aborted.');
+            if (! stdErr(fn () => confirm("Issue certificate with DN: {$csrDn}?"))) {
+                stdErr(fn () => error('Aborted.'));
 
                 return self::FAILURE;
             }
@@ -97,7 +97,7 @@ class CsrCommand extends Command
                 serialNumberOverride: $this->option('serial-number'),
             );
         } catch (\RuntimeException $e) {
-            error($e->getMessage());
+            stdErr(fn () => error($e->getMessage()));
 
             return self::FAILURE;
         }

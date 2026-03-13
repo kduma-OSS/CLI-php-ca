@@ -25,21 +25,21 @@ class KeyCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            error($e->getMessage());
+            stdErr(fn () => error($e->getMessage()));
 
             return self::FAILURE;
         }
 
         $caMetadata = $config->database()->ca()->metadata();
         if ($caMetadata?->key_id === null) {
-            error('CA key is not configured.');
+            stdErr(fn () => error('CA key is not configured.'));
 
             return self::FAILURE;
         }
 
         $privateKeyPem = $config->database()->keys()->getFile($caMetadata->key_id, KeyFile::PrivateKey);
         if ($privateKeyPem === null) {
-            error("CA private key [{$caMetadata->key_id}] not found.");
+            stdErr(fn () => error("CA private key [{$caMetadata->key_id}] not found."));
 
             return self::FAILURE;
         }
@@ -47,7 +47,7 @@ class KeyCommand extends Command
         try {
             $issuerKey = $this->loadPrivateKey($privateKeyPem);
         } catch (\Exception $e) {
-            error('Failed to load CA private key: '.$e->getMessage());
+            stdErr(fn () => error('Failed to load CA private key: '.$e->getMessage()));
 
             return self::FAILURE;
         }
@@ -63,7 +63,7 @@ class KeyCommand extends Command
                 serialNumberOverride: $this->option('serial-number'),
             );
         } catch (\RuntimeException $e) {
-            error($e->getMessage());
+            stdErr(fn () => error($e->getMessage()));
 
             return self::FAILURE;
         }
