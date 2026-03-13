@@ -24,7 +24,7 @@ class PublicCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            error($e->getMessage());
+            stdErr(fn () => error($e->getMessage()));
 
             return self::FAILURE;
         }
@@ -32,7 +32,7 @@ class PublicCommand extends Command
         $id = $this->argument('id');
 
         if ($config->database()->keys()->exists($id)) {
-            error("Key with id {$id} already exists");
+            stdErr(fn () => error("Key with id {$id} already exists"));
 
             return self::FAILURE;
         }
@@ -41,7 +41,7 @@ class PublicCommand extends Command
 
         if ($path) {
             if (! file_exists($path)) {
-                error("File not found: {$path}");
+                stdErr(fn () => error("File not found: {$path}"));
 
                 return self::FAILURE;
             }
@@ -51,7 +51,7 @@ class PublicCommand extends Command
         }
 
         if (! $pem) {
-            error('No PEM data provided');
+            stdErr(fn () => error('No PEM data provided'));
 
             return self::FAILURE;
         }
@@ -59,13 +59,13 @@ class PublicCommand extends Command
         try {
             $publicKey = RSA::loadPublicKey($pem);
         } catch (\Exception $e) {
-            error('Failed to load public key: '.$e->getMessage());
+            stdErr(fn () => error('Failed to load public key: '.$e->getMessage()));
 
             return self::FAILURE;
         }
 
         if (! $publicKey instanceof RSA\PublicKey) {
-            error('Only RSA public keys are supported.');
+            stdErr(fn () => error('Only RSA public keys are supported.'));
 
             return self::FAILURE;
         }
