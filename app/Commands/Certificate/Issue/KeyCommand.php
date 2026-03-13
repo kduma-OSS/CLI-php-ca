@@ -55,7 +55,7 @@ class KeyCommand extends Command
         $service = new CertificateSigningService($config->database(), $config);
 
         try {
-            $service->issueFromKeyId(
+            $certificate = $service->issueFromKeyId(
                 templateName: $this->argument('template'),
                 keyId: $this->argument('key_id'),
                 issuerKey: $issuerKey,
@@ -67,6 +67,8 @@ class KeyCommand extends Command
 
             return self::FAILURE;
         }
+
+        $this->output->writeln($certificate->id);
 
         return self::SUCCESS;
     }

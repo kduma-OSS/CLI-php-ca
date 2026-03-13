@@ -89,7 +89,7 @@ class CsrCommand extends Command
         $service = new CertificateSigningService($config->database(), $config);
 
         try {
-            $service->issueFromCsr(
+            $certificate = $service->issueFromCsr(
                 templateName: $this->argument('template'),
                 csrPem: $csrPem,
                 issuerKey: $issuerKey,
@@ -101,6 +101,8 @@ class CsrCommand extends Command
 
             return self::FAILURE;
         }
+
+        $this->output->writeln($certificate->id);
 
         return self::SUCCESS;
     }
