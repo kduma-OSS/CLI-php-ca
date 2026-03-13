@@ -65,7 +65,7 @@ class ImportCommand extends Command
         }
 
         try {
-            $private_key = $this->loadPrivateKey($pem);
+            $private_key = $this->loadPrivateKey($pem, $password);
         } catch (\Exception $e) {
             $this->error('Failed to load private key: ' . $e->getMessage());
             return self::FAILURE;
@@ -83,7 +83,7 @@ class ImportCommand extends Command
         );
 
         $config->database()->keys()->save($entity);
-        $config->database()->keys()->putFile($id, KeyFile::PrivateKey, $private_key->withPassword($password)->toString('PKCS8'));
+        $config->database()->keys()->putFile($id, KeyFile::PrivateKey, $private_key->withPassword($password ?? false)->toString('PKCS8'));
         $config->database()->keys()->putFile($id, KeyFile::PublicKey, $public_key->toString('PKCS8'));
 
         return self::SUCCESS;
