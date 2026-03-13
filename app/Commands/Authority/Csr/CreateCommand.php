@@ -22,7 +22,7 @@ class CreateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'authority:csr:create {key_id} {distinguished_name} {--ca= : Configuration file} {--password= : Password} {--force : Overwrite existing CSR}';
+    protected $signature = 'authority:csr:create {key_id} {distinguished_name} {--ca= : Configuration file} {--password= : Password} {--force : Overwrite existing CSR} {--ignore-existing-certificate : Create CSR even if a certificate already exists}';
 
     /**
      * The console command description.
@@ -44,6 +44,12 @@ class CreateCommand extends Command
         }
 
         $ca = $config->database()->ca();
+
+        $hasCertificate = $ca->metadata()?->certificate !== null && $ca->hasFile(CaFile::Certificate);
+        if ($hasCertificate && !$this->option('ignore-existing-certificate')) {
+            stdErr(fn () => error('A certificate already exists. Use --ignore-existing-certificate to create a CSR anyway.'));
+            return self::FAILURE;
+        }
 
         if ($ca->hasFile(CaFile::Csr) && !$this->option('force')) {
             stdErr(fn () => error('A CSR already exists. Use --force to overwrite.'));
