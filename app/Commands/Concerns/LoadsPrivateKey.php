@@ -5,6 +5,8 @@ namespace App\Commands\Concerns;
 use phpseclib3\Crypt\RSA;
 use phpseclib3\Crypt\RSA\PrivateKey as RSAPrivateKey;
 
+use function Laravel\Prompts\password;
+
 trait LoadsPrivateKey
 {
     protected function loadPrivateKey(string $pem, ?string &$password = null): RSAPrivateKey
@@ -18,10 +20,7 @@ trait LoadsPrivateKey
                 throw $e;
             }
 
-            $password = $this->secret('Enter password for private key');
-            if (!$password) {
-                throw new \RuntimeException('Password cannot be empty');
-            }
+            $password = stdErr(fn () => password('Enter password for private key', required: true));
 
             return RSA::loadPrivateKey($pem, $password);
         }
