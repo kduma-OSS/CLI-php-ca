@@ -7,7 +7,7 @@ use phpseclib3\Crypt\RSA\PrivateKey as RSAPrivateKey;
 
 trait LoadsPrivateKey
 {
-    protected function loadPrivateKey(string $pem): RSAPrivateKey
+    protected function loadPrivateKey(string $pem, ?string &$password = null): RSAPrivateKey
     {
         $password = $this->option('password') ?? false;
 
