@@ -20,7 +20,7 @@ trait LoadsPrivateKey
                 throw $e;
             }
 
-            $password = password('Enter password for private key', required: true);
+            $password = stdErr(fn () => password('Enter password for private key', required: true));
 
             return RSA::loadPrivateKey($pem, $password);
         }
