@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Commands\Authority\Certificate\Csr;
+namespace App\Commands\Authority\Csr;
 
 use App\Commands\Concerns\LoadsCaConfiguration;
 use App\Storage\Enums\CaFile;
@@ -18,7 +18,7 @@ class GetCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'authority:certificate:csr:get {--ca= : Configuration file}';
+    protected $signature = 'authority:csr:get {--ca= : Configuration file}';
 
     /**
      * The console command description.

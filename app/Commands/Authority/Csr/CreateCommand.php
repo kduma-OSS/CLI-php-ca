@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Commands\Authority\Certificate\Csr;
+namespace App\Commands\Authority\Csr;
 
 use App\Commands\Concerns\LoadsCaConfiguration;
 use App\Commands\Concerns\LoadsPrivateKey;
@@ -22,7 +22,7 @@ class CreateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'authority:certificate:csr:create {key_id} {distinguished_name} {--ca= : Configuration file} {--password= : Password} {--force : Overwrite existing CSR}';
+    protected $signature = 'authority:csr:create {key_id} {distinguished_name} {--ca= : Configuration file} {--password= : Password} {--force : Overwrite existing CSR}';
 
     /**
      * The console command description.
