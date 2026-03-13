@@ -2,7 +2,6 @@
     "database_path": "./db/root-ca",
     "certification_authority": {
         "random_serial_numbers": true,
-        "distinguished_name": "C=WW, O=PHP PKI CA Project, CN=My Root CA",
         "certificate_distribution_points": [
             "http://pki.example.com/root-ca.crt",
             "http://pki-alt.example.com/root-ca.crt"

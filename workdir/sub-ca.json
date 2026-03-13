@@ -2,7 +2,6 @@
     "database_path": "./db/sub-ca",
     "certification_authority": {
         "random_serial_numbers": false,
-        "distinguished_name": "C=WW, O=PHP PKI CA Project, CN=My Sub CA",
         "certificate_distribution_points": [
             "http://pki.example.com/sub-ca.crt",
             "http://pki-alt.example.com/sub-ca.crt"

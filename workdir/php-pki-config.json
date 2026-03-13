@@ -1,14 +1,14 @@
 {
-    "database_path": "./db/int-ca",
+    "database_path": "./db/default-ca",
     "certification_authority": {
         "random_serial_numbers": false,
         "certificate_distribution_points": [
-            "http://pki.example.com/int-ca.crt",
-            "http://pki-alt.example.com/int-ca.crt"
+            "http://pki.example.com/default-ca.crt",
+            "http://pki-alt.example.com/default-ca.crt"
         ],
         "crl_distribution_points": [
-            "http://pki.example.com/int-ca.crl",
-            "http://pki-alt.example.com/int-ca.crl"
+            "http://pki.example.com/default-ca.crl",
+            "http://pki-alt.example.com/default-ca.crl"
         ]
     },
     "certificate_templates": {
