@@ -6,6 +6,8 @@ use App\Commands\Concerns\LoadsCaConfiguration;
 use App\Commands\Concerns\LoadsPrivateKey;
 use App\Storage\Entities\CaCertificateDetails;
 use App\Storage\Entities\CaMetadata;
+use App\Storage\Enums\CaFile;
+use App\Storage\Enums\KeyFile;
 use Carbon\CarbonImmutable;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
@@ -74,7 +76,7 @@ class SelfSignedCertificate extends Command
             return self::FAILURE;
         }
 
-        $pem = $config->database()->keys()->getFile($key_id, 'private.key');
+        $pem = $config->database()->keys()->getFile($key_id, KeyFile::PrivateKey);
         $password = $this->option('password') ?? false;
 
         try {
@@ -117,7 +119,7 @@ class SelfSignedCertificate extends Command
         $x509->setEndDate($validTo);
         $result = $x509->sign($rootIssuer, $rootSubject);
 
-        $ca->putFile('certificate.crt', $x509->saveX509($result));
+        $ca->putFile(CaFile::Certificate, $x509->saveX509($result));
         $ca->saveMetadata(new CaMetadata(
             key_id: $key_id,
             certificate: new CaCertificateDetails(

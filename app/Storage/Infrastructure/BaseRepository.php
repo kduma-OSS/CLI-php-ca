@@ -16,13 +16,18 @@ abstract class BaseRepository
 
     abstract protected function entityClass(): string;
 
-    abstract protected function allowedFiles(): array;
+    /** @return class-string<RepositoryFile> */
+    abstract protected function fileEnum(): string;
 
-    protected function validateFilename(string $filename): void
+    protected function validateFilename(RepositoryFile $file): void
     {
-        if (! in_array($filename, $this->allowedFiles(), true)) {
+        $enumClass = $this->fileEnum();
+
+        if (! $file instanceof $enumClass) {
+            $allowed = implode(', ', array_map(fn ($case) => $case->value, $enumClass::cases()));
+
             throw new InvalidArgumentException(
-                "File [{$filename}] is not allowed in [{$this->storageName()}]. Allowed: " . implode(', ', $this->allowedFiles()) . "."
+                "File [{$file->value}] is not allowed in [{$this->storageName()}]. Allowed: {$allowed}."
             );
         }
     }

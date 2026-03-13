@@ -4,6 +4,7 @@ namespace App\Commands\Key;
 
 use App\Commands\Concerns\LoadsCaConfiguration;
 use App\Storage\Entities\Key;
+use App\Storage\Enums\KeyFile;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 use phpseclib3\Crypt\RSA;
@@ -66,8 +67,8 @@ class CreateCommand extends Command
         );
 
         $config->database()->keys()->save($entity);
-        $config->database()->keys()->putFile($id, 'private.key', $private_key->withPassword($password)->toString('PKCS8'));
-        $config->database()->keys()->putFile($id, 'public.key', $public_key->toString('PKCS8'));
+        $config->database()->keys()->putFile($id, KeyFile::PrivateKey, $private_key->withPassword($password)->toString('PKCS8'));
+        $config->database()->keys()->putFile($id, KeyFile::PublicKey, $public_key->toString('PKCS8'));
 
         return self::SUCCESS;
     }

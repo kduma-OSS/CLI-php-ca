@@ -107,9 +107,9 @@ abstract class Repository extends BaseRepository
         return $this->all();
     }
 
-    public function putFile(string $id, string $filename, string $content): void
+    public function putFile(string $id, RepositoryFile $file, string $content): void
     {
-        $this->validateFilename($filename);
+        $this->validateFilename($file);
 
         $recordPath = $this->recordPath($id);
 
@@ -117,14 +117,14 @@ abstract class Repository extends BaseRepository
             $this->files->makeDirectory($recordPath, 0755, true);
         }
 
-        $this->files->put($recordPath.'/'.$filename, $content);
+        $this->files->put($recordPath.'/'.$file->value, $content);
     }
 
-    public function getFile(string $id, string $filename): ?string
+    public function getFile(string $id, RepositoryFile $file): ?string
     {
-        $this->validateFilename($filename);
+        $this->validateFilename($file);
 
-        $filePath = $this->recordPath($id).'/'.$filename;
+        $filePath = $this->recordPath($id).'/'.$file->value;
 
         if (! $this->files->exists($filePath)) {
             return null;
@@ -133,10 +133,10 @@ abstract class Repository extends BaseRepository
         return $this->files->get($filePath);
     }
 
-    public function hasFile(string $id, string $filename): bool
+    public function hasFile(string $id, RepositoryFile $file): bool
     {
-        $this->validateFilename($filename);
+        $this->validateFilename($file);
 
-        return $this->files->exists($this->recordPath($id).'/'.$filename);
+        return $this->files->exists($this->recordPath($id).'/'.$file->value);
     }
 }

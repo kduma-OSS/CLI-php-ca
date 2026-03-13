@@ -3,6 +3,7 @@
 namespace App\Storage\Repositories;
 
 use App\Storage\Entities\Certificate;
+use App\Storage\Enums\CertificateFile;
 use App\Storage\Infrastructure\Repository;
 use Illuminate\Support\Collection;
 
@@ -18,9 +19,9 @@ class CertificateRepository extends Repository
         return Certificate::class;
     }
 
-    protected function allowedFiles(): array
+    protected function fileEnum(): string
     {
-        return ['certificate.pem', 'request.pem'];
+        return CertificateFile::class;
     }
 
     public function forKey(string $keyId): Collection

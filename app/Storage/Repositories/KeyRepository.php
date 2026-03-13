@@ -3,6 +3,7 @@
 namespace App\Storage\Repositories;
 
 use App\Storage\Entities\Key;
+use App\Storage\Enums\KeyFile;
 use App\Storage\Infrastructure\Repository;
 
 class KeyRepository extends Repository
@@ -17,9 +18,9 @@ class KeyRepository extends Repository
         return Key::class;
     }
 
-    protected function allowedFiles(): array
+    protected function fileEnum(): string
     {
-        return ['private.key', 'public.key'];
+        return KeyFile::class;
     }
 
     public function forFingerprint(string $fingerprint): ?Key

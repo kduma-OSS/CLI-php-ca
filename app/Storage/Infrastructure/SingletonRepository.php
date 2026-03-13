@@ -42,20 +42,20 @@ abstract class SingletonRepository extends BaseRepository
         $this->files->put($this->metadataPath(), $this->encodeMetadata($entity->toArray()));
     }
 
-    public function putFile(string $filename, string $content): void
+    public function putFile(RepositoryFile $file, string $content): void
     {
-        $this->validateFilename($filename);
+        $this->validateFilename($file);
 
         $this->ensureDirectory();
 
-        $this->files->put($this->path().'/'.$filename, $content);
+        $this->files->put($this->path().'/'.$file->value, $content);
     }
 
-    public function getFile(string $filename): ?string
+    public function getFile(RepositoryFile $file): ?string
     {
-        $this->validateFilename($filename);
+        $this->validateFilename($file);
 
-        $filePath = $this->path().'/'.$filename;
+        $filePath = $this->path().'/'.$file->value;
 
         if (! $this->files->exists($filePath)) {
             return null;
@@ -64,18 +64,18 @@ abstract class SingletonRepository extends BaseRepository
         return $this->files->get($filePath);
     }
 
-    public function hasFile(string $filename): bool
+    public function hasFile(RepositoryFile $file): bool
     {
-        $this->validateFilename($filename);
+        $this->validateFilename($file);
 
-        return $this->files->exists($this->path().'/'.$filename);
+        return $this->files->exists($this->path().'/'.$file->value);
     }
 
-    public function deleteFile(string $filename): bool
+    public function deleteFile(RepositoryFile $file): bool
     {
-        $this->validateFilename($filename);
+        $this->validateFilename($file);
 
-        $filePath = $this->path().'/'.$filename;
+        $filePath = $this->path().'/'.$file->value;
 
         if (! $this->files->exists($filePath)) {
             return false;

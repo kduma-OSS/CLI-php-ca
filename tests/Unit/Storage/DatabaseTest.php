@@ -4,6 +4,9 @@ use App\Storage\Database;
 use App\Storage\Entities\CaMetadata;
 use App\Storage\Entities\Certificate;
 use App\Storage\Entities\Key;
+use App\Storage\Enums\CaFile;
+use App\Storage\Enums\CertificateFile;
+use App\Storage\Enums\KeyFile;
 use Carbon\CarbonImmutable;
 
 beforeEach(function () {
@@ -128,11 +131,11 @@ test('can write and read PEM files for keys', function () {
     $this->db->keys()->save(new Key('my-key', 2048, 'AA:BB:CC:DD', CarbonImmutable::parse('2024-01-01T00:00:00Z')));
     $pemContent = "-----BEGIN PRIVATE KEY-----\nMIItest...\n-----END PRIVATE KEY-----\n";
 
-    $this->db->keys()->putFile('my-key', 'private.key', $pemContent);
+    $this->db->keys()->putFile('my-key', KeyFile::PrivateKey, $pemContent);
 
-    expect($this->db->keys()->hasFile('my-key', 'private.key'))->toBeTrue();
-    expect($this->db->keys()->getFile('my-key', 'private.key'))->toBe($pemContent);
-    expect($this->db->keys()->getFile('my-key', 'public.key'))->toBeNull();
+    expect($this->db->keys()->hasFile('my-key', KeyFile::PrivateKey))->toBeTrue();
+    expect($this->db->keys()->getFile('my-key', KeyFile::PrivateKey))->toBe($pemContent);
+    expect($this->db->keys()->getFile('my-key', KeyFile::PublicKey))->toBeNull();
 });
 
 test('can write and read PEM files for certificates', function () {
@@ -144,38 +147,38 @@ test('can write and read PEM files for certificates', function () {
     $certPem = "-----BEGIN CERTIFICATE-----\nMIItest...\n-----END CERTIFICATE-----\n";
     $csrPem = "-----BEGIN CERTIFICATE REQUEST-----\nMIItest...\n-----END CERTIFICATE REQUEST-----\n";
 
-    $this->db->certificates()->putFile('my-cert', 'certificate.pem', $certPem);
-    $this->db->certificates()->putFile('my-cert', 'request.pem', $csrPem);
+    $this->db->certificates()->putFile('my-cert', CertificateFile::Certificate, $certPem);
+    $this->db->certificates()->putFile('my-cert', CertificateFile::Request, $csrPem);
 
-    expect($this->db->certificates()->getFile('my-cert', 'certificate.pem'))->toBe($certPem);
-    expect($this->db->certificates()->getFile('my-cert', 'request.pem'))->toBe($csrPem);
-    expect($this->db->certificates()->hasFile('my-cert', 'request.pem'))->toBeTrue();
+    expect($this->db->certificates()->getFile('my-cert', CertificateFile::Certificate))->toBe($certPem);
+    expect($this->db->certificates()->getFile('my-cert', CertificateFile::Request))->toBe($csrPem);
+    expect($this->db->certificates()->hasFile('my-cert', CertificateFile::Request))->toBeTrue();
 });
 
 // --- Allowed files validation ---
 
-test('putFile rejects disallowed filename in repository', function () {
+test('putFile rejects wrong enum type in repository', function () {
     $this->db->keys()->save(new Key('my-key', 2048, 'AA:BB:CC:DD', CarbonImmutable::parse('2024-01-01T00:00:00Z')));
-    $this->db->keys()->putFile('my-key', 'evil.txt', 'data');
-})->throws(InvalidArgumentException::class, 'File [evil.txt] is not allowed in [keys]');
+    $this->db->keys()->putFile('my-key', CaFile::Certificate, 'data');
+})->throws(InvalidArgumentException::class, 'File [certificate.crt] is not allowed in [keys]');
 
-test('getFile rejects disallowed filename in repository', function () {
+test('getFile rejects wrong enum type in repository', function () {
     $this->db->keys()->save(new Key('my-key', 2048, 'AA:BB:CC:DD', CarbonImmutable::parse('2024-01-01T00:00:00Z')));
-    $this->db->keys()->getFile('my-key', '../metadata.json');
-})->throws(InvalidArgumentException::class, 'File [../metadata.json] is not allowed in [keys]');
+    $this->db->keys()->getFile('my-key', CertificateFile::Certificate);
+})->throws(InvalidArgumentException::class, 'File [certificate.pem] is not allowed in [keys]');
 
-test('hasFile rejects disallowed filename in repository', function () {
+test('hasFile rejects wrong enum type in repository', function () {
     $this->db->keys()->save(new Key('my-key', 2048, 'AA:BB:CC:DD', CarbonImmutable::parse('2024-01-01T00:00:00Z')));
-    $this->db->keys()->hasFile('my-key', 'secret.pem');
-})->throws(InvalidArgumentException::class, 'File [secret.pem] is not allowed in [keys]');
+    $this->db->keys()->hasFile('my-key', CaFile::Csr);
+})->throws(InvalidArgumentException::class, 'File [csr.req] is not allowed in [keys]');
 
-test('putFile rejects disallowed filename in singleton repository', function () {
-    $this->db->ca()->putFile('evil.txt', 'data');
-})->throws(InvalidArgumentException::class, 'File [evil.txt] is not allowed in [ca]');
+test('putFile rejects wrong enum type in singleton repository', function () {
+    $this->db->ca()->putFile(KeyFile::PrivateKey, 'data');
+})->throws(InvalidArgumentException::class, 'File [private.key] is not allowed in [ca]');
 
-test('deleteFile rejects disallowed filename in singleton repository', function () {
-    $this->db->ca()->deleteFile('evil.txt');
-})->throws(InvalidArgumentException::class, 'File [evil.txt] is not allowed in [ca]');
+test('deleteFile rejects wrong enum type in singleton repository', function () {
+    $this->db->ca()->deleteFile(KeyFile::PublicKey);
+})->throws(InvalidArgumentException::class, 'File [public.key] is not allowed in [ca]');
 
 // --- JSON format ---
 
@@ -216,22 +219,22 @@ test('CA metadata returns null when no metadata exists', function () {
 
 test('can save and read CA certificate', function () {
     $pem = "-----BEGIN CERTIFICATE-----\nCA cert\n-----END CERTIFICATE-----\n";
-    $this->db->ca()->putFile('certificate.crt', $pem);
-    expect($this->db->ca()->getFile('certificate.crt'))->toBe($pem);
+    $this->db->ca()->putFile(CaFile::Certificate, $pem);
+    expect($this->db->ca()->getFile(CaFile::Certificate))->toBe($pem);
 });
 
 test('CA certificate returns null when not set', function () {
-    expect($this->db->ca()->getFile('certificate.crt'))->toBeNull();
+    expect($this->db->ca()->getFile(CaFile::Certificate))->toBeNull();
 });
 
 test('can save and read CA CSR', function () {
     $pem = "-----BEGIN CERTIFICATE REQUEST-----\nCA csr\n-----END CERTIFICATE REQUEST-----\n";
-    $this->db->ca()->putFile('csr.req', $pem);
-    expect($this->db->ca()->getFile('csr.req'))->toBe($pem);
+    $this->db->ca()->putFile(CaFile::Csr, $pem);
+    expect($this->db->ca()->getFile(CaFile::Csr))->toBe($pem);
 });
 
 test('CA CSR returns null when not set', function () {
-    expect($this->db->ca()->getFile('csr.req'))->toBeNull();
+    expect($this->db->ca()->getFile(CaFile::Csr))->toBeNull();
 });
 
 // --- Two independent databases ---

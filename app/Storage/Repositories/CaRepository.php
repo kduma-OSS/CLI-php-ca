@@ -3,6 +3,7 @@
 namespace App\Storage\Repositories;
 
 use App\Storage\Entities\CaMetadata;
+use App\Storage\Enums\CaFile;
 use App\Storage\Infrastructure\SingletonRepository;
 
 class CaRepository extends SingletonRepository
@@ -17,8 +18,8 @@ class CaRepository extends SingletonRepository
         return CaMetadata::class;
     }
 
-    protected function allowedFiles(): array
+    protected function fileEnum(): string
     {
-        return ['certificate.crt', 'csr.req'];
+        return CaFile::class;
     }
 }

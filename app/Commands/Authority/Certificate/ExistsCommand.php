@@ -3,6 +3,7 @@
 namespace App\Commands\Authority\Certificate;
 
 use App\Commands\Concerns\LoadsCaConfiguration;
+use App\Storage\Enums\CaFile;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
@@ -18,7 +19,7 @@ class ExistsCommand extends Command
     {
         $ca = $this->getCaConfig()->database()->ca();
 
-        $has = $ca->metadata()?->certificate !== null && $ca->hasFile('certificate.crt');
+        $has = $ca->metadata()?->certificate !== null && $ca->hasFile(CaFile::Certificate);
 
         if ($has) {
             $this->info('Certificate exists');
