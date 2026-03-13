@@ -42,11 +42,30 @@ ensure_self_signed_ca() {
 ensure_key php-pki-config.json 1024 || exit 1
 ensure_self_signed_ca php-pki-config.json "CN=Test CA" "+1 month" || exit 1
 
+ensure_csr_for_ca() {
+    local ca_file="$1"
+    local distinguished_name="$2"
+
+    printf "[%s] Checking if CSR exists: " "$ca_file"
+    if ! ../php-ca authority:csr:exists --ca="$ca_file" --quiet; then
+        echo "no"
+        printf "[%s] Creating new CSR: " "$ca_file"
+        if ! ../php-ca authority:csr:create ca "$distinguished_name" --ca="$ca_file" --ignore-existing-certificate; then
+            echo "failed"
+            return 1
+        else
+            echo "created"
+        fi
+    else
+        echo "yes"
+    fi
+}
+
 ensure_key root-ca.json 4096 || exit 1
 ensure_self_signed_ca root-ca.json "C=WW, O=PHP PKI CA Project, CN=My Root CA" "+25 years" || exit 1
 
 ensure_key sub-ca.json 2048 || exit 1
-
-
+ensure_csr_for_ca sub-ca.json "C=WW, O=PHP PKI CA Project, CN=My Sub CA" || exit 1
 
 ensure_key int-ca.json 1024 || exit 1
+ensure_csr_for_ca int-ca.json "C=WW, O=PHP PKI CA Project, CN=My Intermediate CA" || exit 1
