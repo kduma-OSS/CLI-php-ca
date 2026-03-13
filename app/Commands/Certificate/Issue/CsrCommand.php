@@ -72,6 +72,20 @@ class CsrCommand extends Command
             return self::FAILURE;
         }
 
+        $dnOverride = $this->option('dn');
+
+        if ($dnOverride === null && ! $this->option('force')) {
+            $x509 = new X509;
+            $x509->loadCSR($csrPem);
+            $csrDn = $x509->getDN(X509::DN_STRING);
+
+            if (! confirm("Issue certificate with DN: {$csrDn}?")) {
+                error('Aborted.');
+
+                return self::FAILURE;
+            }
+        }
+
         $service = new CertificateSigningService($config->database(), $config);
 
         try {
@@ -79,7 +93,7 @@ class CsrCommand extends Command
                 templateName: $this->argument('template'),
                 csrPem: $csrPem,
                 issuerKey: $issuerKey,
-                distinguishedNameOverride: $this->option('dn'),
+                distinguishedNameOverride: $dnOverride,
                 serialNumberOverride: $this->option('serial-number'),
             );
         } catch (\RuntimeException $e) {
