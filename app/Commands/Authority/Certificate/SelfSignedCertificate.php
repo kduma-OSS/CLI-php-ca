@@ -72,7 +72,7 @@ class SelfSignedCertificate extends Command
             $existingSerial = $ca->metadata()?->certificate?->serial_number;
             $serial_number = $existingSerial !== null
                 ? (new BigInteger($existingSerial, 16))->add(new BigInteger(1))->toHex()
-                : "1";
+                : (new BigInteger(1))->toHex();
         }
 
         $key_id = $this->argument('key_id');
