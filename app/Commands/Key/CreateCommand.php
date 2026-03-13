@@ -17,7 +17,7 @@ class CreateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'key:create {id} {--ca=:Configuration file} {--key-size=4096 : Key size} {--encrypted : Encrypt private key} {--password= : Password}';
+    protected $signature = 'key:create {id} {--ca= : Configuration file} {--key-size=4096 : Key size} {--decrypted : Store private key without encryption} {--password= : Password}';
 
     /**
      * The console command description.
@@ -46,17 +46,21 @@ class CreateCommand extends Command
         }
 
         $key_size = (int)$this->option('key-size');
-        $password = $this->option('password') ?? false;
+        if ($this->option('decrypted')) {
+            $password = false;
+        } else {
+            $password = $this->option('password') ?? false;
 
-        if($this->option('encrypted') && !$password) {
-            $password = $this->secret('Enter password for private key');
-            if(!$password) {
-                $this->error('Password cannot be empty');
-                return self::FAILURE;
-            }
-            if($password !== $this->secret('Confirm password')) {
-                $this->error('Passwords do not match');
-                return self::FAILURE;
+            if (! $password) {
+                $password = $this->secret('Enter password for private key');
+                if (! $password) {
+                    $this->error('Password cannot be empty');
+                    return self::FAILURE;
+                }
+                if ($password !== $this->secret('Confirm password')) {
+                    $this->error('Passwords do not match');
+                    return self::FAILURE;
+                }
             }
         }
 
