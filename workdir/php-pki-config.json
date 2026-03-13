@@ -1,5 +1,22 @@
 {
     "database_path": "./db/default-ca",
+    "encryption": [
+        {
+            "type": "env",
+            "name": "PRIVATE_KEY_ENCODING_KEY",
+            "apply_to": {
+                "KeyFile::PrivateKey": true,
+                "KeyFile::PublicKey": ["test-id", "test2-id", "test3-id"]
+            }
+        },
+        {
+            "type": "file",
+            "name": "./secrets/private-key-encoding-key.txt",
+            "apply_to": {
+                "CertificateFile::Certificate": true
+            }
+        }
+    ],
     "certification_authority": {
         "random_serial_numbers": false,
         "certificate_distribution_points": [
