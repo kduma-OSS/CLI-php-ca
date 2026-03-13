@@ -45,7 +45,7 @@ class KeyCommand extends Command
         }
 
         try {
-            $issuerKey = $this->loadPrivateKey($privateKeyPem);
+            $issuerKey = stdErr(fn () => $this->loadPrivateKey($privateKeyPem));
         } catch (\Exception $e) {
             stdErr(fn () => error('Failed to load CA private key: '.$e->getMessage()));
 

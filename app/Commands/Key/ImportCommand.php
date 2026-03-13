@@ -71,7 +71,7 @@ class ImportCommand extends Command
         }
 
         try {
-            $private_key = $this->loadPrivateKey($pem, $password);
+            $private_key = stdErr(fn () => $this->loadPrivateKey($pem, $password));
         } catch (\Exception $e) {
             stdErr(fn () => error('Failed to load private key: '.$e->getMessage()));
 
