@@ -1,0 +1,95 @@
+name: Build PHAR and Release
+
+on:
+  push:
+    branches: [ develop ]
+    tags: [ 'v*.*.*-src', 'v*.*-src', 'v*-src' ]
+  pull_request:
+    branches: [ master, develop ]
+  workflow_dispatch:
+
+jobs:
+  build-phar:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict --no-check-all
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-dev
+
+      # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
+      # Docs: https://getcomposer.org/doc/articles/scripts.md
+
+      - name: Get the tag name
+        if:   startsWith(github.ref, 'refs/tags/')
+        run:  echo "TAG=`cat VERSION.txt`" >> $GITHUB_ENV
+
+      - name: Build PHAR archive
+        if:   startsWith(github.ref, 'refs/tags/')
+        run: php php-ca app:build --build-version=${{ env.TAG }}
+
+      - name: Build PHAR archive
+        if:   ${{ !startsWith(github.ref, 'refs/tags/') }}
+        run: php php-ca app:build --build-version=$(git rev-parse --short "$GITHUB_SHA")
+
+      - name: copy phar to temp
+        run: cp builds/php-ca /tmp/php-ca.phar
+
+      - name: Release source
+        uses: softprops/action-gh-release@v2
+        if:   startsWith(github.ref, 'refs/tags/')
+        with:
+          files: /tmp/php-ca.phar
+          tag_name: v${{ env.TAG }}-src
+          name: php-ca v${{ env.TAG }} release
+          generate_release_notes: true
+
+      - name: Upload a Build Artifact
+        if:   ${{ !startsWith(github.ref, 'refs/tags/') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: binary
+          path: /tmp/php-ca.phar
+          retention-days: 7
+
+      - uses: actions/checkout@v4
+        if:   startsWith(github.ref, 'refs/tags/')
+        with:
+          ref: bin
+
+      - name: copy phar from temp
+        if:   startsWith(github.ref, 'refs/tags/')
+        run: mkdir -p builds; rm -f builds/php-ca; cp /tmp/php-ca.phar builds/php-ca
+
+      - name: commit update
+        uses: EndBug/add-and-commit@v9
+        if:   startsWith(github.ref, 'refs/tags/')
+        with:
+          message: 'Binary release of version v${{ env.TAG }}'
+          tag: 'v${{ env.TAG }} --force'
+          tag_push: '--force'
+
+#      - name: Release
+#        uses: softprops/action-gh-release@v2
+#        if:   startsWith(github.ref, 'refs/tags/')
+#        with:
+#          tag_name: v${{ env.TAG }}
