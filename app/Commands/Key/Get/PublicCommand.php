@@ -7,6 +7,8 @@ use App\Storage\Enums\KeyFile;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
+use function Laravel\Prompts\error;
+
 class PublicCommand extends Command
 {
     use LoadsCaConfiguration;
@@ -33,7 +35,7 @@ class PublicCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            $this->error($e->getMessage());
+            stdErr(fn () => error($e->getMessage()));
             return self::FAILURE;
         }
 
@@ -42,7 +44,7 @@ class PublicCommand extends Command
         $content = $repository->getFile($this->argument('id'), KeyFile::PublicKey);
 
         if ($content === null) {
-            $this->error('Public key not found for ID ['.$this->argument('id').'].');
+            stdErr(fn () => error('Public key not found for ID ['.$this->argument('id').'].'));
 
             return self::FAILURE;
         }

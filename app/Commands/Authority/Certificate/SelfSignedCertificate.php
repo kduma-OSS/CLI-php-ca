@@ -16,6 +16,8 @@ use phpseclib3\Crypt\Random;
 use phpseclib3\File\X509;
 use phpseclib3\Math\BigInteger;
 
+use function Laravel\Prompts\error;
+
 class SelfSignedCertificate extends Command
 {
     use LoadsCaConfiguration;
@@ -43,27 +45,27 @@ class SelfSignedCertificate extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            $this->error($e->getMessage());
+            stdErr(fn () => error($e->getMessage()));
             return self::FAILURE;
         }
 
         $ca = $config->database()->ca();
 
         if ($ca->metadata()?->certificate !== null && !$this->option('force')) {
-            $this->error('A certificate already exists. Use --force to overwrite.');
+            stdErr(fn () => error('A certificate already exists. Use --force to overwrite.'));
             return self::FAILURE;
         }
 
         $distinguished_name = $this->argument('distinguished_name');
         if (! (new X509)->setDN($distinguished_name)) {
-            $this->error('Invalid distinguished name format.');
+            stdErr(fn () => error('Invalid distinguished name format.'));
             return self::FAILURE;
         }
 
         $serial_number = $this->option('serial-number');
         if ($serial_number !== null) {
             if (! ctype_xdigit($serial_number)) {
-                $this->error('Serial number must be a valid hexadecimal string.');
+                stdErr(fn () => error('Serial number must be a valid hexadecimal string.'));
                 return self::FAILURE;
             }
         } else if($config->certificationAuthority->randomSerialNumbers) {
@@ -71,13 +73,13 @@ class SelfSignedCertificate extends Command
         } else {
             $existingSerial = $ca->metadata()?->certificate?->serial_number;
             $serial_number = $existingSerial !== null
-                ? (new BigInteger($existingSerial, 16))->add(new BigInteger(1))->toHex()
-                : (new BigInteger(1))->toHex();
+                ? new BigInteger($existingSerial, 16)->add(new BigInteger(1))->toHex()
+                : new BigInteger(1)->toHex();
         }
 
         $key_id = $this->argument('key_id');
         if (! $config->database()->keys()->exists($key_id)) {
-            $this->error("Key [{$key_id}] does not exist.");
+            stdErr(fn () => error("Key [{$key_id}] does not exist."));
 
             return self::FAILURE;
         }
@@ -88,7 +90,7 @@ class SelfSignedCertificate extends Command
         try {
             $key = $this->loadPrivateKey($pem);
         } catch (\Exception $e) {
-            $this->error('Failed to load private key: ' . $e->getMessage());
+            stdErr(fn () => error('Failed to load private key: ' . $e->getMessage()));
             return self::FAILURE;
         }
 
@@ -96,7 +98,7 @@ class SelfSignedCertificate extends Command
         if ($path_length_constraint !== null) {
             $path_length_constraint = (int) $path_length_constraint;
             if ($path_length_constraint < 0) {
-                $this->error('Path length constraint must be greater than or equal to zero.');
+                stdErr(fn () => error('Path length constraint must be greater than or equal to zero.'));
                 return self::FAILURE;
             }
         }

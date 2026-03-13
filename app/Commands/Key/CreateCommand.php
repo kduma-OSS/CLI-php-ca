@@ -9,6 +9,8 @@ use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 use phpseclib3\Crypt\RSA;
 
+use function Laravel\Prompts\{error, password};
+
 class CreateCommand extends Command
 {
     use LoadsCaConfiguration;
@@ -34,14 +36,14 @@ class CreateCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            $this->error($e->getMessage());
+            stdErr(fn () => error($e->getMessage()));
             return self::FAILURE;
         }
 
         $id = $this->argument('id');
 
         if($config->database()->keys()->exists($id)) {
-            $this->error("Key with id {$id} already exists");
+            stdErr(fn () => error("Key with id {$id} already exists"));
             return self::FAILURE;
         }
 
@@ -52,13 +54,9 @@ class CreateCommand extends Command
             $password = $this->option('password') ?? false;
 
             if (! $password) {
-                $password = $this->secret('Enter password for private key');
-                if (! $password) {
-                    $this->error('Password cannot be empty');
-                    return self::FAILURE;
-                }
-                if ($password !== $this->secret('Confirm password')) {
-                    $this->error('Passwords do not match');
+                $password = stdErr(fn () => password(label: 'Enter password for private key', required: true));
+                if ($password !== stdErr(fn () => password(label: 'Confirm password', required: true))) {
+                    stdErr(fn () => error('Passwords do not match'));
                     return self::FAILURE;
                 }
             }

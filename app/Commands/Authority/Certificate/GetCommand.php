@@ -7,6 +7,8 @@ use App\Storage\Enums\CaFile;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
+use function Laravel\Prompts\error;
+
 class GetCommand extends Command
 {
     use LoadsCaConfiguration;
@@ -33,7 +35,7 @@ class GetCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            $this->error($e->getMessage());
+            stdErr(fn () => error($e->getMessage()));
             return self::FAILURE;
         }
 
@@ -42,7 +44,7 @@ class GetCommand extends Command
         $content = $ca->getFile(CaFile::Certificate);
 
         if ($content === null) {
-            $this->error('CA certificate not found.');
+            stdErr(fn () => error('CA certificate not found.'));
 
             return self::FAILURE;
         }

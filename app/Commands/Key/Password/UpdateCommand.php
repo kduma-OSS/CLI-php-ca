@@ -8,6 +8,8 @@ use App\Storage\Enums\KeyFile;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
+use function Laravel\Prompts\{error, password};
+
 class UpdateCommand extends Command
 {
     use LoadsCaConfiguration;
@@ -35,14 +37,14 @@ class UpdateCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            $this->error($e->getMessage());
+            stdErr(fn () => error($e->getMessage()));
             return self::FAILURE;
         }
 
         $id = $this->argument('id');
 
         if (! $config->database()->keys()->exists($id)) {
-            $this->error("Key [{$id}] does not exist.");
+            stdErr(fn () => error("Key [{$id}] does not exist."));
             return self::FAILURE;
         }
 
@@ -51,7 +53,7 @@ class UpdateCommand extends Command
         try {
             $privateKey = $this->loadPrivateKey($pem);
         } catch (\Exception $e) {
-            $this->error('Failed to load private key: ' . $e->getMessage());
+            stdErr(fn () => error('Failed to load private key: ' . $e->getMessage()));
             return self::FAILURE;
         }
 
@@ -61,13 +63,9 @@ class UpdateCommand extends Command
             $newPassword = $this->option('new-password') ?? false;
 
             if (! $newPassword) {
-                $newPassword = $this->secret('Enter new password for private key');
-                if (! $newPassword) {
-                    $this->error('Password cannot be empty');
-                    return self::FAILURE;
-                }
-                if ($newPassword !== $this->secret('Confirm new password')) {
-                    $this->error('Passwords do not match');
+                $newPassword = stdErr(fn () => password(label: 'Enter new password for private key', required: true));
+                if ($newPassword !== stdErr(fn () => password(label: 'Confirm new password', required: true))) {
+                    stdErr(fn () => error('Passwords do not match'));
                     return self::FAILURE;
                 }
             }

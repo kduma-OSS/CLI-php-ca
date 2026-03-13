@@ -6,6 +6,8 @@ use App\Commands\Concerns\LoadsCaConfiguration;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
+use function Laravel\Prompts\{error, info};
+
 class ExistsCommand extends Command
 {
     use LoadsCaConfiguration;
@@ -32,16 +34,16 @@ class ExistsCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            $this->error($e->getMessage());
+            stdErr(fn () => error($e->getMessage()));
             return self::FAILURE;
         }
 
         $has = $config->database()->keys()->exists($this->argument('id'));
 
         if ($has) {
-            $this->info('Key exists');
+            stdErr(fn () => info('Key exists'));
         } else {
-            $this->error('Key does not exist');
+            stdErr(fn () => error('Key does not exist'));
         }
 
         return $has ? self::SUCCESS : self::FAILURE;

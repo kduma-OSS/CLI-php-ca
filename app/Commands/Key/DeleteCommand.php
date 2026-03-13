@@ -6,6 +6,8 @@ use App\Commands\Concerns\LoadsCaConfiguration;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
+use function Laravel\Prompts\{error, info, confirm};
+
 class DeleteCommand extends Command
 {
     use LoadsCaConfiguration;
@@ -32,25 +34,25 @@ class DeleteCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            $this->error($e->getMessage());
+            stdErr(fn () => error($e->getMessage()));
             return self::FAILURE;
         }
 
         $id = $this->argument('id');
 
         if (!$config->database()->keys()->exists($id)) {
-            $this->error("Key with id {$id} does not exist");
+            stdErr(fn () => error("Key with id {$id} does not exist"));
             return self::FAILURE;
         }
 
-        if (!$this->option('force') && !$this->confirm("Are you sure you want to delete key '{$id}'?")) {
-            $this->info('Cancelled');
+        if (!$this->option('force') && !stdErr(fn () => confirm("Are you sure you want to delete key '{$id}'?"))) {
+            stdErr(fn () => info('Cancelled'));
             return self::INVALID;
         }
 
         $config->database()->keys()->delete($id);
 
-        $this->info("Key '{$id}' has been deleted");
+        stdErr(fn () => info("Key '{$id}' has been deleted"));
 
         return self::SUCCESS;
     }

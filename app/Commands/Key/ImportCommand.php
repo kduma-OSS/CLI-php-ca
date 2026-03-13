@@ -9,6 +9,8 @@ use App\Storage\Enums\KeyFile;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
+use function Laravel\Prompts\error;
+
 class ImportCommand extends Command
 {
     use LoadsCaConfiguration;
@@ -36,14 +38,14 @@ class ImportCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            $this->error($e->getMessage());
+            stdErr(fn () => error($e->getMessage()));
             return self::FAILURE;
         }
 
         $id = $this->argument('id');
 
         if ($config->database()->keys()->exists($id)) {
-            $this->error("Key with id {$id} already exists");
+            stdErr(fn () => error("Key with id {$id} already exists"));
             return self::FAILURE;
         }
 
@@ -51,7 +53,7 @@ class ImportCommand extends Command
 
         if ($path) {
             if (!file_exists($path)) {
-                $this->error("File not found: {$path}");
+                stdErr(fn () => error("File not found: {$path}"));
                 return self::FAILURE;
             }
             $pem = file_get_contents($path);
@@ -60,14 +62,14 @@ class ImportCommand extends Command
         }
 
         if (!$pem) {
-            $this->error('No PEM data provided');
+            stdErr(fn () => error('No PEM data provided'));
             return self::FAILURE;
         }
 
         try {
             $private_key = $this->loadPrivateKey($pem, $password);
         } catch (\Exception $e) {
-            $this->error('Failed to load private key: ' . $e->getMessage());
+            stdErr(fn () => error('Failed to load private key: ' . $e->getMessage()));
             return self::FAILURE;
         }
 

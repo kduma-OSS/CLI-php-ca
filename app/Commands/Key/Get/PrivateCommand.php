@@ -8,6 +8,8 @@ use App\Storage\Enums\KeyFile;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
+use function Laravel\Prompts\error;
+
 class PrivateCommand extends Command
 {
     use LoadsCaConfiguration;
@@ -35,7 +37,7 @@ class PrivateCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            $this->error($e->getMessage());
+            stdErr(fn () => error($e->getMessage()));
             return self::FAILURE;
         }
 
@@ -44,7 +46,7 @@ class PrivateCommand extends Command
         $content = $repository->getFile($this->argument('id'), KeyFile::PrivateKey);
 
         if ($content === null) {
-            $this->error('Private key not found for ID ['.$this->argument('id').'].');
+            stdErr(fn () => error('Private key not found for ID ['.$this->argument('id').'].'));
 
             return self::FAILURE;
         }
@@ -53,7 +55,7 @@ class PrivateCommand extends Command
             try {
                 $key = $this->loadPrivateKey($content);
             } catch (\Exception $e) {
-                $this->error('Failed to decrypt private key: '.$e->getMessage());
+                stdErr(fn () => error('Failed to decrypt private key: '.$e->getMessage()));
 
                 return self::FAILURE;
             }

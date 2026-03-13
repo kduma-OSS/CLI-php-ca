@@ -7,6 +7,8 @@ use App\Storage\Enums\CaFile;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
+use function Laravel\Prompts\{error, info};
+
 class ExistsCommand extends Command
 {
     use LoadsCaConfiguration;
@@ -20,7 +22,7 @@ class ExistsCommand extends Command
         try {
             $config = $this->getCaConfig();
         } catch (\RuntimeException $e) {
-            $this->error($e->getMessage());
+            stdErr(fn () => error($e->getMessage()));
             return self::FAILURE;
         }
 
@@ -29,9 +31,9 @@ class ExistsCommand extends Command
         $has = $ca->metadata()?->certificate !== null && $ca->hasFile(CaFile::Certificate);
 
         if ($has) {
-            $this->info('Certificate exists');
+            stdErr(fn () => info('Certificate exists'));
         } else {
-            $this->error('Certificate does not exist');
+            stdErr(fn () => error('Certificate does not exist'));
         }
 
         return $has ? self::SUCCESS : self::FAILURE;
