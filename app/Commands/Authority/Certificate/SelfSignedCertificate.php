@@ -7,6 +7,7 @@ use App\Commands\Concerns\LoadsPrivateKey;
 use App\Storage\Entities\CaCertificateDetails;
 use App\Storage\Entities\CaMetadata;
 use App\Storage\Enums\CaFile;
+use App\Support\CertificateFingerprint;
 use App\Storage\Enums\KeyFile;
 use Carbon\CarbonImmutable;
 use Illuminate\Console\Scheduling\Schedule;
@@ -124,12 +125,14 @@ class SelfSignedCertificate extends Command
         $x509->setEndDate($validTo);
         $result = $x509->sign($rootIssuer, $rootSubject);
 
-        $ca->putFile(CaFile::Certificate, $x509->saveX509($result));
+        $certPem = $x509->saveX509($result);
+        $ca->putFile(CaFile::Certificate, $certPem);
         $ca->saveMetadata(new CaMetadata(
             key_id: $key_id,
             certificate: new CaCertificateDetails(
                 serial_number: $serial_number,
                 distinguished_name: $distinguished_name,
+                fingerprint: CertificateFingerprint::compute($certPem),
                 path_length_constraint: $path_length_constraint,
                 valid_from: $validFrom,
                 valid_to: $validTo,

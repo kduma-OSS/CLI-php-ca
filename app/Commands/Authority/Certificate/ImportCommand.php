@@ -6,6 +6,7 @@ use App\Commands\Concerns\LoadsCaConfiguration;
 use App\Storage\Entities\CaCertificateDetails;
 use App\Storage\Entities\CaMetadata;
 use App\Storage\Enums\CaFile;
+use App\Support\CertificateFingerprint;
 use Carbon\CarbonImmutable;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
@@ -106,6 +107,7 @@ class ImportCommand extends Command
             certificate: new CaCertificateDetails(
                 serial_number: $serialNumber,
                 distinguished_name: $dn,
+                fingerprint: CertificateFingerprint::compute($pem),
                 path_length_constraint: $pathLengthConstraint,
                 valid_from: $validFrom,
                 valid_to: $validTo,
