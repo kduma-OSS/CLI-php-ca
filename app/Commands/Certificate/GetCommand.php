@@ -13,7 +13,7 @@ class GetCommand extends Command
 {
     use LoadsCaConfiguration;
 
-    protected $signature = 'certificate:get {id} {--ca= : Configuration file}';
+    protected $signature = 'certificate:get {id?} {--ca= : Configuration file}';
 
     protected $description = 'Get issued certificate in PEM format';
 
@@ -27,7 +27,13 @@ class GetCommand extends Command
             return self::FAILURE;
         }
 
-        $id = $this->argument('id');
+        $id = $this->argument('id') ?? trim(file_get_contents('php://stdin'));
+
+        if (! $id) {
+            stdErr(fn () => error('No certificate ID provided.'));
+
+            return self::FAILURE;
+        }
         $content = $config->database()->certificates()->getFile($id, CertificateFile::Certificate);
 
         if ($content === null) {
