@@ -1,5 +1,8 @@
-/vendor
-/.idea
-/.vscode
-/.vagrant
+/vendor/
+*/vendor/
+composer.lock
+.phpunit.cache
 .phpunit.result.cache
+.php-cs-fixer.cache
+.DS_Store
+.idea

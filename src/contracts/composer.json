@@ -1,0 +1,33 @@
+{
+    "name": "kduma/php-ca-contracts",
+    "description": "PHP Certification Authority - Contracts",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "kduma",
+        "certificate-authority",
+        "ca",
+        "pki",
+        "contracts"
+    ],
+    "homepage": "https://github.com/kduma-OSS/PHP-CA",
+    "authors": [
+        {
+            "name": "Krystian Duma",
+            "email": "git@krystian.duma.sh"
+        }
+    ],
+    "require": {
+        "php": "^8.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "KDuma\\PhpCA\\Contracts\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}

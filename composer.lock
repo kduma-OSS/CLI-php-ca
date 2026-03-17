@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "430ca8d90f0d563a76e8d483ae41b908",
+    "content-hash": "f329fe2cfa71dd4d1f97d179531184d2",
     "packages": [
         {
             "name": "brick/math",
@@ -750,7 +750,7 @@
         },
         {
             "name": "illuminate/bus",
-            "version": "v12.54.1",
+            "version": "v12.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/bus.git",
@@ -803,16 +803,16 @@
         },
         {
             "name": "illuminate/cache",
-            "version": "v12.54.1",
+            "version": "v12.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/cache.git",
-                "reference": "c810faec9626d0d373614438be6aa532d7a0cf74"
+                "reference": "4be8526904a50c37272d11e5969aae5e77cfc85c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/cache/zipball/c810faec9626d0d373614438be6aa532d7a0cf74",
-                "reference": "c810faec9626d0d373614438be6aa532d7a0cf74",
+                "url": "https://api.github.com/repos/illuminate/cache/zipball/4be8526904a50c37272d11e5969aae5e77cfc85c",
+                "reference": "4be8526904a50c37272d11e5969aae5e77cfc85c",
                 "shasum": ""
             },
             "require": {
@@ -861,20 +861,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-03-10T13:53:55+00:00"
+            "time": "2026-03-17T13:42:38+00:00"
         },
         {
             "name": "illuminate/collections",
-            "version": "v12.54.1",
+            "version": "v12.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
-                "reference": "86f874536cbda5f35c23a9908ee7f176caa4496e"
+                "reference": "83313b009c4afb6f02dbc090bdb67809756eefa2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/collections/zipball/86f874536cbda5f35c23a9908ee7f176caa4496e",
-                "reference": "86f874536cbda5f35c23a9908ee7f176caa4496e",
+                "url": "https://api.github.com/repos/illuminate/collections/zipball/83313b009c4afb6f02dbc090bdb67809756eefa2",
+                "reference": "83313b009c4afb6f02dbc090bdb67809756eefa2",
                 "shasum": ""
             },
             "require": {
@@ -921,11 +921,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-02-25T15:25:18+00:00"
+            "time": "2026-03-11T14:13:25+00:00"
         },
         {
             "name": "illuminate/conditionable",
-            "version": "v12.54.1",
+            "version": "v12.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/conditionable.git",
@@ -971,7 +971,7 @@
         },
         {
             "name": "illuminate/config",
-            "version": "v12.54.1",
+            "version": "v12.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/config.git",
@@ -1019,16 +1019,16 @@
         },
         {
             "name": "illuminate/console",
-            "version": "v12.54.1",
+            "version": "v12.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/console.git",
-                "reference": "2e5ce11e5251b75d353b3bab9c299fe789ad164d"
+                "reference": "55508f214a538599235935fa018824900f68b5bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/console/zipball/2e5ce11e5251b75d353b3bab9c299fe789ad164d",
-                "reference": "2e5ce11e5251b75d353b3bab9c299fe789ad164d",
+                "url": "https://api.github.com/repos/illuminate/console/zipball/55508f214a538599235935fa018824900f68b5bb",
+                "reference": "55508f214a538599235935fa018824900f68b5bb",
                 "shasum": ""
             },
             "require": {
@@ -1081,20 +1081,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-03-05T15:53:28+00:00"
+            "time": "2026-03-14T17:21:24+00:00"
         },
         {
             "name": "illuminate/container",
-            "version": "v12.54.1",
+            "version": "v12.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
-                "reference": "648307e8f54bcd9450c858f99abd11bc50c364a0"
+                "reference": "9abe9dba6b3f5220205ce143069c975a601e4294"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/container/zipball/648307e8f54bcd9450c858f99abd11bc50c364a0",
-                "reference": "648307e8f54bcd9450c858f99abd11bc50c364a0",
+                "url": "https://api.github.com/repos/illuminate/container/zipball/9abe9dba6b3f5220205ce143069c975a601e4294",
+                "reference": "9abe9dba6b3f5220205ce143069c975a601e4294",
                 "shasum": ""
             },
             "require": {
@@ -1143,11 +1143,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-02-12T16:13:27+00:00"
+            "time": "2026-03-16T14:05:01+00:00"
         },
         {
             "name": "illuminate/contracts",
-            "version": "v12.54.1",
+            "version": "v12.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -1195,7 +1195,7 @@
         },
         {
             "name": "illuminate/events",
-            "version": "v12.54.1",
+            "version": "v12.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/events.git",
@@ -1250,7 +1250,7 @@
         },
         {
             "name": "illuminate/filesystem",
-            "version": "v12.54.1",
+            "version": "v12.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/filesystem.git",
@@ -1317,7 +1317,7 @@
         },
         {
             "name": "illuminate/macroable",
-            "version": "v12.54.1",
+            "version": "v12.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -1363,7 +1363,7 @@
         },
         {
             "name": "illuminate/pipeline",
-            "version": "v12.54.1",
+            "version": "v12.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/pipeline.git",
@@ -1415,7 +1415,7 @@
         },
         {
             "name": "illuminate/process",
-            "version": "v12.54.1",
+            "version": "v12.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/process.git",
@@ -1466,7 +1466,7 @@
         },
         {
             "name": "illuminate/reflection",
-            "version": "v12.54.1",
+            "version": "v12.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/reflection.git",
@@ -1517,16 +1517,16 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v12.54.1",
+            "version": "v12.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "e54208c0b5693becd8d3bec02f07e8db9aa4f512"
+                "reference": "cd8a3c5a95501b9ae0828ac785b5af5ffccdca45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/e54208c0b5693becd8d3bec02f07e8db9aa4f512",
-                "reference": "e54208c0b5693becd8d3bec02f07e8db9aa4f512",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/cd8a3c5a95501b9ae0828ac785b5af5ffccdca45",
+                "reference": "cd8a3c5a95501b9ae0828ac785b5af5ffccdca45",
                 "shasum": ""
             },
             "require": {
@@ -1593,11 +1593,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-03-06T15:24:01+00:00"
+            "time": "2026-03-17T13:55:49+00:00"
         },
         {
             "name": "illuminate/testing",
-            "version": "v12.54.1",
+            "version": "v12.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/testing.git",
@@ -1657,16 +1657,16 @@
         },
         {
             "name": "illuminate/view",
-            "version": "v12.54.1",
+            "version": "v12.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/view.git",
-                "reference": "68462e6ad63df8c4343cccab5379f5929988542d"
+                "reference": "03ed552cf1d9a3e424750c760244b46e0cefda4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/view/zipball/68462e6ad63df8c4343cccab5379f5929988542d",
-                "reference": "68462e6ad63df8c4343cccab5379f5929988542d",
+                "url": "https://api.github.com/repos/illuminate/view/zipball/03ed552cf1d9a3e424750c760244b46e0cefda4a",
+                "reference": "03ed552cf1d9a3e424750c760244b46e0cefda4a",
                 "shasum": ""
             },
             "require": {
@@ -1707,7 +1707,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-02-25T15:25:18+00:00"
+            "time": "2026-03-17T13:09:53+00:00"
         },
         {
             "name": "jolicode/jolinotif",
@@ -1825,6 +1825,531 @@
                 "source": "https://github.com/jolicode/php-os-helper/tree/v0.1.0"
             },
             "time": "2023-12-03T12:46:03+00:00"
+        },
+        {
+            "name": "kduma/binary-tools",
+            "version": "v0.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kduma-OSS/PHP-binary-tools.git",
+                "reference": "bd839a17521947039f9dfbb7c21a0e96755ea446"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kduma-OSS/PHP-binary-tools/zipball/bd839a17521947039f9dfbb7c21a0e96755ea446",
+                "reference": "bd839a17521947039f9dfbb7c21a0e96755ea446",
+                "shasum": ""
+            },
+            "require": {
+                "ext-hash": "*",
+                "ext-mbstring": "*",
+                "php": "^8.4"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.18",
+                "phpunit/phpunit": "^11.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "KDuma\\BinaryTools\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "kduma",
+                    "email": "kduma@users.noreply.github.com"
+                }
+            ],
+            "description": "PHP library for binary data manipulation and encoding/decoding tools",
+            "homepage": "https://opensource.duma.sh/libraries/php/binary-tools",
+            "support": {
+                "issues": "https://github.com/kduma-OSS/PHP-binary-tools/issues",
+                "source": "https://github.com/kduma-OSS/PHP-binary-tools/tree/v0.0.4"
+            },
+            "time": "2025-09-18T19:35:19+00:00"
+        },
+        {
+            "name": "kduma/simple-dal",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kduma-OSS-splits/PHP-simple-dal.git",
+                "reference": "4a0a255eb0d01fd62e7bd42c240a17b8ef0abad6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kduma-OSS-splits/PHP-simple-dal/zipball/4a0a255eb0d01fd62e7bd42c240a17b8ef0abad6",
+                "reference": "4a0a255eb0d01fd62e7bd42c240a17b8ef0abad6",
+                "shasum": ""
+            },
+            "require": {
+                "kduma/simple-dal-adapter-contracts": "^0.1.0",
+                "kduma/simple-dal-contracts": "^0.1.0",
+                "php": "^8.4"
+            },
+            "require-dev": {
+                "pestphp/pest": "^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "KDuma\\SimpleDAL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "kduma",
+                    "email": "kduma@users.noreply.github.com"
+                }
+            ],
+            "description": "Simple DAL - Core library",
+            "homepage": "https://opensource.duma.sh/libraries/php/simple-dal",
+            "keywords": [
+                "Simple-DAL"
+            ],
+            "support": {
+                "source": "https://github.com/kduma-OSS-splits/PHP-simple-dal/tree/v0.1.0"
+            },
+            "time": "2026-03-17T22:10:42+00:00"
+        },
+        {
+            "name": "kduma/simple-dal-adapter-contracts",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kduma-OSS-splits/PHP-simple-dal-adapter-contracts.git",
+                "reference": "f531889cb0ccd7e0fab43eef91157a47acd9574e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kduma-OSS-splits/PHP-simple-dal-adapter-contracts/zipball/f531889cb0ccd7e0fab43eef91157a47acd9574e",
+                "reference": "f531889cb0ccd7e0fab43eef91157a47acd9574e",
+                "shasum": ""
+            },
+            "require": {
+                "kduma/simple-dal-contracts": "^0.1.0",
+                "php": "^8.4"
+            },
+            "require-dev": {
+                "pestphp/pest": "^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "KDuma\\SimpleDAL\\Adapter\\Contracts\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "kduma",
+                    "email": "kduma@users.noreply.github.com"
+                }
+            ],
+            "description": "Simple DAL - Adapter SPI contracts and conformance tests",
+            "homepage": "https://opensource.duma.sh/libraries/php/simple-dal",
+            "keywords": [
+                "Simple-DAL",
+                "Simple-DAL-adapter"
+            ],
+            "support": {
+                "source": "https://github.com/kduma-OSS-splits/PHP-simple-dal-adapter-contracts/tree/v0.1.0"
+            },
+            "time": "2026-03-17T22:10:37+00:00"
+        },
+        {
+            "name": "kduma/simple-dal-contracts",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kduma-OSS-splits/PHP-simple-dal-contracts.git",
+                "reference": "dd151f23e1a31c687ea8ea9b2e35b5f992ee9079"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kduma-OSS-splits/PHP-simple-dal-contracts/zipball/dd151f23e1a31c687ea8ea9b2e35b5f992ee9079",
+                "reference": "dd151f23e1a31c687ea8ea9b2e35b5f992ee9079",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "KDuma\\SimpleDAL\\Contracts\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "kduma",
+                    "email": "kduma@users.noreply.github.com"
+                }
+            ],
+            "description": "Simple DAL - Contracts and interfaces",
+            "homepage": "https://opensource.duma.sh/libraries/php/simple-dal",
+            "keywords": [
+                "Simple-DAL"
+            ],
+            "support": {
+                "source": "https://github.com/kduma-OSS-splits/PHP-simple-dal-contracts/tree/v0.1.0"
+            },
+            "time": "2026-03-17T12:13:21+00:00"
+        },
+        {
+            "name": "kduma/simple-dal-encryption",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kduma-OSS-splits/PHP-simple-dal-encryption.git",
+                "reference": "3e1277f019cf800622a15e11a30846ab3f908b1e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kduma-OSS-splits/PHP-simple-dal-encryption/zipball/3e1277f019cf800622a15e11a30846ab3f908b1e",
+                "reference": "3e1277f019cf800622a15e11a30846ab3f908b1e",
+                "shasum": ""
+            },
+            "require": {
+                "kduma/binary-tools": "^0.0.4",
+                "kduma/simple-dal-adapter-contracts": "^0.1.0",
+                "kduma/simple-dal-encryption-contracts": "^0.1.0",
+                "php": "^8.4"
+            },
+            "require-dev": {
+                "pestphp/pest": "^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "KDuma\\SimpleDAL\\Encryption\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "kduma",
+                    "email": "kduma@users.noreply.github.com"
+                }
+            ],
+            "description": "Simple DAL - Selective attachment encryption plugin",
+            "homepage": "https://opensource.duma.sh/libraries/php/simple-dal",
+            "keywords": [
+                "Simple-DAL",
+                "Simple-DAL-plugin"
+            ],
+            "support": {
+                "source": "https://github.com/kduma-OSS-splits/PHP-simple-dal-encryption/tree/v0.1.0"
+            },
+            "time": "2026-03-17T22:10:39+00:00"
+        },
+        {
+            "name": "kduma/simple-dal-encryption-contracts",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kduma-OSS-splits/PHP-simple-dal-encryption-contracts.git",
+                "reference": "edfe6a41af86cccb61ddd9f96a124279b49482dd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kduma-OSS-splits/PHP-simple-dal-encryption-contracts/zipball/edfe6a41af86cccb61ddd9f96a124279b49482dd",
+                "reference": "edfe6a41af86cccb61ddd9f96a124279b49482dd",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "KDuma\\SimpleDAL\\Encryption\\Contracts\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "kduma",
+                    "email": "kduma@users.noreply.github.com"
+                }
+            ],
+            "description": "Simple DAL - Encryption key contracts and interfaces",
+            "homepage": "https://opensource.duma.sh/libraries/php/simple-dal",
+            "keywords": [
+                "Simple-DAL",
+                "Simple-DAL-plugin"
+            ],
+            "support": {
+                "source": "https://github.com/kduma-OSS-splits/PHP-simple-dal-encryption-contracts/tree/v0.1.0"
+            },
+            "time": "2026-03-17T12:13:22+00:00"
+        },
+        {
+            "name": "kduma/simple-dal-encryption-phpseclib",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kduma-OSS-splits/PHP-simple-dal-encryption-phpseclib.git",
+                "reference": "4cef7ad327b8eb672345f6f6f87567203abb650b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kduma-OSS-splits/PHP-simple-dal-encryption-phpseclib/zipball/4cef7ad327b8eb672345f6f6f87567203abb650b",
+                "reference": "4cef7ad327b8eb672345f6f6f87567203abb650b",
+                "shasum": ""
+            },
+            "require": {
+                "kduma/simple-dal-encryption-contracts": "^0.1.0",
+                "php": "^8.4",
+                "phpseclib/phpseclib": "^3.0"
+            },
+            "require-dev": {
+                "pestphp/pest": "^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "KDuma\\SimpleDAL\\Encryption\\PhpSecLib\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "kduma",
+                    "email": "kduma@users.noreply.github.com"
+                }
+            ],
+            "description": "Simple DAL - phpseclib3 encryption key implementations (RSA, AES)",
+            "homepage": "https://opensource.duma.sh/libraries/php/simple-dal",
+            "keywords": [
+                "Simple-DAL",
+                "Simple-DAL-plugin"
+            ],
+            "support": {
+                "source": "https://github.com/kduma-OSS-splits/PHP-simple-dal-encryption-phpseclib/tree/v0.1.0"
+            },
+            "time": "2026-03-17T22:10:42+00:00"
+        },
+        {
+            "name": "kduma/simple-dal-flysystem-adapter",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kduma-OSS-splits/PHP-simple-dal-flysystem-adapter.git",
+                "reference": "4ceb935b42340520feb62b511081acccd13b994c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kduma-OSS-splits/PHP-simple-dal-flysystem-adapter/zipball/4ceb935b42340520feb62b511081acccd13b994c",
+                "reference": "4ceb935b42340520feb62b511081acccd13b994c",
+                "shasum": ""
+            },
+            "require": {
+                "kduma/simple-dal-adapter-contracts": "^0.1.0",
+                "league/flysystem": "^3.0",
+                "php": "^8.4"
+            },
+            "require-dev": {
+                "kduma/simple-dal": "^0.1.0",
+                "pestphp/pest": "^3.0"
+            },
+            "suggest": {
+                "league/flysystem-ziparchive": "For ZIP archive storage"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "KDuma\\SimpleDAL\\Adapter\\Flysystem\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "kduma",
+                    "email": "kduma@users.noreply.github.com"
+                }
+            ],
+            "description": "Simple DAL - Flysystem adapter (local, ZIP, S3, etc.)",
+            "homepage": "https://opensource.duma.sh/libraries/php/simple-dal",
+            "keywords": [
+                "Simple-DAL",
+                "Simple-DAL-adapter"
+            ],
+            "support": {
+                "source": "https://github.com/kduma-OSS-splits/PHP-simple-dal-flysystem-adapter/tree/v0.1.0"
+            },
+            "time": "2026-03-17T22:10:43+00:00"
+        },
+        {
+            "name": "kduma/simple-dal-typed",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kduma-OSS-splits/PHP-simple-dal-typed.git",
+                "reference": "29282c9d4ec702fa9168b79841ab022649f7a6c2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kduma-OSS-splits/PHP-simple-dal-typed/zipball/29282c9d4ec702fa9168b79841ab022649f7a6c2",
+                "reference": "29282c9d4ec702fa9168b79841ab022649f7a6c2",
+                "shasum": ""
+            },
+            "require": {
+                "kduma/simple-dal": "^0.1.0",
+                "kduma/simple-dal-adapter-contracts": "^0.1.0",
+                "kduma/simple-dal-contracts": "^0.1.0",
+                "kduma/simple-dal-typed-contracts": "^0.1.0",
+                "php": "^8.4",
+                "spatie/php-attribute-reader": "^1.0"
+            },
+            "require-dev": {
+                "kduma/simple-dal-db-adapter": "^0.1.0",
+                "pestphp/pest": "^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "KDuma\\SimpleDAL\\Typed\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "kduma",
+                    "email": "kduma@users.noreply.github.com"
+                }
+            ],
+            "description": "Simple DAL - Typed Records plugin with auto-mapping and converters",
+            "homepage": "https://opensource.duma.sh/libraries/php/simple-dal",
+            "keywords": [
+                "Simple-DAL",
+                "Simple-DAL-plugin"
+            ],
+            "support": {
+                "source": "https://github.com/kduma-OSS-splits/PHP-simple-dal-typed/tree/v0.1.0"
+            },
+            "time": "2026-03-17T22:10:37+00:00"
+        },
+        {
+            "name": "kduma/simple-dal-typed-contracts",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kduma-OSS-splits/PHP-simple-dal-typed-contracts.git",
+                "reference": "0e0beb514ce1664b9b54a3e570353d770794de1d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kduma-OSS-splits/PHP-simple-dal-typed-contracts/zipball/0e0beb514ce1664b9b54a3e570353d770794de1d",
+                "reference": "0e0beb514ce1664b9b54a3e570353d770794de1d",
+                "shasum": ""
+            },
+            "require": {
+                "kduma/simple-dal-contracts": "^0.1.0",
+                "php": "^8.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "KDuma\\SimpleDAL\\Typed\\Contracts\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "kduma",
+                    "email": "kduma@users.noreply.github.com"
+                }
+            ],
+            "description": "Simple DAL - Typed Records plugin contracts and interfaces",
+            "homepage": "https://opensource.duma.sh/libraries/php/simple-dal",
+            "keywords": [
+                "Simple-DAL",
+                "Simple-DAL-plugin"
+            ],
+            "support": {
+                "source": "https://github.com/kduma-OSS-splits/PHP-simple-dal-typed-contracts/tree/v0.1.0"
+            },
+            "time": "2026-03-17T22:10:46+00:00"
         },
         {
             "name": "laravel-zero/foundation",
@@ -2002,16 +2527,16 @@
         },
         {
             "name": "laravel/prompts",
-            "version": "v0.3.14",
+            "version": "v0.3.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/prompts.git",
-                "reference": "9f0e371244eedfe2ebeaa72c79c54bb5df6e0176"
+                "reference": "4bb8107ec97651fd3f17f897d6489dbc4d8fb999"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/prompts/zipball/9f0e371244eedfe2ebeaa72c79c54bb5df6e0176",
-                "reference": "9f0e371244eedfe2ebeaa72c79c54bb5df6e0176",
+                "url": "https://api.github.com/repos/laravel/prompts/zipball/4bb8107ec97651fd3f17f897d6489dbc4d8fb999",
+                "reference": "4bb8107ec97651fd3f17f897d6489dbc4d8fb999",
                 "shasum": ""
             },
             "require": {
@@ -2055,9 +2580,9 @@
             "description": "Add beautiful and user-friendly forms to your command-line applications.",
             "support": {
                 "issues": "https://github.com/laravel/prompts/issues",
-                "source": "https://github.com/laravel/prompts/tree/v0.3.14"
+                "source": "https://github.com/laravel/prompts/tree/v0.3.15"
             },
-            "time": "2026-03-01T09:02:38+00:00"
+            "time": "2026-03-17T13:45:17+00:00"
         },
         {
             "name": "league/flysystem",
@@ -2730,6 +3255,125 @@
             "time": "2026-02-16T23:10:27+00:00"
         },
         {
+            "name": "paragonie/constant_time_encoding",
+            "version": "v3.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paragonie/constant_time_encoding.git",
+                "reference": "d5b01a39b3415c2cd581d3bd3a3575c1ebbd8e77"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/d5b01a39b3415c2cd581d3bd3a3575c1ebbd8e77",
+                "reference": "d5b01a39b3415c2cd581d3bd3a3575c1ebbd8e77",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8"
+            },
+            "require-dev": {
+                "infection/infection": "^0",
+                "nikic/php-fuzzer": "^0",
+                "phpunit/phpunit": "^9|^10|^11",
+                "vimeo/psalm": "^4|^5|^6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ParagonIE\\ConstantTime\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paragon Initiative Enterprises",
+                    "email": "security@paragonie.com",
+                    "homepage": "https://paragonie.com",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Steve 'Sc00bz' Thomas",
+                    "email": "steve@tobtu.com",
+                    "homepage": "https://www.tobtu.com",
+                    "role": "Original Developer"
+                }
+            ],
+            "description": "Constant-time Implementations of RFC 4648 Encoding (Base-64, Base-32, Base-16)",
+            "keywords": [
+                "base16",
+                "base32",
+                "base32_decode",
+                "base32_encode",
+                "base64",
+                "base64_decode",
+                "base64_encode",
+                "bin2hex",
+                "encoding",
+                "hex",
+                "hex2bin",
+                "rfc4648"
+            ],
+            "support": {
+                "email": "info@paragonie.com",
+                "issues": "https://github.com/paragonie/constant_time_encoding/issues",
+                "source": "https://github.com/paragonie/constant_time_encoding"
+            },
+            "time": "2025-09-24T15:06:41+00:00"
+        },
+        {
+            "name": "paragonie/random_compat",
+            "version": "v9.99.100",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paragonie/random_compat.git",
+                "reference": "996434e5492cb4c3edcb9168db6fbb1359ef965a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/996434e5492cb4c3edcb9168db6fbb1359ef965a",
+                "reference": "996434e5492cb4c3edcb9168db6fbb1359ef965a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 7"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*|5.*",
+                "vimeo/psalm": "^1"
+            },
+            "suggest": {
+                "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paragon Initiative Enterprises",
+                    "email": "security@paragonie.com",
+                    "homepage": "https://paragonie.com"
+                }
+            ],
+            "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
+            "keywords": [
+                "csprng",
+                "polyfill",
+                "pseudorandom",
+                "random"
+            ],
+            "support": {
+                "email": "info@paragonie.com",
+                "issues": "https://github.com/paragonie/random_compat/issues",
+                "source": "https://github.com/paragonie/random_compat"
+            },
+            "time": "2020-10-15T08:29:30+00:00"
+        },
+        {
             "name": "phpoption/phpoption",
             "version": "1.9.5",
             "source": {
@@ -2803,6 +3447,116 @@
                 }
             ],
             "time": "2025-12-27T19:41:33+00:00"
+        },
+        {
+            "name": "phpseclib/phpseclib",
+            "version": "3.0.49",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpseclib/phpseclib.git",
+                "reference": "6233a1e12584754e6b5daa69fe1289b47775c1b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/6233a1e12584754e6b5daa69fe1289b47775c1b9",
+                "reference": "6233a1e12584754e6b5daa69fe1289b47775c1b9",
+                "shasum": ""
+            },
+            "require": {
+                "paragonie/constant_time_encoding": "^1|^2|^3",
+                "paragonie/random_compat": "^1.4|^2.0|^9.99.99",
+                "php": ">=5.6.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "suggest": {
+                "ext-dom": "Install the DOM extension to load XML formatted public keys.",
+                "ext-gmp": "Install the GMP (GNU Multiple Precision) extension in order to speed up arbitrary precision integer arithmetic operations.",
+                "ext-libsodium": "SSH2/SFTP can make use of some algorithms provided by the libsodium-php extension.",
+                "ext-mcrypt": "Install the Mcrypt extension in order to speed up a few other cryptographic operations.",
+                "ext-openssl": "Install the OpenSSL extension in order to speed up a wide variety of cryptographic operations."
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "phpseclib/bootstrap.php"
+                ],
+                "psr-4": {
+                    "phpseclib3\\": "phpseclib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jim Wigginton",
+                    "email": "terrafrost@php.net",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Patrick Monnerat",
+                    "email": "pm@datasphere.ch",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Andreas Fischer",
+                    "email": "bantu@phpbb.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Hans-Jürgen Petrich",
+                    "email": "petrich@tronic-media.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Graham Campbell",
+                    "email": "graham@alt-three.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP Secure Communications Library - Pure-PHP implementations of RSA, AES, SSH2, SFTP, X.509 etc.",
+            "homepage": "http://phpseclib.sourceforge.net",
+            "keywords": [
+                "BigInteger",
+                "aes",
+                "asn.1",
+                "asn1",
+                "blowfish",
+                "crypto",
+                "cryptography",
+                "encryption",
+                "rsa",
+                "security",
+                "sftp",
+                "signature",
+                "signing",
+                "ssh",
+                "twofish",
+                "x.509",
+                "x509"
+            ],
+            "support": {
+                "issues": "https://github.com/phpseclib/phpseclib/issues",
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.49"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/terrafrost",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/phpseclib",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpseclib/phpseclib",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-01-27T09:17:28+00:00"
         },
         {
             "name": "psr/clock",
@@ -3413,6 +4167,64 @@
                 "source": "https://github.com/ramsey/uuid/tree/4.9.2"
             },
             "time": "2025-12-14T04:43:48+00:00"
+        },
+        {
+            "name": "spatie/php-attribute-reader",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/php-attribute-reader.git",
+                "reference": "46e7484d7b51f5b22d672745c541e48c5a385404"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/php-attribute-reader/zipball/46e7484d7b51f5b22d672745c541e48c5a385404",
+                "reference": "46e7484d7b51f5b22d672745c541e48c5a385404",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "pestphp/pest": "^1.0|^2.0|^3.0|^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Attributes\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A clean API for working with PHP attributes",
+            "homepage": "https://github.com/spatie/php-attribute-reader",
+            "keywords": [
+                "attributes",
+                "php-attribute-reader",
+                "reflection",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/php-attribute-reader/issues",
+                "source": "https://github.com/spatie/php-attribute-reader/tree/1.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-02-23T09:01:55+00:00"
         },
         {
             "name": "symfony/clock",
@@ -5755,6 +6567,35 @@
             "time": "2024-05-16T03:13:13+00:00"
         },
         {
+            "name": "monorepo-php/monorepo",
+            "version": "12.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/monorepo-php/monorepo.git",
+                "reference": "7ae8d3a9a20eab57d86ae876843c06e7cb644196"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/monorepo-php/monorepo/zipball/7ae8d3a9a20eab57d86ae876843c06e7cb644196",
+                "reference": "7ae8d3a9a20eab57d86ae876843c06e7cb644196",
+                "shasum": ""
+            },
+            "bin": [
+                "monorepo-builder"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "monorepo-builder phar",
+            "support": {
+                "issues": "https://github.com/monorepo-php/monorepo/issues",
+                "source": "https://github.com/monorepo-php/monorepo/tree/12.5.1"
+            },
+            "time": "2026-02-13T08:24:10+00:00"
+        },
+        {
             "name": "myclabs/deep-copy",
             "version": "1.13.4",
             "source": {
@@ -7341,16 +8182,16 @@
         },
         {
             "name": "sebastian/environment",
-            "version": "8.0.3",
+            "version": "8.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "24a711b5c916efc6d6e62aa65aa2ec98fef77f68"
+                "reference": "7b8842c2d8e85d0c3a5831236bf5869af6ab2a11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/24a711b5c916efc6d6e62aa65aa2ec98fef77f68",
-                "reference": "24a711b5c916efc6d6e62aa65aa2ec98fef77f68",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/7b8842c2d8e85d0c3a5831236bf5869af6ab2a11",
+                "reference": "7b8842c2d8e85d0c3a5831236bf5869af6ab2a11",
                 "shasum": ""
             },
             "require": {
@@ -7393,7 +8234,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/environment/issues",
                 "security": "https://github.com/sebastianbergmann/environment/security/policy",
-                "source": "https://github.com/sebastianbergmann/environment/tree/8.0.3"
+                "source": "https://github.com/sebastianbergmann/environment/tree/8.0.4"
             },
             "funding": [
                 {
@@ -7413,7 +8254,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-08-12T14:11:56+00:00"
+            "time": "2026-03-15T07:05:40+00:00"
         },
         {
             "name": "sebastian/exporter",
@@ -8175,12 +9016,12 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.2"
+        "php": "^8.4"
     },
     "platform-dev": {},
     "plugin-api-version": "2.9.0"
