@@ -4,13 +4,10 @@
     "type": "library",
     "license": "MIT",
     "keywords": [
-        "kduma",
         "certificate-authority",
-        "ca",
-        "pki",
-        "contracts"
+        "pki"
     ],
-    "homepage": "https://github.com/kduma-OSS/PHP-CA",
+    "homepage": "https://opensource.duma.sh/apps/php-ca",
     "authors": [
         {
             "name": "Krystian Duma",

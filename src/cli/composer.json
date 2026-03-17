@@ -2,13 +2,11 @@
     "name": "kduma/php-ca",
     "description": "PHP Certification Authority - CLI",
     "keywords": [
-        "kduma",
         "certificate-authority",
-        "ca",
         "pki",
         "cli"
     ],
-    "homepage": "https://github.com/kduma-OSS/PHP-CA",
+    "homepage": "https://opensource.duma.sh/apps/php-ca",
     "type": "project",
     "license": "MIT",
     "support": {
