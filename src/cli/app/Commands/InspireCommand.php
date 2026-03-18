@@ -2,13 +2,25 @@
 
 namespace App\Commands;
 
+use App\Concerns\DiscoversConfigurationTrait;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
+use function Laravel\Prompts\error;
+use function Laravel\Prompts\intro;
 use function Termwind\render;
 
 class InspireCommand extends Command
 {
+    use DiscoversConfigurationTrait;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->bootDiscoversConfigurationTrait();
+    }
+
+
     /**
      * The signature of the command.
      *
@@ -26,16 +38,18 @@ class InspireCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle(): void
+    public function handle(): int
     {
-        render(<<<'HTML'
-            <div class="py-1 ml-2">
-                <div class="px-1 bg-blue-300 text-black">Laravel Zero</div>
-                <em class="ml-1">
-                  Simplicity is the ultimate sophistication.
-                </em>
-            </div>
-        HTML);
+        try {
+            $path = $this->getCaConfigPath();
+        } catch (\InvalidArgumentException $e) {
+            error($e->getMessage());
+            return self::FAILURE;
+        }
+
+        intro($path);
+
+        return self::SUCCESS;
     }
 
     /**
