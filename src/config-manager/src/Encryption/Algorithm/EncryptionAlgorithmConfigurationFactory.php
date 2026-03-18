@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace KDuma\PhpCA\ConfigManager\Encryption\Algorithm;
 
 use InvalidArgumentException;
+use KDuma\PhpCA\ConfigManager\ConfigManagerRegistry;
 use KDuma\PhpCA\ConfigManager\Encryption\Algorithm\Attributes\EncryptionAlgorithmConfiguration;
 use LogicException;
-use olvlvl\ComposerAttributeCollector\Attributes;
+use Spatie\Attributes\Attributes;
 
 class EncryptionAlgorithmConfigurationFactory
 {
@@ -16,13 +17,7 @@ class EncryptionAlgorithmConfigurationFactory
      */
     public function getTypes(): array
     {
-        $types = [];
-
-        foreach (Attributes::findTargetClasses(EncryptionAlgorithmConfiguration::class) as $target) {
-            $types[$target->attribute->type] = $target->name;
-        }
-
-        return $types;
+        return ConfigManagerRegistry::getEncryptionAlgorithmTypes();
     }
 
     public function fromArray(array $data, string $basePath): BaseEncryptionAlgorithmConfiguration
@@ -47,12 +42,10 @@ class EncryptionAlgorithmConfigurationFactory
      */
     public static function getTypeForClass(string $class): string
     {
-        $attrs = Attributes::forClass($class);
+        $attr = Attributes::get($class, EncryptionAlgorithmConfiguration::class);
 
-        foreach ($attrs->classAttributes as $attr) {
-            if ($attr instanceof EncryptionAlgorithmConfiguration) {
-                return $attr->type;
-            }
+        if ($attr !== null) {
+            return $attr->type;
         }
 
         throw new LogicException("Missing #[EncryptionAlgorithmConfiguration] attribute on {$class}.");

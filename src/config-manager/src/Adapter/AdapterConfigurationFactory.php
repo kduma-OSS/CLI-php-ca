@@ -6,8 +6,9 @@ namespace KDuma\PhpCA\ConfigManager\Adapter;
 
 use InvalidArgumentException;
 use KDuma\PhpCA\ConfigManager\Adapter\Attributes\AdapterConfiguration;
+use KDuma\PhpCA\ConfigManager\ConfigManagerRegistry;
 use LogicException;
-use olvlvl\ComposerAttributeCollector\Attributes;
+use Spatie\Attributes\Attributes;
 
 class AdapterConfigurationFactory
 {
@@ -16,13 +17,7 @@ class AdapterConfigurationFactory
      */
     public function getAdapterTypes(): array
     {
-        $types = [];
-
-        foreach (Attributes::findTargetClasses(AdapterConfiguration::class) as $target) {
-            $types[$target->attribute->type] = $target->name;
-        }
-
-        return $types;
+        return ConfigManagerRegistry::getAdapterTypes();
     }
 
     public function fromArray(array $data, string $basePath): BaseAdapterConfiguration
@@ -49,12 +44,10 @@ class AdapterConfigurationFactory
      */
     public static function getTypeForClass(string $class): string
     {
-        $attrs = Attributes::forClass($class);
+        $attr = Attributes::get($class, AdapterConfiguration::class);
 
-        foreach ($attrs->classAttributes as $attr) {
-            if ($attr instanceof AdapterConfiguration) {
-                return $attr->type;
-            }
+        if ($attr !== null) {
+            return $attr->type;
         }
 
         throw new LogicException("Missing #[AdapterConfiguration] attribute on {$class}.");

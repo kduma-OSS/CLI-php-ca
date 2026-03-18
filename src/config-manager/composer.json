@@ -29,8 +29,8 @@
         "kduma/simple-dal-flysystem-adapter": "^0.1",
         "league/flysystem": "^3.0",
         "league/flysystem-ziparchive": "^3.0",
-        "olvlvl/composer-attribute-collector": "^2.0",
-        "phpseclib/phpseclib": "^3.0"
+        "phpseclib/phpseclib": "^3.0",
+        "spatie/php-attribute-reader": "^1.0"
     },
     "require-dev": {
         "pestphp/pest": "^3.0|^4.0"
@@ -52,7 +52,6 @@
     },
     "config": {
         "allow-plugins": {
-            "olvlvl/composer-attribute-collector": true,
             "pestphp/pest-plugin": true
         }
     }

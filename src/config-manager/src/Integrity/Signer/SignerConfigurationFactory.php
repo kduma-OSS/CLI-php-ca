@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace KDuma\PhpCA\ConfigManager\Integrity\Signer;
 
 use InvalidArgumentException;
+use KDuma\PhpCA\ConfigManager\ConfigManagerRegistry;
 use KDuma\PhpCA\ConfigManager\Integrity\Signer\Attributes\SignerConfiguration;
 use LogicException;
-use olvlvl\ComposerAttributeCollector\Attributes;
+use Spatie\Attributes\Attributes;
 
 class SignerConfigurationFactory
 {
@@ -16,13 +17,7 @@ class SignerConfigurationFactory
      */
     public function getTypes(): array
     {
-        $types = [];
-
-        foreach (Attributes::findTargetClasses(SignerConfiguration::class) as $target) {
-            $types[$target->attribute->type] = $target->name;
-        }
-
-        return $types;
+        return ConfigManagerRegistry::getSignerTypes();
     }
 
     public function fromArray(array $data, string $basePath): BaseSignerConfiguration
@@ -47,12 +42,10 @@ class SignerConfigurationFactory
      */
     public static function getTypeForClass(string $class): string
     {
-        $attrs = Attributes::forClass($class);
+        $attr = Attributes::get($class, SignerConfiguration::class);
 
-        foreach ($attrs->classAttributes as $attr) {
-            if ($attr instanceof SignerConfiguration) {
-                return $attr->type;
-            }
+        if ($attr !== null) {
+            return $attr->type;
         }
 
         throw new LogicException("Missing #[SignerConfiguration] attribute on {$class}.");

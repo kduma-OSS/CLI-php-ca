@@ -53,7 +53,7 @@ it('creates FileValueProvider with resolved path', function () {
 it('throws on unknown type', function () {
     $factory = new ValueProviderFactory();
     $factory->fromArray(['type' => 'vault'], '/base');
-})->throws(InvalidArgumentException::class, 'Unknown key discovery type "vault"');
+})->throws(InvalidArgumentException::class, 'Unknown value provider type "vault"');
 
 it('round-trips string key discovery to plain string', function () {
     $factory = new ValueProviderFactory();

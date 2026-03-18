@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace KDuma\PhpCA\ConfigManager\Integrity\Hasher;
 
 use InvalidArgumentException;
+use KDuma\PhpCA\ConfigManager\ConfigManagerRegistry;
 use KDuma\PhpCA\ConfigManager\Integrity\Hasher\Attributes\HasherConfiguration;
 use LogicException;
-use olvlvl\ComposerAttributeCollector\Attributes;
+use Spatie\Attributes\Attributes;
 
 class HasherConfigurationFactory
 {
@@ -16,13 +17,7 @@ class HasherConfigurationFactory
      */
     public function getTypes(): array
     {
-        $types = [];
-
-        foreach (Attributes::findTargetClasses(HasherConfiguration::class) as $target) {
-            $types[$target->attribute->type] = $target->name;
-        }
-
-        return $types;
+        return ConfigManagerRegistry::getHasherTypes();
     }
 
     public function fromArray(array $data): BaseHasherConfiguration
@@ -47,12 +42,10 @@ class HasherConfigurationFactory
      */
     public static function getTypeForClass(string $class): string
     {
-        $attrs = Attributes::forClass($class);
+        $attr = Attributes::get($class, HasherConfiguration::class);
 
-        foreach ($attrs->classAttributes as $attr) {
-            if ($attr instanceof HasherConfiguration) {
-                return $attr->type;
-            }
+        if ($attr !== null) {
+            return $attr->type;
         }
 
         throw new LogicException("Missing #[HasherConfiguration] attribute on {$class}.");
