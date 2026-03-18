@@ -25,6 +25,8 @@ jobs:
             split_repository: 'PHP-CA-contracts'
           - local_path: 'src/library'
             split_repository: 'PHP-CA-library'
+          - local_path: 'src/config-manager'
+            split_repository: 'PHP-CA-config-manager'
           - local_path: 'src/cli'
             split_repository: 'CLI-PHP-CA'
 

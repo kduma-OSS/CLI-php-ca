@@ -9,6 +9,9 @@
         <testsuite name="Library">
             <directory>src/library/tests</directory>
         </testsuite>
+        <testsuite name="ConfigManager">
+            <directory>src/config-manager/tests</directory>
+        </testsuite>
         <testsuite name="CLI">
             <directory>src/cli/tests</directory>
         </testsuite>
@@ -16,6 +19,7 @@
     <source>
         <include>
             <directory>src/library/src</directory>
+            <directory>src/config-manager/src</directory>
             <directory>src/cli/app</directory>
         </include>
     </source>

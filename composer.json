@@ -36,6 +36,7 @@
     },
     "replace": {
         "kduma/php-ca": "self.version",
+        "kduma/php-ca-config-manager": "self.version",
         "kduma/php-ca-contracts": "self.version",
         "kduma/php-ca-lib": "self.version"
     },
@@ -43,11 +44,13 @@
         "psr-4": {
             "App\\": "src/cli/app/",
             "KDuma\\PhpCA\\": "src/library/src/",
+            "KDuma\\PhpCA\\ConfigManager\\": "src/config-manager/src/",
             "KDuma\\PhpCA\\Contracts\\": "src/contracts/src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
+            "KDuma\\PhpCA\\ConfigManager\\Tests\\": "src/config-manager/tests/",
             "KDuma\\PhpCA\\Tests\\": "src/library/tests/",
             "Tests\\": "src/cli/tests/"
         }

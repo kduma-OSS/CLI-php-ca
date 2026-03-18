@@ -1,0 +1,49 @@
+{
+    "name": "kduma/php-ca-config-manager",
+    "description": "PHP Certification Authority - Configuration Manager",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "certificate-authority",
+        "pki"
+    ],
+    "homepage": "https://opensource.duma.sh/apps/php-ca",
+    "authors": [
+        {
+            "name": "Krystian Duma",
+            "email": "git@krystian.duma.sh"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "kduma/php-ca-contracts": "^0.1",
+        "kduma/simple-dal-encryption": "^0.1",
+        "kduma/simple-dal-encryption-phpseclib": "^0.1",
+        "kduma/simple-dal-flysystem-adapter": "^0.1",
+        "league/flysystem": "^3.0",
+        "phpseclib/phpseclib": "^3.0"
+    },
+    "require-dev": {
+        "pestphp/pest": "^3.0|^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "KDuma\\PhpCA\\ConfigManager\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "KDuma\\PhpCA\\ConfigManager\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
