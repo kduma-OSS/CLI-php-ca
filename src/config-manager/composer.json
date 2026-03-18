@@ -32,10 +32,7 @@
     "autoload": {
         "psr-4": {
             "KDuma\\PhpCA\\ConfigManager\\": "src/"
-        },
-        "files": [
-            "vendor/attributes.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
