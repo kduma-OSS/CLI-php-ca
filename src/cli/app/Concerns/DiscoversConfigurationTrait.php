@@ -2,6 +2,9 @@
 
 namespace App\Concerns;
 
+use KDuma\PhpCA\ConfigManager\CaConfiguration;
+use KDuma\PhpCA\ConfigManager\CaConfigurationLoader;
+use KDuma\SimpleDAL\Adapter\Contracts\StorageAdapterInterface;
 use Symfony\Component\Console\Input\InputOption;
 
 trait DiscoversConfigurationTrait
@@ -34,6 +37,21 @@ trait DiscoversConfigurationTrait
         }
 
         return realpath($path);
+    }
+
+    protected function getCaConfiguration(): CaConfiguration
+    {
+        $path = $this->getCaConfigPath();
+        $data = json_decode(file_get_contents($path), true, 512, JSON_THROW_ON_ERROR);
+
+        $loader = new CaConfigurationLoader();
+
+        return $loader->load($data, dirname($path));
+    }
+
+    protected function getCaAdapter(): StorageAdapterInterface
+    {
+        return $this->getCaConfiguration()->adapter->createAdapter();
     }
 
     protected function discoverConfigFile(): string

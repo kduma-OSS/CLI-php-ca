@@ -41,13 +41,13 @@ class InspireCommand extends Command
     public function handle(): int
     {
         try {
-            $path = $this->getCaConfigPath();
+            $config = $this->getCaConfiguration();
         } catch (\InvalidArgumentException $e) {
             error($e->getMessage());
             return self::FAILURE;
         }
 
-        intro($path);
+        intro('Adapter: ' . $config->adapter::getType() . ' (' . get_class($config->adapter) . ')');
 
         return self::SUCCESS;
     }

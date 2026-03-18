@@ -19,8 +19,11 @@
         "kduma/php-ca-contracts": "dev-master",
         "kduma/simple-dal-encryption": "^0.1",
         "kduma/simple-dal-encryption-phpseclib": "^0.1",
+        "kduma/simple-dal-db-adapter": "^0.1",
         "kduma/simple-dal-flysystem-adapter": "^0.1",
         "league/flysystem": "^3.0",
+        "league/flysystem-ziparchive": "^3.0",
+        "olvlvl/composer-attribute-collector": "^2.0",
         "phpseclib/phpseclib": "^3.0"
     },
     "require-dev": {
@@ -29,7 +32,10 @@
     "autoload": {
         "psr-4": {
             "KDuma\\PhpCA\\ConfigManager\\": "src/"
-        }
+        },
+        "files": [
+            "vendor/attributes.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -43,6 +49,7 @@
     },
     "config": {
         "allow-plugins": {
+            "olvlvl/composer-attribute-collector": true,
             "pestphp/pest-plugin": true
         }
     }
