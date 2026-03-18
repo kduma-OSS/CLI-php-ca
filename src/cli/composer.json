@@ -47,7 +47,8 @@
         "sort-packages": true,
         "optimize-autoloader": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true
+            "pestphp/pest-plugin": true,
+            "olvlvl/composer-attribute-collector": true
         }
     },
     "extra": {
