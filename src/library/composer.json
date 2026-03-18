@@ -16,7 +16,7 @@
     ],
     "require": {
         "php": "^8.4",
-        "kduma/php-ca-contracts": "^0.1",
+        "kduma/php-ca-contracts": "dev-master",
         "kduma/simple-dal": "^0.1",
         "kduma/simple-dal-adapter-contracts": "^0.1",
         "kduma/simple-dal-typed": "^0.1",
@@ -37,7 +37,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.1-dev"
+            "dev-master": "0.0-dev"
         }
     },
     "config": {
