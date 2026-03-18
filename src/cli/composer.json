@@ -57,6 +57,11 @@
     "extra": {
         "branch-alias": {
             "dev-master": "0.0-dev"
+        },
+        "composer-attribute-collector": {
+            "include": [
+                "{vendor}/kduma/"
+            ]
         }
     },
     "minimum-stability": "dev",
