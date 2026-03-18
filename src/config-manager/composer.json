@@ -17,6 +17,7 @@
     "require": {
         "php": "^8.4",
         "kduma/php-ca-contracts": "dev-master",
+        "kduma/php-ca-lib": "dev-master",
         "kduma/simple-dal-encryption": "^0.1",
         "kduma/simple-dal-encryption-phpseclib": "^0.1",
         "kduma/simple-dal-encryption-sodium": "^0.1",

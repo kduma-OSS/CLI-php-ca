@@ -17,7 +17,8 @@ it('loads from array with hasher only', function () {
         ->and($config->signer)->toBeNull()
         ->and($config->onChecksumFailure)->toBe(FailureMode::Throw)
         ->and($config->onSignatureFailure)->toBe(FailureMode::Throw)
-        ->and($config->onMissingIntegrity)->toBe(FailureMode::Throw);
+        ->and($config->onMissingIntegrity)->toBe(FailureMode::Throw)
+        ->and($config->detachedAttachments)->toBeTrue();
 });
 
 it('loads from array with custom failure modes', function () {
@@ -56,6 +57,7 @@ it('round-trips integrity configuration', function () {
         'on_checksum_failure' => 'throw',
         'on_signature_failure' => 'throw',
         'on_missing_integrity' => 'ignore',
+        'detached_attachments' => true,
     ]);
 });
 
@@ -70,7 +72,8 @@ it('creates IntegrityConfig object', function () {
 
     $integrityConfig = $config->createIntegrityConfig();
 
-    expect($integrityConfig)->toBeInstanceOf(\KDuma\SimpleDAL\Integrity\IntegrityConfig::class);
+    expect($integrityConfig)->toBeInstanceOf(\KDuma\SimpleDAL\Integrity\IntegrityConfig::class)
+        ->and($integrityConfig->detachedAttachments)->toBeTrue();
 });
 
 it('throws on invalid failure mode', function () {
@@ -78,3 +81,15 @@ it('throws on invalid failure mode', function () {
         'on_checksum_failure' => 'warn',
     ], '/base');
 })->throws(InvalidArgumentException::class, 'Unknown failure mode: "warn"');
+
+it('loads detached_attachments as false', function () {
+    $config = IntegrityConfiguration::fromArray([
+        'hasher' => ['type' => 'sha256'],
+        'detached_attachments' => false,
+    ], '/base');
+
+    expect($config->detachedAttachments)->toBeFalse();
+
+    $integrityConfig = $config->createIntegrityConfig();
+    expect($integrityConfig->detachedAttachments)->toBeFalse();
+});

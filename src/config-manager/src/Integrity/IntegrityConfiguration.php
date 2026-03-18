@@ -19,6 +19,7 @@ readonly class IntegrityConfiguration
         public FailureMode $onChecksumFailure = FailureMode::Throw,
         public FailureMode $onSignatureFailure = FailureMode::Throw,
         public FailureMode $onMissingIntegrity = FailureMode::Throw,
+        public bool $detachedAttachments = true,
     ) {}
 
     public function createIntegrityConfig(): IntegrityConfig
@@ -29,6 +30,7 @@ readonly class IntegrityConfiguration
             onChecksumFailure: $this->onChecksumFailure,
             onSignatureFailure: $this->onSignatureFailure,
             onMissingIntegrity: $this->onMissingIntegrity,
+            detachedAttachments: $this->detachedAttachments,
         );
     }
 
@@ -36,12 +38,12 @@ readonly class IntegrityConfiguration
     {
         $hasher = null;
         if (isset($data['hasher']) && is_array($data['hasher'])) {
-            $hasher = (new HasherConfigurationFactory())->fromArray($data['hasher']);
+            $hasher = new HasherConfigurationFactory()->fromArray($data['hasher']);
         }
 
         $signer = null;
         if (isset($data['signer']) && is_array($data['signer'])) {
-            $signer = (new SignerConfigurationFactory())->fromArray($data['signer'], $basePath);
+            $signer = new SignerConfigurationFactory()->fromArray($data['signer'], $basePath);
         }
 
         return new static(
@@ -50,6 +52,7 @@ readonly class IntegrityConfiguration
             onChecksumFailure: self::parseFailureMode($data['on_checksum_failure'] ?? 'throw'),
             onSignatureFailure: self::parseFailureMode($data['on_signature_failure'] ?? 'throw'),
             onMissingIntegrity: self::parseFailureMode($data['on_missing_integrity'] ?? 'throw'),
+            detachedAttachments: $data['detached_attachments'] ?? true,
         );
     }
 
@@ -68,6 +71,7 @@ readonly class IntegrityConfiguration
         $result['on_checksum_failure'] = self::failureModeToString($this->onChecksumFailure);
         $result['on_signature_failure'] = self::failureModeToString($this->onSignatureFailure);
         $result['on_missing_integrity'] = self::failureModeToString($this->onMissingIntegrity);
+        $result['detached_attachments'] = $this->detachedAttachments;
 
         return $result;
     }

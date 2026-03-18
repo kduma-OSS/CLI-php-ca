@@ -2,6 +2,7 @@
 
 namespace App\Concerns;
 
+use KDuma\PhpCA\CertificationAuthority;
 use KDuma\PhpCA\ConfigManager\CaConfiguration;
 use KDuma\PhpCA\ConfigManager\CaConfigurationLoader;
 use KDuma\SimpleDAL\Adapter\Contracts\StorageAdapterInterface;
@@ -42,16 +43,21 @@ trait DiscoversConfigurationTrait
     protected function getCaConfiguration(): CaConfiguration
     {
         $path = $this->getCaConfigPath();
-        $data = json_decode(file_get_contents($path), true, 512, JSON_THROW_ON_ERROR);
+
+        try {
+            $data = json_decode(file_get_contents($path), true, 512, JSON_THROW_ON_ERROR);
+        } catch (\JsonException $e) {
+            throw new \InvalidArgumentException("CA configuration file is not valid JSON: {$e->getMessage()}");
+        }
 
         $loader = new CaConfigurationLoader();
 
         return $loader->load($data, dirname($path));
     }
 
-    protected function getCaAdapter(): StorageAdapterInterface
+    protected function getCertificationAuthority(): CertificationAuthority
     {
-        return $this->getCaConfiguration()->adapter->createAdapter();
+        return $this->getCaConfiguration()->createCertificationAuthority();
     }
 
     protected function discoverConfigFile(): string

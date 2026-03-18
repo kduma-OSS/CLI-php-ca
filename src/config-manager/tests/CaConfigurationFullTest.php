@@ -52,6 +52,7 @@ it('round-trips full config', function () {
             'on_checksum_failure' => 'throw',
             'on_signature_failure' => 'throw',
             'on_missing_integrity' => 'ignore',
+            'detached_attachments' => true,
         ],
         'encryption' => [
             'keys' => [
