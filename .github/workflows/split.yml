@@ -23,12 +23,16 @@ jobs:
         package:
           - local_path: 'src/contracts'
             split_repository: 'PHP-CA-contracts'
+            tag_suffix: ''
           - local_path: 'src/library'
             split_repository: 'PHP-CA-library'
+            tag_suffix: ''
           - local_path: 'src/config-manager'
             split_repository: 'PHP-CA-config-manager'
+            tag_suffix: ''
           - local_path: 'src/cli'
             split_repository: 'CLI-PHP-CA'
+            tag_suffix: '-src'
 
     steps:
       - uses: actions/checkout@v5
@@ -67,19 +71,25 @@ jobs:
         id: resolve-tag
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" && -n "${{ inputs.tag }}" ]]; then
-            echo "tag=${{ inputs.tag }}" >> "$GITHUB_OUTPUT"
+            SOURCE_TAG="${{ inputs.tag }}"
           elif [[ "${{ github.ref }}" == refs/tags/* ]]; then
-            echo "tag=${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
+            SOURCE_TAG="${{ github.ref_name }}"
           else
-            echo "tag=" >> "$GITHUB_OUTPUT"
+            SOURCE_TAG=""
+          fi
+          echo "source_tag=${SOURCE_TAG}" >> "$GITHUB_OUTPUT"
+          if [[ -n "$SOURCE_TAG" ]]; then
+            echo "split_tag=${SOURCE_TAG}${{ matrix.package.tag_suffix }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "split_tag=" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Checkout tag
-        if: steps.resolve-tag.outputs.tag != ''
-        run: git checkout "refs/tags/${{ steps.resolve-tag.outputs.tag }}"
+        if: steps.resolve-tag.outputs.source_tag != ''
+        run: git checkout "refs/tags/${{ steps.resolve-tag.outputs.source_tag }}"
 
       - name: Split (no tag)
-        if: steps.resolve-tag.outputs.tag == ''
+        if: steps.resolve-tag.outputs.split_tag == ''
         uses: danharrin/monorepo-split-github-action@v2.4.0
         env:
           PAT: x-access-token:${{ steps.app-token.outputs.token }}
@@ -92,12 +102,12 @@ jobs:
           user_email: 'github-actions[bot]@users.noreply.github.com'
 
       - name: Split (with tag)
-        if: steps.resolve-tag.outputs.tag != ''
+        if: steps.resolve-tag.outputs.split_tag != ''
         uses: danharrin/monorepo-split-github-action@v2.4.0
         env:
           PAT: x-access-token:${{ steps.app-token.outputs.token }}
         with:
-          tag: ${{ steps.resolve-tag.outputs.tag }}
+          tag: ${{ steps.resolve-tag.outputs.split_tag }}
           package_directory: ${{ matrix.package.local_path }}
           repository_organization: 'kduma-OSS-splits'
           repository_name: ${{ matrix.package.split_repository }}
