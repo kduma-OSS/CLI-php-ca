@@ -6,6 +6,8 @@ namespace KDuma\PhpCA\ConfigManager;
 
 use InvalidArgumentException;
 use KDuma\PhpCA\ConfigManager\Adapter\AdapterConfigurationFactory;
+use KDuma\PhpCA\ConfigManager\Encryption\EncryptionConfiguration;
+use KDuma\PhpCA\ConfigManager\Integrity\IntegrityConfiguration;
 
 class CaConfigurationLoader
 {
@@ -18,8 +20,20 @@ class CaConfigurationLoader
         $factory = new AdapterConfigurationFactory();
         $adapter = $factory->fromArray($data['adapter'], $basePath);
 
+        $integrity = null;
+        if (isset($data['integrity']) && is_array($data['integrity'])) {
+            $integrity = IntegrityConfiguration::fromArray($data['integrity'], $basePath);
+        }
+
+        $encryption = null;
+        if (isset($data['encryption']) && is_array($data['encryption'])) {
+            $encryption = EncryptionConfiguration::fromArray($data['encryption'], $basePath);
+        }
+
         return new CaConfiguration(
             adapter: $adapter,
+            integrity: $integrity,
+            encryption: $encryption,
         );
     }
 }
