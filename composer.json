@@ -32,7 +32,8 @@
         "laravel/pint": "^1.25",
         "mockery/mockery": "^1.6",
         "monorepo-php/monorepo": "^12.0",
-        "pestphp/pest": "^3.0|^4.0"
+        "pestphp/pest": "^3.0|^4.0",
+        "phpacker/phpacker": "^0.6.4"
     },
     "replace": {
         "kduma/php-ca": "self.version",
