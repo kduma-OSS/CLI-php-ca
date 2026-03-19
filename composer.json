@@ -17,31 +17,31 @@
         }
     ],
     "require": {
-        "kduma/simple-dal": "^0.1",
-        "kduma/simple-dal-adapter-contracts": "^0.1",
-        "kduma/simple-dal-encryption": "^0.1",
-        "kduma/simple-dal-encryption-phpseclib": "^0.1",
-        "kduma/simple-dal-encryption-sodium": "^0.1",
-        "kduma/simple-dal-integrity": "^0.1",
-        "kduma/simple-dal-integrity-contracts": "^0.1",
-        "kduma/simple-dal-integrity-hash": "^0.1",
-        "kduma/simple-dal-integrity-phpseclib": "^0.1",
-        "kduma/simple-dal-integrity-sodium": "^0.1",
-        "kduma/simple-dal-db-adapter": "^0.1",
-        "kduma/simple-dal-flysystem-adapter": "^0.1",
-        "league/flysystem-ziparchive": "^3.0",
-        "kduma/simple-dal-typed": "^0.1",
-        "laravel-zero/framework": "^12.0.2",
-        "league/flysystem": "^3.0",
+        "kduma/simple-dal": "^v0.2",
+        "kduma/simple-dal-adapter-contracts": "^v0.2",
+        "kduma/simple-dal-encryption": "^v0.2",
+        "kduma/simple-dal-encryption-phpseclib": "^v0.2",
+        "kduma/simple-dal-encryption-sodium": "^v0.2",
+        "kduma/simple-dal-integrity": "^v0.2",
+        "kduma/simple-dal-integrity-contracts": "^v0.2",
+        "kduma/simple-dal-integrity-hash": "^v0.2",
+        "kduma/simple-dal-integrity-phpseclib": "^v0.2",
+        "kduma/simple-dal-integrity-sodium": "^v0.2",
+        "kduma/simple-dal-db-adapter": "^v0.2",
+        "kduma/simple-dal-flysystem-adapter": "^v0.2",
+        "league/flysystem-ziparchive": "^3.31",
+        "kduma/simple-dal-typed": "^v0.2",
+        "laravel-zero/framework": "^12.0.5",
+        "league/flysystem": "^3.32",
         "php": "^8.4",
-        "phpseclib/phpseclib": "^3.0",
+        "phpseclib/phpseclib": "^3.0.50",
         "paragonie/sodium_compat": "^2.5"
     },
     "require-dev": {
-        "laravel/pint": "^1.25",
-        "mockery/mockery": "^1.6",
-        "monorepo-php/monorepo": "^12.0",
-        "pestphp/pest": "^3.0|^4.0",
+        "laravel/pint": "^1.29",
+        "mockery/mockery": "^1.6.12",
+        "monorepo-php/monorepo": "^12.5.1",
+        "pestphp/pest": "^3.0|^4.4.2",
         "phpacker/phpacker": "^0.6.4"
     },
     "replace": {
@@ -56,7 +56,10 @@
             "KDuma\\PhpCA\\": "src/library/src/",
             "KDuma\\PhpCA\\ConfigManager\\": "src/config-manager/src/",
             "KDuma\\PhpCA\\Contracts\\": "src/contracts/src/"
-        }
+        },
+        "files": [
+            "src/cli/app/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

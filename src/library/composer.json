@@ -1,29 +1,29 @@
 {
     "name": "kduma/php-ca-lib",
     "description": "PHP Certification Authority - Core Library",
-    "type": "library",
-    "license": "MIT",
     "keywords": [
         "certificate-authority",
         "pki"
     ],
     "homepage": "https://opensource.duma.sh/apps/php-ca",
+    "license": "MIT",
     "authors": [
         {
             "name": "Krystian Duma",
             "email": "git@krystian.duma.sh"
         }
     ],
+    "type": "library",
     "require": {
         "php": "^8.4",
         "kduma/php-ca-contracts": "dev-master",
-        "kduma/simple-dal": "^0.1",
-        "kduma/simple-dal-adapter-contracts": "^0.1",
-        "kduma/simple-dal-typed": "^0.1",
-        "phpseclib/phpseclib": "^3.0"
+        "kduma/simple-dal": "^v0.2",
+        "kduma/simple-dal-adapter-contracts": "^v0.2",
+        "kduma/simple-dal-typed": "^v0.2",
+        "phpseclib/phpseclib": "^3.0.50"
     },
     "require-dev": {
-        "pestphp/pest": "^3.0|^4.0"
+        "pestphp/pest": "^3.0|^4.4.2"
     },
     "autoload": {
         "psr-4": {

@@ -35,9 +35,9 @@ class KeyBuilder
         }
 
         $builder = new static();
-        $builder->key = $key;
+        $builder->key = self::normalizeRsaPadding($key);
         $builder->hasPrivateKey = $key instanceof PrivateKey;
-        $builder->type = self::detectKeyType($key);
+        $builder->type = self::detectKeyType($builder->key);
 
         return $builder;
     }
@@ -102,10 +102,27 @@ class KeyBuilder
         throw new \InvalidArgumentException('Unsupported key type: ' . get_class($key));
     }
 
+    /**
+     * Normalize RSA keys to use rsaEncryption OID (PKCS1 v1.5) instead of rsassaPss.
+     */
+    private static function normalizeRsaPadding(PrivateKey|PublicKey $key): PrivateKey|PublicKey
+    {
+        if ($key instanceof RSA\PrivateKey) {
+            return $key->withPadding(RSA::SIGNATURE_PKCS1 | RSA::ENCRYPTION_PKCS1);
+        }
+
+        if ($key instanceof RSA\PublicKey) {
+            return $key->withPadding(RSA::SIGNATURE_PKCS1 | RSA::ENCRYPTION_PKCS1);
+        }
+
+        return $key;
+    }
+
     private static function generateKey(BaseKeyType $type): PrivateKey
     {
         return match (true) {
-            $type instanceof RSAKeyType => RSA::createKey($type->size),
+            $type instanceof RSAKeyType => RSA::createKey($type->size)
+                ->withPadding(RSA::SIGNATURE_PKCS1 | RSA::ENCRYPTION_PKCS1),
             $type instanceof DSAKeyType => DSA::createKey($type->parameters->L(), $type->parameters->N()),
             $type instanceof ECDSAKeyType => EC::createKey($type->curve->value),
             $type instanceof EdDSAKeyType => EC::createKey($type->curve->value),

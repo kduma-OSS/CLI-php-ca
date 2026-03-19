@@ -1,0 +1,6 @@
+{
+    "adapter": {
+        "type": "directory",
+        "path": "./workdir/example_data"
+    }
+}

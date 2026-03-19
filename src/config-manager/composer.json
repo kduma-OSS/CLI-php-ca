@@ -1,40 +1,40 @@
 {
     "name": "kduma/php-ca-config-manager",
     "description": "PHP Certification Authority - Configuration Manager",
-    "type": "library",
-    "license": "MIT",
     "keywords": [
         "certificate-authority",
         "pki"
     ],
     "homepage": "https://opensource.duma.sh/apps/php-ca",
+    "license": "MIT",
     "authors": [
         {
             "name": "Krystian Duma",
             "email": "git@krystian.duma.sh"
         }
     ],
+    "type": "library",
     "require": {
         "php": "^8.4",
         "kduma/php-ca-contracts": "dev-master",
         "kduma/php-ca-lib": "dev-master",
-        "kduma/simple-dal-encryption": "^0.1",
-        "kduma/simple-dal-encryption-phpseclib": "^0.1",
-        "kduma/simple-dal-encryption-sodium": "^0.1",
-        "kduma/simple-dal-integrity": "^0.1",
-        "kduma/simple-dal-integrity-contracts": "^0.1",
-        "kduma/simple-dal-integrity-hash": "^0.1",
-        "kduma/simple-dal-integrity-phpseclib": "^0.1",
-        "kduma/simple-dal-integrity-sodium": "^0.1",
-        "kduma/simple-dal-db-adapter": "^0.1",
-        "kduma/simple-dal-flysystem-adapter": "^0.1",
-        "league/flysystem": "^3.0",
-        "league/flysystem-ziparchive": "^3.0",
-        "phpseclib/phpseclib": "^3.0",
+        "kduma/simple-dal-encryption": "^v0.2",
+        "kduma/simple-dal-encryption-phpseclib": "^v0.2",
+        "kduma/simple-dal-encryption-sodium": "^v0.2",
+        "kduma/simple-dal-integrity": "^v0.2",
+        "kduma/simple-dal-integrity-contracts": "^v0.2",
+        "kduma/simple-dal-integrity-hash": "^v0.2",
+        "kduma/simple-dal-integrity-phpseclib": "^v0.2",
+        "kduma/simple-dal-integrity-sodium": "^v0.2",
+        "kduma/simple-dal-db-adapter": "^v0.2",
+        "kduma/simple-dal-flysystem-adapter": "^v0.2",
+        "league/flysystem": "^3.32",
+        "league/flysystem-ziparchive": "^3.31",
+        "phpseclib/phpseclib": "^3.0.50",
         "spatie/php-attribute-reader": "^1.0"
     },
     "require-dev": {
-        "pestphp/pest": "^3.0|^4.0"
+        "pestphp/pest": "^3.0|^4.4.2"
     },
     "autoload": {
         "psr-4": {

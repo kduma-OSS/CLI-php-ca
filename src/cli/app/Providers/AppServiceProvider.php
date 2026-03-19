@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use KDuma\PhpCA\ConfigManager\ConfigManagerRegistry;
+use KDuma\PhpCA\Record\Extension\ExtensionRegistry;
 use phpseclib3\Crypt\RSA;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,6 +15,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         ConfigManagerRegistry::registerDefaults();
+        ExtensionRegistry::registerDefaults();
 
         if (\Phar::running() !== '') {
             $pharOpenSslConf = \Phar::running() . '/vendor/phpseclib/phpseclib/phpseclib/openssl.cnf';
