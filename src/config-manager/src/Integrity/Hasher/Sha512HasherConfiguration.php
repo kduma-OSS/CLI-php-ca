@@ -13,12 +13,12 @@ readonly class Sha512HasherConfiguration extends BaseHasherConfiguration
 {
     public function createHasher(): HashingAlgorithmInterface
     {
-        return new Sha512HashingAlgorithm();
+        return new Sha512HashingAlgorithm;
     }
 
     public static function fromArray(array $data): static
     {
-        return new static();
+        return new static;
     }
 
     public function toArray(): array

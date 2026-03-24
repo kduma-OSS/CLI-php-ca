@@ -27,11 +27,11 @@ final class InMemoryStorageAdapter implements StorageAdapterInterface
     {
         $this->definitions[$entityName] = $definition;
 
-        if (!isset($this->records[$entityName])) {
+        if (! isset($this->records[$entityName])) {
             $this->records[$entityName] = [];
         }
 
-        if (!isset($this->attachments[$entityName])) {
+        if (! isset($this->attachments[$entityName])) {
             $this->attachments[$entityName] = [];
         }
     }
@@ -43,7 +43,7 @@ final class InMemoryStorageAdapter implements StorageAdapterInterface
 
     public function readRecord(string $entityName, string $recordId): array
     {
-        if (!isset($this->records[$entityName][$recordId])) {
+        if (! isset($this->records[$entityName][$recordId])) {
             throw new RecordNotFoundException("Record '{$recordId}' not found in entity '{$entityName}'.");
         }
 
@@ -63,7 +63,7 @@ final class InMemoryStorageAdapter implements StorageAdapterInterface
 
     public function listRecordIds(string $entityName): array
     {
-        if (!isset($this->records[$entityName])) {
+        if (! isset($this->records[$entityName])) {
             return [];
         }
 
@@ -116,7 +116,7 @@ final class InMemoryStorageAdapter implements StorageAdapterInterface
 
     public function readAttachment(string $entityName, string $recordId, string $name): mixed
     {
-        if (!isset($this->attachments[$entityName][$recordId][$name])) {
+        if (! isset($this->attachments[$entityName][$recordId][$name])) {
             throw new AttachmentNotFoundException("Attachment '{$name}' not found for record '{$recordId}' in entity '{$entityName}'.");
         }
 
@@ -139,7 +139,7 @@ final class InMemoryStorageAdapter implements StorageAdapterInterface
 
     public function listAttachments(string $entityName, string $recordId): array
     {
-        if (!isset($this->attachments[$entityName][$recordId])) {
+        if (! isset($this->attachments[$entityName][$recordId])) {
             return [];
         }
 
@@ -166,7 +166,7 @@ final class InMemoryStorageAdapter implements StorageAdapterInterface
         $current = $data;
 
         foreach ($segments as $segment) {
-            if (!is_array($current) || !array_key_exists($segment, $current)) {
+            if (! is_array($current) || ! array_key_exists($segment, $current)) {
                 return null;
             }
 

@@ -16,27 +16,47 @@ class RevocationEntity extends BaseEntity
 {
     public string $certificateId {
         get => $this->certificateId;
-        set { if (isset($this->certificateId)) { throw new \LogicException('Immutable.'); } $this->certificateId = $value; }
+        set {
+            if (isset($this->certificateId)) {
+                throw new \LogicException('Immutable.');
+            } $this->certificateId = $value;
+        }
     }
 
     public string $serialNumber {
         get => $this->serialNumber;
-        set { if (isset($this->serialNumber)) { throw new \LogicException('Immutable.'); } $this->serialNumber = $value; }
+        set {
+            if (isset($this->serialNumber)) {
+                throw new \LogicException('Immutable.');
+            } $this->serialNumber = $value;
+        }
     }
 
     public DateTimeImmutable $revokedAt {
         get => $this->revokedAt;
-        set { if (isset($this->revokedAt)) { throw new \LogicException('Immutable.'); } $this->revokedAt = $value; }
+        set {
+            if (isset($this->revokedAt)) {
+                throw new \LogicException('Immutable.');
+            } $this->revokedAt = $value;
+        }
     }
 
     public RevocationReason $reason {
         get => $this->reason;
-        set { if (isset($this->reason)) { throw new \LogicException('Immutable.'); } $this->reason = $value; }
+        set {
+            if (isset($this->reason)) {
+                throw new \LogicException('Immutable.');
+            } $this->reason = $value;
+        }
     }
 
     public ?string $caCertificateId = null {
         get => $this->caCertificateId;
-        set { if (isset($this->caCertificateId)) { throw new \LogicException('Immutable.'); } $this->caCertificateId = $value; }
+        set {
+            if (isset($this->caCertificateId)) {
+                throw new \LogicException('Immutable.');
+            } $this->caCertificateId = $value;
+        }
     }
 
     protected static function _populateFromRecord(BaseEntity $entity, TypedRecord $record): void

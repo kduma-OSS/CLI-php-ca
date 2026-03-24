@@ -4,6 +4,7 @@ namespace App\Commands\Template;
 
 use App\Commands\BaseCommand;
 use DateInterval;
+use KDuma\PhpCA\Record\Converter\DateIntervalConverter;
 
 use function Laravel\Prompts\error;
 use function Laravel\Prompts\info;
@@ -12,6 +13,7 @@ use function Laravel\Prompts\text;
 class EditCommand extends BaseCommand
 {
     protected $signature = 'template:edit {id} {--display-name=} {--validity=}';
+
     protected $description = 'Edit a certificate template';
 
     public function handle(): int
@@ -21,6 +23,7 @@ class EditCommand extends BaseCommand
 
         if ($template === null) {
             error('Template not found.');
+
             return self::FAILURE;
         }
 
@@ -37,6 +40,7 @@ class EditCommand extends BaseCommand
                 $changed = true;
             } catch (\Exception) {
                 error('Invalid validity interval.');
+
                 return self::FAILURE;
             }
         }
@@ -44,7 +48,7 @@ class EditCommand extends BaseCommand
         if (! $changed) {
             $template->displayName = text('Display name', default: $template->displayName, required: true);
 
-            $converter = new \KDuma\PhpCA\Record\Converter\DateIntervalConverter();
+            $converter = new DateIntervalConverter;
             $currentValidity = $template->validity ? $converter->toStorage($template->validity) : '';
             $validityStr = text('Validity (ISO 8601 duration, empty to inherit from parent)', default: $currentValidity);
 
@@ -55,6 +59,7 @@ class EditCommand extends BaseCommand
                     $template->validity = new DateInterval($validityStr);
                 } catch (\Exception) {
                     error("Invalid validity interval: {$validityStr}");
+
                     return self::FAILURE;
                 }
             }

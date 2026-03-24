@@ -1,13 +1,12 @@
 <?php
 
 declare(strict_types=1);
+use Tests\TestCase;
 
-uses(Tests\TestCase::class);
-
-use function Pest\testDirectory;
+uses(TestCase::class);
 
 beforeEach(function () {
-    $this->configPath = sys_get_temp_dir() . '/php-ca-test-' . uniqid() . '.json';
+    $this->configPath = sys_get_temp_dir().'/php-ca-test-'.uniqid().'.json';
 });
 
 afterEach(function () {

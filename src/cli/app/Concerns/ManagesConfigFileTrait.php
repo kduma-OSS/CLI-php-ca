@@ -18,7 +18,7 @@ trait ManagesConfigFileTrait
     protected function writeConfigData(array $data): void
     {
         $path = $this->getCaConfigPath();
-        $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . "\n";
+        $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)."\n";
 
         file_put_contents($path, $json);
     }
@@ -26,7 +26,7 @@ trait ManagesConfigFileTrait
     protected function validateConfig(array $data): bool
     {
         try {
-            $loader = new CaConfigurationLoader();
+            $loader = new CaConfigurationLoader;
             $loader->load($data, dirname($this->getCaConfigPath()));
 
             return true;

@@ -12,14 +12,14 @@ use KDuma\PhpCA\ConfigManager\Integrity\Hasher\Sha3_256HasherConfiguration;
 use KDuma\PhpCA\ConfigManager\Integrity\Hasher\Sha512HasherConfiguration;
 
 it('discovers all hasher types', function () {
-    $factory = new HasherConfigurationFactory();
+    $factory = new HasherConfigurationFactory;
     $types = $factory->getTypes();
 
     expect($types)->toHaveKeys(['crc32', 'md5', 'sha1', 'sha256', 'sha3-256', 'sha512', 'blake2b']);
 });
 
 it('creates correct hasher from type', function (string $type, string $expectedClass) {
-    $factory = new HasherConfigurationFactory();
+    $factory = new HasherConfigurationFactory;
     $hasher = $factory->fromArray(['type' => $type]);
 
     expect($hasher)->toBeInstanceOf($expectedClass);
@@ -34,13 +34,13 @@ it('creates correct hasher from type', function (string $type, string $expectedC
 ]);
 
 it('round-trips hasher configuration', function (string $type) {
-    $factory = new HasherConfigurationFactory();
+    $factory = new HasherConfigurationFactory;
     $hasher = $factory->fromArray(['type' => $type]);
 
     expect($hasher->toArray())->toBe(['type' => $type]);
 })->with(['crc32', 'md5', 'sha1', 'sha256', 'sha3-256', 'sha512', 'blake2b']);
 
 it('throws on unknown hasher type', function () {
-    $factory = new HasherConfigurationFactory();
+    $factory = new HasherConfigurationFactory;
     $factory->fromArray(['type' => 'xxhash']);
 })->throws(InvalidArgumentException::class, 'Unknown hasher type "xxhash"');

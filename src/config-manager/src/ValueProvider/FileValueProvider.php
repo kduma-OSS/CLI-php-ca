@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace KDuma\PhpCA\ConfigManager\ValueProvider;
 
-use KDuma\PhpCA\ConfigManager\Adapter\BaseAdapterConfiguration;
 use KDuma\PhpCA\ConfigManager\ValueProvider\Attributes\ValueProviderType;
 
 #[ValueProviderType('file')]
@@ -47,7 +46,7 @@ readonly class FileValueProvider extends ValueProvider
             return $path;
         }
 
-        $resolved = rtrim($basePath, '/') . '/' . $path;
+        $resolved = rtrim($basePath, '/').'/'.$path;
 
         while (str_contains($resolved, '/./')) {
             $resolved = str_replace('/./', '/', $resolved);

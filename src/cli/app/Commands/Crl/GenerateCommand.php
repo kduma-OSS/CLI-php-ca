@@ -11,6 +11,7 @@ use function Laravel\Prompts\info;
 class GenerateCommand extends BaseCommand
 {
     protected $signature = 'crl:generate {--ca-cert=} {--signer-cert=} {--next-update=+7days}';
+
     protected $description = 'Generate a CRL from current revocations';
 
     public function handle(): int
@@ -20,12 +21,14 @@ class GenerateCommand extends BaseCommand
         $caCertId = $this->option('ca-cert') ?? $ca->state->getActiveCaCertificateId();
         if ($caCertId === null) {
             error('No active CA certificate. Specify --ca-cert or activate one.');
+
             return self::FAILURE;
         }
 
         $caCert = $ca->caCertificates->findOrNull($caCertId);
         if ($caCert === null) {
             error("CA certificate \"{$caCertId}\" not found.");
+
             return self::FAILURE;
         }
 
@@ -34,6 +37,7 @@ class GenerateCommand extends BaseCommand
             $signerCert = $ca->certificates->findOrNull($signerCertId);
             if ($signerCert === null) {
                 error("Signer certificate \"{$signerCertId}\" not found.");
+
                 return self::FAILURE;
             }
         }
@@ -42,6 +46,7 @@ class GenerateCommand extends BaseCommand
             $nextUpdate = new DateTimeImmutable($this->option('next-update'));
         } catch (\Exception) {
             error('Invalid --next-update value.');
+
             return self::FAILURE;
         }
 
@@ -60,6 +65,7 @@ class GenerateCommand extends BaseCommand
             $crl = $builder->save();
         } catch (\Throwable $e) {
             error($e->getMessage());
+
             return self::FAILURE;
         }
 

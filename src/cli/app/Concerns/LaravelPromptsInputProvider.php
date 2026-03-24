@@ -9,7 +9,7 @@ use function Laravel\Prompts\text;
 class LaravelPromptsInputProvider implements InputProviderInterface
 {
     /**
-     * @param array<string, string|string[]> $presets Pre-set answers keyed by alias (bypass prompts)
+     * @param  array<string, string|string[]>  $presets  Pre-set answers keyed by alias (bypass prompts)
      */
     public function __construct(
         private readonly array $presets = [],

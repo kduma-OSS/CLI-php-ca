@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
+use KDuma\PhpCA\ConfigManager\Encryption\Algorithm\SecretBoxAlgorithmConfiguration;
 use KDuma\PhpCA\ConfigManager\Encryption\EncryptionConfiguration;
 use KDuma\PhpCA\ConfigManager\Encryption\EncryptionRuleConfiguration;
-use KDuma\PhpCA\ConfigManager\Encryption\Algorithm\SecretBoxAlgorithmConfiguration;
 use KDuma\PhpCA\ConfigManager\ValueProvider\StringValueProvider;
 use KDuma\SimpleDAL\Encryption\EncryptionConfig;
 

@@ -5,18 +5,10 @@ declare(strict_types=1);
 use KDuma\PhpCA\CertificationAuthority;
 use KDuma\PhpCA\Entity\CertificateTemplateBuilder;
 use KDuma\PhpCA\Entity\CertificateTemplateEntity;
-use KDuma\PhpCA\Entity\CertificateTemplateEntityCollection;
-use KDuma\PhpCA\Entity\KeyBuilder;
-use KDuma\PhpCA\Record\CertificateSubject\CertificateSubject;
-use KDuma\PhpCA\Record\CertificateSubject\DN\CommonName;
-use KDuma\PhpCA\Record\CertificateSubject\DN\Organization;
-use KDuma\PhpCA\Record\CertificateSubject\DN\Country;
 use KDuma\PhpCA\Record\Extension\ExtensionRegistry;
 use KDuma\PhpCA\Record\Extension\Template\Templates\BasicConstraintsExtensionTemplate;
-use KDuma\PhpCA\Record\Extension\Template\Templates\KeyUsageExtensionTemplate;
 use KDuma\PhpCA\Record\Extension\Template\Templates\ExtKeyUsageExtensionTemplate;
-use KDuma\PhpCA\Record\KeyType\EdDSAKeyType;
-use KDuma\PhpCA\Record\KeyType\Enum\EdDSACurve;
+use KDuma\PhpCA\Record\Extension\Template\Templates\KeyUsageExtensionTemplate;
 use KDuma\SimpleDAL\Adapter\Flysystem\FlysystemAdapter;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Local\LocalFilesystemAdapter;
@@ -24,38 +16,38 @@ use League\Flysystem\Local\LocalFilesystemAdapter;
 // --- CertificateTemplateEntity property tests ---
 
 test('CertificateTemplateEntity: displayName can be set', function () {
-    $entity = new CertificateTemplateEntity();
+    $entity = new CertificateTemplateEntity;
     $entity->displayName = 'My Template';
 
     expect($entity->displayName)->toBe('My Template');
 });
 
 test('CertificateTemplateEntity: parentId defaults to null', function () {
-    $entity = new CertificateTemplateEntity();
+    $entity = new CertificateTemplateEntity;
 
     expect($entity->parentId)->toBeNull();
 });
 
 test('CertificateTemplateEntity: validity defaults to null', function () {
-    $entity = new CertificateTemplateEntity();
+    $entity = new CertificateTemplateEntity;
 
     expect($entity->validity)->toBeNull();
 });
 
 test('CertificateTemplateEntity: extensions defaults to empty array', function () {
-    $entity = new CertificateTemplateEntity();
+    $entity = new CertificateTemplateEntity;
 
     expect($entity->extensions)->toBe([]);
 });
 
 test('CertificateTemplateEntity: persisted is false for new entity', function () {
-    $entity = new CertificateTemplateEntity();
+    $entity = new CertificateTemplateEntity;
 
     expect($entity->persisted)->toBeFalse();
 });
 
 test('CertificateTemplateEntity: id can be set before persistence', function () {
-    $entity = new CertificateTemplateEntity();
+    $entity = new CertificateTemplateEntity;
     $entity->id = 'my-template';
 
     expect($entity->id)->toBe('my-template');
@@ -64,7 +56,7 @@ test('CertificateTemplateEntity: id can be set before persistence', function () 
 // --- getEffectiveExtensions ---
 
 test('CertificateTemplateEntity: getEffectiveExtensions returns own extensions with no parent', function () {
-    $entity = new CertificateTemplateEntity();
+    $entity = new CertificateTemplateEntity;
     $entity->extensions = [
         new BasicConstraintsExtensionTemplate(ca: false),
         new KeyUsageExtensionTemplate(digitalSignature: true),
@@ -76,7 +68,7 @@ test('CertificateTemplateEntity: getEffectiveExtensions returns own extensions w
 });
 
 test('CertificateTemplateEntity: getEffectiveExtensions returns own extensions with no collection', function () {
-    $entity = new CertificateTemplateEntity();
+    $entity = new CertificateTemplateEntity;
     $entity->parentId = 'some-parent';
     $entity->extensions = [
         new BasicConstraintsExtensionTemplate(ca: false),
@@ -89,7 +81,7 @@ test('CertificateTemplateEntity: getEffectiveExtensions returns own extensions w
 });
 
 test('CertificateTemplateEntity: getEffectiveExtensions returns empty for entity with no extensions', function () {
-    $entity = new CertificateTemplateEntity();
+    $entity = new CertificateTemplateEntity;
 
     expect($entity->getEffectiveExtensions())->toBeEmpty();
 });
@@ -97,7 +89,7 @@ test('CertificateTemplateEntity: getEffectiveExtensions returns empty for entity
 // --- getEffectiveValidity ---
 
 test('CertificateTemplateEntity: getEffectiveValidity returns own validity', function () {
-    $entity = new CertificateTemplateEntity();
+    $entity = new CertificateTemplateEntity;
     $entity->validity = new DateInterval('P1Y');
 
     $effective = $entity->getEffectiveValidity();
@@ -107,13 +99,13 @@ test('CertificateTemplateEntity: getEffectiveValidity returns own validity', fun
 });
 
 test('CertificateTemplateEntity: getEffectiveValidity returns null when no validity and no parent', function () {
-    $entity = new CertificateTemplateEntity();
+    $entity = new CertificateTemplateEntity;
 
     expect($entity->getEffectiveValidity())->toBeNull();
 });
 
 test('CertificateTemplateEntity: getEffectiveValidity returns null when parent not in collection', function () {
-    $entity = new CertificateTemplateEntity();
+    $entity = new CertificateTemplateEntity;
     $entity->parentId = 'non-existent-parent';
 
     expect($entity->getEffectiveValidity())->toBeNull();
@@ -302,7 +294,7 @@ test('CertificateTemplateBuilder: methods return self for chaining', function ()
     $r1 = $builder->displayName('Test');
     $r2 = $builder->parent('parent-id');
     $r3 = $builder->validity(new DateInterval('P1Y'));
-    $r4 = $builder->addExtension(new BasicConstraintsExtensionTemplate());
+    $r4 = $builder->addExtension(new BasicConstraintsExtensionTemplate);
 
     expect($r1)->toBe($builder)
         ->and($r2)->toBe($builder)
@@ -334,7 +326,7 @@ test('CertificateTemplateEntityCollection returns builder', function () {
 
 function createTempCaForTemplateTests(): CertificationAuthority
 {
-    $tempDir = sys_get_temp_dir() . '/php-ca-test-' . uniqid();
+    $tempDir = sys_get_temp_dir().'/php-ca-test-'.uniqid();
     mkdir($tempDir, 0777, true);
     $filesystem = new Filesystem(new LocalFilesystemAdapter($tempDir));
     $adapter = new FlysystemAdapter($filesystem);

@@ -9,7 +9,6 @@ use KDuma\PhpCA\Record\KeyRecord;
 use KDuma\PhpCA\Record\KeyType\BaseKeyType;
 use KDuma\SimpleDAL\Contracts\Exception\AttachmentNotFoundException;
 use KDuma\SimpleDAL\Typed\Contracts\TypedRecord;
-use phpseclib3\Crypt\Common\AsymmetricKey;
 use phpseclib3\Crypt\Common\PrivateKey;
 use phpseclib3\Crypt\Common\PublicKey;
 use phpseclib3\Crypt\PublicKeyLoader;
@@ -24,7 +23,7 @@ class KeyEntity extends BaseEntity
             return $this->type;
         }
         set {
-            if(isset($this->type)) {
+            if (isset($this->type)) {
                 throw new \LogicException('Cannot set type on an existing entity.');
             }
 
@@ -32,18 +31,18 @@ class KeyEntity extends BaseEntity
         }
     }
 
-    public string $fingerprint{
+    public string $fingerprint {
         get {
             return $this->fingerprint;
         }
         set {
-            if(isset($this->fingerprint)) {
+            if (isset($this->fingerprint)) {
                 throw new \LogicException('Cannot set fingerprint on an existing entity.');
             }
 
             $this->fingerprint = $value;
 
-            if (!$this->persisted && !isset($this->id)) {
+            if (! $this->persisted && ! isset($this->id)) {
                 $this->id = $value;
             }
         }
@@ -54,13 +53,13 @@ class KeyEntity extends BaseEntity
             return $this->hasPrivateKey;
         }
         set {
-            if(isset($this->hasPrivateKey) && $this->hasPrivateKey === false && $value === true) {
+            if (isset($this->hasPrivateKey) && $this->hasPrivateKey === false && $value === true) {
                 throw new \LogicException('Cannot set private key on an existing entity.');
             }
 
             $this->hasPrivateKey = $value;
 
-            if($this->hasPrivateKey === false) {
+            if ($this->hasPrivateKey === false) {
                 $this->_pendingChanges['privateKey'] = null;
             }
         }
@@ -71,6 +70,7 @@ class KeyEntity extends BaseEntity
             if (isset($this->_pendingChanges['publicKey'])) {
                 return $this->_pendingChanges['publicKey'];
             }
+
             return $this->attachments->get(KeyAttachment::PublicKey)->contents();
         }
         set {
@@ -104,14 +104,14 @@ class KeyEntity extends BaseEntity
         if ($this->privateKey === null) {
             return null;
         }
+
         return PublicKeyLoader::loadPrivateKey($this->privateKey);
     }
 
-    public function getKey(): PrivateKey|PublicKey {
+    public function getKey(): PrivateKey|PublicKey
+    {
         return $this->getPrivateKey() ?? $this->getPublicKey();
     }
-
-
 
     private array $_pendingChanges = [];
 
@@ -125,7 +125,7 @@ class KeyEntity extends BaseEntity
         if (array_key_exists('privateKey', $this->_pendingChanges)) {
             if ($this->_pendingChanges['privateKey'] !== null) {
                 $this->attachments->put(KeyAttachment::PrivateKey, $this->_pendingChanges['privateKey']);
-            } else if ($this->attachments->has(KeyAttachment::PrivateKey)) {
+            } elseif ($this->attachments->has(KeyAttachment::PrivateKey)) {
                 $this->attachments->delete(KeyAttachment::PrivateKey);
             }
         }
@@ -134,8 +134,8 @@ class KeyEntity extends BaseEntity
     }
 
     /**
-     * @param KeyEntity $entity
-     * @param KeyRecord $record
+     * @param  KeyEntity  $entity
+     * @param  KeyRecord  $record
      */
     protected static function _populateFromRecord(BaseEntity $entity, TypedRecord $record): void
     {
@@ -148,8 +148,8 @@ class KeyEntity extends BaseEntity
     }
 
     /**
-     * @param KeyEntity $entity
-     * @param KeyRecord $record
+     * @param  KeyEntity  $entity
+     * @param  KeyRecord  $record
      */
     protected static function _populateToRecord(BaseEntity $entity, TypedRecord $record): void
     {

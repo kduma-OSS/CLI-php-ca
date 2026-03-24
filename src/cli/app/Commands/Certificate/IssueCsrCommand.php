@@ -12,6 +12,7 @@ use function Laravel\Prompts\text;
 class IssueCsrCommand extends BaseCommand
 {
     protected $signature = 'certificate:issue:csr {csr-id} {--template=} {--ca-cert=} {--ca-key=} {--no-subject : Ignore CSR subject} {--no-extensions : Ignore CSR extensions} {--var=*}';
+
     protected $description = 'Issue a certificate from a stored CSR';
 
     public function handle(): int
@@ -24,12 +25,14 @@ class IssueCsrCommand extends BaseCommand
         $caCertId = $this->option('ca-cert') ?? $ca->state->getActiveCaCertificateId();
         if ($caCertId === null) {
             error('No active CA certificate. Specify --ca-cert or activate one with ca:activate.');
+
             return self::FAILURE;
         }
 
         $caCert = $ca->caCertificates->findOrNull($caCertId);
         if ($caCert === null) {
             error("CA certificate \"{$caCertId}\" not found.");
+
             return self::FAILURE;
         }
 
@@ -50,6 +53,7 @@ class IssueCsrCommand extends BaseCommand
                 ->save();
         } catch (\Throwable $e) {
             error($e->getMessage());
+
             return self::FAILURE;
         }
 

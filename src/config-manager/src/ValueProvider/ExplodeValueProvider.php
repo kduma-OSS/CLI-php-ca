@@ -23,7 +23,7 @@ readonly class ExplodeValueProvider extends ValueProvider
 
         if (! isset($parts[$this->index])) {
             throw new RuntimeException(
-                "Explode key discovery: index {$this->index} out of bounds (got " . count($parts) . " parts)."
+                "Explode key discovery: index {$this->index} out of bounds (got ".count($parts).' parts).'
             );
         }
 
@@ -32,7 +32,7 @@ readonly class ExplodeValueProvider extends ValueProvider
 
     public static function fromArray(array $data, string $basePath): static
     {
-        $factory = new ValueProviderFactory();
+        $factory = new ValueProviderFactory;
 
         return new static(
             index: $data['index'] ?? throw new \InvalidArgumentException('Explode key discovery requires "index".'),

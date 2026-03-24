@@ -4,6 +4,7 @@ namespace App\Commands\Csr;
 
 use App\Commands\BaseCommand;
 use KDuma\PhpCA\Entity\CsrEntity;
+use KDuma\PhpCA\Entity\KeyBuilder;
 use KDuma\PhpCA\Helpers\FingerprintHelper;
 use KDuma\PhpCA\Record\CertificateSubject\CertificateSubject;
 use phpseclib3\File\X509;
@@ -14,6 +15,7 @@ use function Laravel\Prompts\info;
 class ImportCommand extends BaseCommand
 {
     protected $signature = 'csr:import {pem?} {--id=}';
+
     protected $description = 'Import an external CSR';
 
     public function handle(): int
@@ -24,6 +26,7 @@ class ImportCommand extends BaseCommand
         if ($path) {
             if (! file_exists($path)) {
                 error("File not found: {$path}");
+
                 return self::FAILURE;
             }
             $pem = file_get_contents($path);
@@ -33,15 +36,17 @@ class ImportCommand extends BaseCommand
 
         if (! $pem) {
             error('No PEM data provided.');
+
             return self::FAILURE;
         }
 
         try {
-            $x509 = new X509();
+            $x509 = new X509;
             $x509->loadCSR($pem);
 
             if (! $x509->validateSignature()) {
                 error('CSR signature is invalid.');
+
                 return self::FAILURE;
             }
 
@@ -60,11 +65,11 @@ class ImportCommand extends BaseCommand
 
             if ($keyEntity === null) {
                 // Import public key only
-                $keyEntity = \KDuma\PhpCA\Entity\KeyBuilder::fromExisting($publicKey)->make();
+                $keyEntity = KeyBuilder::fromExisting($publicKey)->make();
                 $ca->keys->save($keyEntity);
             }
 
-            $entity = new CsrEntity();
+            $entity = new CsrEntity;
             $entity->id = $this->option('id');
             $entity->subject = CertificateSubject::fromString($dn);
             $entity->keyId = $keyEntity->id;
@@ -75,6 +80,7 @@ class ImportCommand extends BaseCommand
             $ca->csrs->save($entity);
         } catch (\Throwable $e) {
             error($e->getMessage());
+
             return self::FAILURE;
         }
 

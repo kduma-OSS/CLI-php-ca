@@ -11,8 +11,11 @@ use KDuma\PhpCA\Record\Extension\Template\BaseExtensionTemplate;
 class CertificateTemplateBuilder
 {
     private string $displayName = '';
+
     private ?string $parentId = null;
+
     private ?DateInterval $validity = null;
+
     /** @var BaseExtensionTemplate[] */
     private array $extensions = [];
 
@@ -55,7 +58,7 @@ class CertificateTemplateBuilder
             throw new \LogicException('Template validity is required (or inherit from parent).');
         }
 
-        $entity = new CertificateTemplateEntity();
+        $entity = new CertificateTemplateEntity;
         $entity->id = $this->templateId;
         $entity->displayName = $this->displayName;
         $entity->parentId = $this->parentId;

@@ -14,9 +14,12 @@ use phpseclib3\File\X509;
 class CrlBuilder
 {
     private string|CACertificateEntity|null $caCert = null;
+
     private string|CertificateEntity|null $signerCertificate = null;
+
     /** @var RevocationEntity[] */
     private array $revocations = [];
+
     private ?DateTimeImmutable $nextUpdate = null;
 
     public function __construct(
@@ -38,7 +41,7 @@ class CrlBuilder
     }
 
     /**
-     * @param RevocationEntity[]|RevocationEntity $revocations
+     * @param  RevocationEntity[]|RevocationEntity  $revocations
      */
     public function addRevocations(array|RevocationEntity $revocations): static
     {
@@ -74,7 +77,7 @@ class CrlBuilder
             throw new \LogicException('Signer key must have a private key.');
         }
 
-        $thisUpdate = new DateTimeImmutable();
+        $thisUpdate = new DateTimeImmutable;
 
         // Determine CRL number
         $existingCrls = $this->ca->crls->all();
@@ -87,7 +90,7 @@ class CrlBuilder
         $crlNumber = $maxCrlNumber + 1;
 
         // Build CRL using phpseclib
-        $issuer = new X509();
+        $issuer = new X509;
         $issuer->loadX509($caCertEntity->certificate);
         $issuer->setPrivateKey(KeyHelper::prepareForSigning($privateKey));
 
@@ -96,7 +99,7 @@ class CrlBuilder
             $issuer->setKeyIdentifier(hex2bin($signerCertEntity->subjectKeyIdentifier));
         }
 
-        $crl = new X509();
+        $crl = new X509;
         $crl->setStartDate($thisUpdate->format('D, d M Y H:i:s O'));
         if ($this->nextUpdate !== null) {
             $crl->setEndDate($this->nextUpdate->format('D, d M Y H:i:s O'));
@@ -116,11 +119,11 @@ class CrlBuilder
         $crlPem = $crl->saveCRL($signedCrl);
 
         // Parse signed CRL to extract signature algorithm
-        $parsedCrl = new X509();
+        $parsedCrl = new X509;
         $parsedCrl->loadCRL($crlPem);
         $crlData = $parsedCrl->getCurrentCert();
 
-        $entity = new CrlEntity();
+        $entity = new CrlEntity;
         $entity->id = (string) $crlNumber;
         $entity->signerKeyId = $signerKeyEntity->id;
         $entity->signerCertificateId = $signerCertEntity?->id;

@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 use KDuma\PhpCA\Record\CertificateSubject\CertificateSubject;
 use KDuma\PhpCA\Record\CertificateSubject\DN\CommonName;
-use KDuma\PhpCA\Record\CertificateSubject\DN\Organization;
 use KDuma\PhpCA\Record\CertificateSubject\DN\Country;
-use KDuma\PhpCA\Record\CertificateSubject\DN\State;
-use KDuma\PhpCA\Record\CertificateSubject\DN\Locality;
+use KDuma\PhpCA\Record\CertificateSubject\DN\Organization;
 use KDuma\PhpCA\Record\CertificateSubject\DN\OrganizationalUnit;
 
 test('toString() produces correct DN string from components', function () {

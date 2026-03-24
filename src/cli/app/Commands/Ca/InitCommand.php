@@ -32,16 +32,19 @@ class InitCommand extends BaseCommand
         // Pre-flight checks
         if (count($ca->caCertificates->all()) > 0) {
             error('CA already has certificates. Cannot re-initialize.');
+
             return self::FAILURE;
         }
 
         if (count($ca->templates->all()) > 0) {
             error('CA already has templates. Cannot re-initialize.');
+
             return self::FAILURE;
         }
 
         if ($ca->keys->has('ca')) {
             error('Key "ca" already exists. Cannot re-initialize.');
+
             return self::FAILURE;
         }
 
@@ -59,6 +62,7 @@ class InitCommand extends BaseCommand
         }
         if (! $dn) {
             error('Distinguished Name is required (--dn).');
+
             return self::FAILURE;
         }
 
@@ -102,6 +106,7 @@ class InitCommand extends BaseCommand
 
         if ($keyResult !== self::SUCCESS) {
             error('Failed to create CA key.');
+
             return self::FAILURE;
         }
 

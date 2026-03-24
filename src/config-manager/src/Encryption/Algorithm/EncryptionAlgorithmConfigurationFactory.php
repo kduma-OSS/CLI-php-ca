@@ -38,7 +38,7 @@ class EncryptionAlgorithmConfigurationFactory
     }
 
     /**
-     * @param class-string<BaseEncryptionAlgorithmConfiguration> $class
+     * @param  class-string<BaseEncryptionAlgorithmConfiguration>  $class
      */
     public static function getTypeForClass(string $class): string
     {

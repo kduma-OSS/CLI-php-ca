@@ -38,7 +38,7 @@ class SignerConfigurationFactory
     }
 
     /**
-     * @param class-string<BaseSignerConfiguration> $class
+     * @param  class-string<BaseSignerConfiguration>  $class
      */
     public static function getTypeForClass(string $class): string
     {

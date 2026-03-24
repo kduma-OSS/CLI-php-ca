@@ -17,7 +17,7 @@ class CaConfigurationLoader
             throw new InvalidArgumentException('Configuration must contain an "adapter" section.');
         }
 
-        $factory = new AdapterConfigurationFactory();
+        $factory = new AdapterConfigurationFactory;
         $adapter = $factory->fromArray($data['adapter'], $basePath);
 
         $integrity = null;

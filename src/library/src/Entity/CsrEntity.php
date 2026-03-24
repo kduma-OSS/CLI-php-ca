@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace KDuma\PhpCA\Entity;
 
-use KDuma\PhpCA\Record\CsrRecord;
 use KDuma\PhpCA\Record\CertificateSubject\CertificateSubject;
+use KDuma\PhpCA\Record\CsrRecord;
 use KDuma\PhpCA\Record\Enum\CsrAttachment;
 use KDuma\PhpCA\Record\Extension\BaseExtension;
 use KDuma\SimpleDAL\Typed\Contracts\TypedRecord;
@@ -17,12 +17,20 @@ class CsrEntity extends BaseEntity
 {
     public CertificateSubject $subject {
         get => $this->subject;
-        set { if (isset($this->subject)) { throw new \LogicException('Immutable.'); } $this->subject = $value; }
+        set {
+            if (isset($this->subject)) {
+                throw new \LogicException('Immutable.');
+            } $this->subject = $value;
+        }
     }
 
     public string $keyId {
         get => $this->keyId;
-        set { if (isset($this->keyId)) { throw new \LogicException('Immutable.'); } $this->keyId = $value; }
+        set {
+            if (isset($this->keyId)) {
+                throw new \LogicException('Immutable.');
+            } $this->keyId = $value;
+        }
     }
 
     public ?string $certificateId = null; // mutable — updated when certificate is issued
@@ -30,12 +38,20 @@ class CsrEntity extends BaseEntity
     /** @var BaseExtension[] */
     public array $requestedExtensions = [] {
         get => $this->requestedExtensions;
-        set { if ($this->requestedExtensions !== []) { throw new \LogicException('Immutable.'); } $this->requestedExtensions = $value; }
+        set {
+            if ($this->requestedExtensions !== []) {
+                throw new \LogicException('Immutable.');
+            } $this->requestedExtensions = $value;
+        }
     }
 
     public string $fingerprint {
         get => $this->fingerprint;
-        set { if (isset($this->fingerprint)) { throw new \LogicException('Immutable.'); } $this->fingerprint = $value; }
+        set {
+            if (isset($this->fingerprint)) {
+                throw new \LogicException('Immutable.');
+            } $this->fingerprint = $value;
+        }
     }
 
     private array $_pendingChanges = [];
@@ -45,6 +61,7 @@ class CsrEntity extends BaseEntity
             if (isset($this->_pendingChanges['csr'])) {
                 return $this->_pendingChanges['csr'];
             }
+
             return $this->attachments->get(CsrAttachment::Csr)->contents();
         }
         set {

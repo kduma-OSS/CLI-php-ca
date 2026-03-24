@@ -19,7 +19,7 @@ use KDuma\SimpleDAL\Integrity\Hash\Hasher\Sha512HashingAlgorithm;
 use KDuma\SimpleDAL\Integrity\Sodium\Blake2bHashingAlgorithm;
 
 test('createHasher returns correct implementation', function (string $configClass, string $expectedClass) {
-    $config = new $configClass();
+    $config = new $configClass;
     $hasher = $config->createHasher();
 
     expect($hasher)->toBeInstanceOf(HashingAlgorithmInterface::class)
@@ -35,7 +35,7 @@ test('createHasher returns correct implementation', function (string $configClas
 ]);
 
 test('createHasher produces a functional hasher', function (string $configClass) {
-    $config = new $configClass();
+    $config = new $configClass;
     $hasher = $config->createHasher();
 
     $hash = $hasher->hash('test data');

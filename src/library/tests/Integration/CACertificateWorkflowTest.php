@@ -20,7 +20,7 @@ use League\Flysystem\Local\LocalFilesystemAdapter;
 
 function createTempCaForCACertTests(): CertificationAuthority
 {
-    $tempDir = sys_get_temp_dir() . '/php-ca-test-' . uniqid();
+    $tempDir = sys_get_temp_dir().'/php-ca-test-'.uniqid();
     mkdir($tempDir, 0777, true);
     $filesystem = new Filesystem(new LocalFilesystemAdapter($tempDir));
     $adapter = new FlysystemAdapter($filesystem);

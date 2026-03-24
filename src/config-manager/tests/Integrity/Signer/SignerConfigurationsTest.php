@@ -124,7 +124,7 @@ test('Ed25519 fromArray and toArray', function () {
     $pubB64 = base64_encode($publicKey);
     $secB64 = base64_encode($secretKey);
 
-    $factory = new SignerConfigurationFactory();
+    $factory = new SignerConfigurationFactory;
     $signer = $factory->fromArray([
         'type' => 'ed25519',
         'id' => 'ed-round-trip',
@@ -148,7 +148,7 @@ test('Ed25519 fromArray without secret_key', function () {
     $publicKey = sodium_crypto_sign_publickey($keypair);
     $pubB64 = base64_encode($publicKey);
 
-    $factory = new SignerConfigurationFactory();
+    $factory = new SignerConfigurationFactory;
     $signer = $factory->fromArray([
         'type' => 'ed25519',
         'id' => 'ed-verify-only',
@@ -167,7 +167,7 @@ test('Ed25519 fromArray without secret_key', function () {
 test('RSA signer fromArray and toArray', function () {
     $rsaKey = RSA::createKey(2048)->toString('PKCS8');
 
-    $factory = new SignerConfigurationFactory();
+    $factory = new SignerConfigurationFactory;
     $signer = $factory->fromArray([
         'type' => 'rsa',
         'id' => 'rsa-signer',
@@ -244,7 +244,7 @@ test('RSA signer with pss padding', function () {
 test('RSA signer fromArray with all options', function () {
     $rsaKey = RSA::createKey(2048)->toString('PKCS8');
 
-    $factory = new SignerConfigurationFactory();
+    $factory = new SignerConfigurationFactory;
     $signer = $factory->fromArray([
         'type' => 'rsa',
         'id' => 'rsa-full',
@@ -281,7 +281,7 @@ test('RSA signer throws on unknown padding', function () {
 test('EC signer fromArray and toArray', function () {
     $ecKey = EC::createKey('secp256r1')->toString('PKCS8');
 
-    $factory = new SignerConfigurationFactory();
+    $factory = new SignerConfigurationFactory;
     $signer = $factory->fromArray([
         'type' => 'ec',
         'id' => 'ec-signer',
@@ -334,7 +334,7 @@ test('EC signer can sign and verify', function () {
 test('DSA signer fromArray and toArray', function () {
     $dsaKey = DSA::createKey(2048, 256)->toString('PKCS8');
 
-    $factory = new SignerConfigurationFactory();
+    $factory = new SignerConfigurationFactory;
     $signer = $factory->fromArray([
         'type' => 'dsa',
         'id' => 'dsa-signer',
@@ -385,7 +385,7 @@ test('DSA signer can sign and verify', function () {
 // ── HMAC fromArray/toArray for sha1 and sha512 ──
 
 test('HmacSha1 fromArray and toArray', function () {
-    $factory = new SignerConfigurationFactory();
+    $factory = new SignerConfigurationFactory;
     $signer = $factory->fromArray([
         'type' => 'hmac-sha1',
         'id' => 'hmac1-test',
@@ -403,7 +403,7 @@ test('HmacSha1 fromArray and toArray', function () {
 });
 
 test('HmacSha512 fromArray and toArray', function () {
-    $factory = new SignerConfigurationFactory();
+    $factory = new SignerConfigurationFactory;
     $signer = $factory->fromArray([
         'type' => 'hmac-sha512',
         'id' => 'hmac512-test',

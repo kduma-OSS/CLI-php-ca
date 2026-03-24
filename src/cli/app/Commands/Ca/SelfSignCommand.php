@@ -15,6 +15,7 @@ use function Laravel\Prompts\text;
 class SelfSignCommand extends BaseCommand
 {
     protected $signature = 'ca:self-sign {--id=} {--key=} {--dn=} {--validity=P20Y} {--activate}';
+
     protected $description = 'Create a self-signed root CA certificate';
 
     public function handle(): int
@@ -28,6 +29,7 @@ class SelfSignCommand extends BaseCommand
             $validity = new DateInterval($this->option('validity'));
         } catch (\Exception) {
             error('Invalid validity interval.');
+
             return self::FAILURE;
         }
 
@@ -43,6 +45,7 @@ class SelfSignCommand extends BaseCommand
                 ->save();
         } catch (\Throwable $e) {
             error($e->getMessage());
+
             return self::FAILURE;
         }
 

@@ -35,12 +35,12 @@ class ExistsCommand extends Command
         $id = $this->argument('id');
 
         if ($ca->keys->has($id)) {
-            info("Key exists.");
+            info('Key exists.');
 
             return self::SUCCESS;
         }
 
-        error("Key not found.");
+        error('Key not found.');
 
         return self::FAILURE;
     }

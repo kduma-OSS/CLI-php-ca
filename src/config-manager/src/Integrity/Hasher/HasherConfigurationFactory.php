@@ -38,7 +38,7 @@ class HasherConfigurationFactory
     }
 
     /**
-     * @param class-string<BaseHasherConfiguration> $class
+     * @param  class-string<BaseHasherConfiguration>  $class
      */
     public static function getTypeForClass(string $class): string
     {

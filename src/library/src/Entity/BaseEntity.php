@@ -13,23 +13,23 @@ use KDuma\SimpleDAL\Typed\Store\TypedAttachmentStore;
  */
 abstract class BaseEntity
 {
-    public function __construct()
-    {}
-
+    public function __construct() {}
 
     /**
      * @internal
-     * @param static $entity
-     * @param TRecord $record
+     *
+     * @param  static  $entity
+     * @param  TRecord  $record
      */
-    abstract static protected function _populateFromRecord(BaseEntity $entity, TypedRecord $record): void;
+    abstract protected static function _populateFromRecord(BaseEntity $entity, TypedRecord $record): void;
 
     /**
      * @internal
-     * @param static $entity
-     * @param TRecord $record
+     *
+     * @param  static  $entity
+     * @param  TRecord  $record
      */
-    abstract static protected function _populateToRecord(BaseEntity $entity, TypedRecord $record): void;
+    abstract protected static function _populateToRecord(BaseEntity $entity, TypedRecord $record): void;
 
     /**
      * Is the entity already in the database?
@@ -43,7 +43,7 @@ abstract class BaseEntity
             return $this->id;
         }
         set {
-            if($this->persisted) {
+            if ($this->persisted) {
                 throw new \LogicException('Cannot set ID on an existing entity.');
             }
 
@@ -67,10 +67,12 @@ abstract class BaseEntity
      * @var TRecord|null
      */
     private ?TypedRecord $existingRecord = null;
+
     private ?TypedAttachmentStore $_attachments = null;
+
     protected TypedAttachmentStore $attachments {
         get {
-            if (!$this->persisted) {
+            if (! $this->persisted) {
                 throw new \LogicException('Cannot get attachments on an entity that is not persisted.');
             }
 
@@ -80,13 +82,12 @@ abstract class BaseEntity
 
     /**
      * @internal
-     * @param TRecord $record
-     * @param TypedAttachmentStore $attachments
-     * @return static
+     *
+     * @param  TRecord  $record
      */
-    static public function _fromRecord(TypedRecord $record, TypedAttachmentStore $attachments): static
+    public static function _fromRecord(TypedRecord $record, TypedAttachmentStore $attachments): static
     {
-        $entity = new static();
+        $entity = new static;
 
         $entity->_updateExistingRecord($record, $attachments);
 
@@ -97,11 +98,12 @@ abstract class BaseEntity
 
     /**
      * @internal
+     *
      * @return TRecord
      */
     public function _getUpdatedRecord(): TypedRecord
     {
-        if(!$this->persisted) {
+        if (! $this->persisted) {
             throw new \LogicException('Cannot update a non-existing record');
         }
 
@@ -114,24 +116,24 @@ abstract class BaseEntity
 
     /**
      * @internal
-     * @param TRecord $record
+     *
+     * @param  TRecord  $record
      * @return TRecord
      */
-    public function _getNewRecord(TypedRecord $record): TypedRecord {
+    public function _getNewRecord(TypedRecord $record): TypedRecord
+    {
         static::_populateToRecord($this, $record);
 
         return $record;
     }
 
     /** @internal */
-    public function _afterPersisted(): void {
-
-    }
+    public function _afterPersisted(): void {}
 
     /**
      * @internal
-     * @param TRecord $record
-     * @param TypedAttachmentStore $attachments
+     *
+     * @param  TRecord  $record
      */
     public function _updateExistingRecord(TypedRecord $record, TypedAttachmentStore $attachments): void
     {

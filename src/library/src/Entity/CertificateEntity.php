@@ -165,6 +165,7 @@ class CertificateEntity extends BaseEntity
             if (isset($this->_pendingChanges['certificate'])) {
                 return $this->_pendingChanges['certificate'];
             }
+
             return $this->attachments->get(CertificateAttachment::Certificate)->contents();
         }
         set {
@@ -194,8 +195,8 @@ class CertificateEntity extends BaseEntity
     }
 
     /**
-     * @param CertificateEntity $entity
-     * @param CertificateRecord $record
+     * @param  CertificateEntity  $entity
+     * @param  CertificateRecord  $record
      */
     protected static function _populateFromRecord(BaseEntity $entity, TypedRecord $record): void
     {
@@ -219,8 +220,8 @@ class CertificateEntity extends BaseEntity
     }
 
     /**
-     * @param CertificateEntity $entity
-     * @param CertificateRecord $record
+     * @param  CertificateEntity  $entity
+     * @param  CertificateRecord  $record
      */
     protected static function _populateToRecord(BaseEntity $entity, TypedRecord $record): void
     {

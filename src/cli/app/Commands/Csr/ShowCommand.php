@@ -9,6 +9,7 @@ use function Laravel\Prompts\error;
 class ShowCommand extends BaseCommand
 {
     protected $signature = 'csr:show {id}';
+
     protected $description = 'Show CSR details';
 
     public function handle(): int
@@ -18,6 +19,7 @@ class ShowCommand extends BaseCommand
 
         if ($csr === null) {
             error('CSR not found.');
+
             return self::FAILURE;
         }
 

@@ -9,7 +9,7 @@ use KDuma\PhpCA\ConfigManager\Adapter\SqliteAdapterConfiguration;
 use KDuma\PhpCA\ConfigManager\Adapter\ZipAdapterConfiguration;
 
 it('returns all registered adapter types', function () {
-    $factory = new AdapterConfigurationFactory();
+    $factory = new AdapterConfigurationFactory;
     $types = $factory->getAdapterTypes();
 
     expect($types)->toHaveKeys(['directory', 'sqlite', 'zip', 'mysql'])
@@ -20,7 +20,7 @@ it('returns all registered adapter types', function () {
 });
 
 it('creates correct class for each type', function (string $type, string $expectedClass) {
-    $factory = new AdapterConfigurationFactory();
+    $factory = new AdapterConfigurationFactory;
     $adapter = $factory->fromArray(['type' => $type, 'path' => './data'], '/base');
 
     expect($adapter)->toBeInstanceOf($expectedClass);
@@ -31,7 +31,7 @@ it('creates correct class for each type', function (string $type, string $expect
 ]);
 
 it('throws on unknown type', function () {
-    $factory = new AdapterConfigurationFactory();
+    $factory = new AdapterConfigurationFactory;
     $factory->fromArray(['type' => 'mongodb'], '/base');
 })->throws(InvalidArgumentException::class, 'Unknown adapter type "mongodb"');
 

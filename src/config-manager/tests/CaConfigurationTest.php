@@ -5,17 +5,17 @@ declare(strict_types=1);
 use KDuma\PhpCA\CertificationAuthority;
 use KDuma\PhpCA\ConfigManager\Adapter\DirectoryAdapterConfiguration;
 use KDuma\PhpCA\ConfigManager\CaConfiguration;
+use KDuma\PhpCA\ConfigManager\Encryption\Algorithm\SecretBoxAlgorithmConfiguration;
 use KDuma\PhpCA\ConfigManager\Encryption\EncryptionConfiguration;
 use KDuma\PhpCA\ConfigManager\Encryption\EncryptionRuleConfiguration;
-use KDuma\PhpCA\ConfigManager\Encryption\Algorithm\SecretBoxAlgorithmConfiguration;
-use KDuma\PhpCA\ConfigManager\Integrity\IntegrityConfiguration;
 use KDuma\PhpCA\ConfigManager\Integrity\Hasher\Sha256HasherConfiguration;
+use KDuma\PhpCA\ConfigManager\Integrity\IntegrityConfiguration;
 use KDuma\PhpCA\ConfigManager\Integrity\Signer\HmacSha256SignerConfiguration;
 use KDuma\PhpCA\ConfigManager\ValueProvider\StringValueProvider;
 
 function recursiveDelete(string $dir): void
 {
-    if (!is_dir($dir)) {
+    if (! is_dir($dir)) {
         return;
     }
     $items = new RecursiveIteratorIterator(
@@ -33,7 +33,7 @@ function recursiveDelete(string $dir): void
 }
 
 test('createCertificationAuthority with directory adapter only', function () {
-    $tmpDir = sys_get_temp_dir() . '/ca-test-' . uniqid();
+    $tmpDir = sys_get_temp_dir().'/ca-test-'.uniqid();
     mkdir($tmpDir, 0777, true);
 
     try {
@@ -49,12 +49,12 @@ test('createCertificationAuthority with directory adapter only', function () {
 });
 
 test('createCertificationAuthority with integrity configuration', function () {
-    $tmpDir = sys_get_temp_dir() . '/ca-test-' . uniqid();
+    $tmpDir = sys_get_temp_dir().'/ca-test-'.uniqid();
     mkdir($tmpDir, 0777, true);
 
     try {
         $adapter = new DirectoryAdapterConfiguration(path: $tmpDir);
-        $hasher = new Sha256HasherConfiguration();
+        $hasher = new Sha256HasherConfiguration;
         $signer = new HmacSha256SignerConfiguration(
             id: 'test-signer',
             secret: new StringValueProvider('my-secret-key-for-hmac'),
@@ -71,7 +71,7 @@ test('createCertificationAuthority with integrity configuration', function () {
 });
 
 test('createCertificationAuthority with encryption configuration', function () {
-    $tmpDir = sys_get_temp_dir() . '/ca-test-' . uniqid();
+    $tmpDir = sys_get_temp_dir().'/ca-test-'.uniqid();
     mkdir($tmpDir, 0777, true);
 
     try {
@@ -97,13 +97,13 @@ test('createCertificationAuthority with encryption configuration', function () {
 });
 
 test('createCertificationAuthority with both integrity and encryption', function () {
-    $tmpDir = sys_get_temp_dir() . '/ca-test-' . uniqid();
+    $tmpDir = sys_get_temp_dir().'/ca-test-'.uniqid();
     mkdir($tmpDir, 0777, true);
 
     try {
         $adapter = new DirectoryAdapterConfiguration(path: $tmpDir);
 
-        $hasher = new Sha256HasherConfiguration();
+        $hasher = new Sha256HasherConfiguration;
         $integrity = new IntegrityConfiguration(hasher: $hasher);
 
         $key = str_repeat('b', SODIUM_CRYPTO_SECRETBOX_KEYBYTES);

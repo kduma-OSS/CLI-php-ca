@@ -13,12 +13,12 @@ readonly class Blake2bHasherConfiguration extends BaseHasherConfiguration
 {
     public function createHasher(): HashingAlgorithmInterface
     {
-        return new Blake2bHashingAlgorithm();
+        return new Blake2bHashingAlgorithm;
     }
 
     public static function fromArray(array $data): static
     {
-        return new static();
+        return new static;
     }
 
     public function toArray(): array

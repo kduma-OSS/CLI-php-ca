@@ -47,7 +47,7 @@ test('mixed SAN types', function () {
 });
 
 test('isCritical defaults to false', function () {
-    $ext = new SubjectAltNameExtension();
+    $ext = new SubjectAltNameExtension;
 
     expect($ext->isCritical())->toBeFalse();
 });

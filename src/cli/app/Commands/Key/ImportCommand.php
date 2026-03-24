@@ -7,7 +7,6 @@ use KDuma\PhpCA\Entity\KeyBuilder;
 use LaravelZero\Framework\Commands\Command;
 
 use function Laravel\Prompts\error;
-use function Laravel\Prompts\info;
 
 class ImportCommand extends Command
 {
@@ -41,7 +40,7 @@ class ImportCommand extends Command
             $content = stream_get_contents(STDIN);
         }
 
-        if (!$content) {
+        if (! $content) {
             error('No PEM data provided.');
 
             return self::FAILURE;

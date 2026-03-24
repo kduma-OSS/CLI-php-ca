@@ -9,8 +9,8 @@ use KDuma\PhpCA\Record\Extension\BaseExtension;
 readonly class AuthorityInfoAccessExtension extends BaseExtension
 {
     /**
-     * @param string[] $ocspUris
-     * @param string[] $caIssuersUris
+     * @param  string[]  $ocspUris
+     * @param  string[]  $caIssuersUris
      */
     public function __construct(
         public array $ocspUris = [],

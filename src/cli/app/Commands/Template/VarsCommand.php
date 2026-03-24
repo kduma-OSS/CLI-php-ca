@@ -12,6 +12,7 @@ use function Laravel\Prompts\info;
 class VarsCommand extends BaseCommand
 {
     protected $signature = 'template:vars {id}';
+
     protected $description = 'List input variables required by a template';
 
     public function handle(): int
@@ -21,6 +22,7 @@ class VarsCommand extends BaseCommand
 
         if ($template === null) {
             error('Template not found.');
+
             return self::FAILURE;
         }
 
@@ -42,6 +44,7 @@ class VarsCommand extends BaseCommand
 
         if (empty($allInputs)) {
             info('Template has no input variables.');
+
             return self::SUCCESS;
         }
 

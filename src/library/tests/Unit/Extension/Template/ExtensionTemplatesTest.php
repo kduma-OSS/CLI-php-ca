@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-use KDuma\PhpCA\Record\Extension\Template\Templates\BasicConstraintsExtensionTemplate;
-use KDuma\PhpCA\Record\Extension\Template\Templates\KeyUsageExtensionTemplate;
-use KDuma\PhpCA\Record\Extension\Template\Templates\ExtKeyUsageExtensionTemplate;
-use KDuma\PhpCA\Record\Extension\Template\Templates\SubjectAltNameExtensionTemplate;
-use KDuma\PhpCA\Record\Extension\Template\Templates\CrlDistributionPointsExtensionTemplate;
-use KDuma\PhpCA\Record\Extension\Template\Templates\AuthorityInfoAccessExtensionTemplate;
-use KDuma\PhpCA\Record\Extension\Template\Templates\SubjectKeyIdentifierExtensionTemplate;
-use KDuma\PhpCA\Record\Extension\Template\Templates\AuthorityKeyIdentifierExtensionTemplate;
-use KDuma\PhpCA\Record\Extension\Template\Templates\PrivateKeyUsagePeriodExtensionTemplate;
-use KDuma\PhpCA\Record\Extension\Template\Templates\NetscapeCommentExtensionTemplate;
-use KDuma\PhpCA\Record\Extension\Resolver\LiteralResolver;
-use KDuma\PhpCA\Record\Extension\Resolver\SubjectKeyFingerprintResolver;
 use KDuma\PhpCA\Record\Extension\Resolver\CaKeyFingerprintResolver;
+use KDuma\PhpCA\Record\Extension\Resolver\LiteralResolver;
 use KDuma\PhpCA\Record\Extension\Resolver\RelativeDateResolver;
+use KDuma\PhpCA\Record\Extension\Resolver\SubjectKeyFingerprintResolver;
+use KDuma\PhpCA\Record\Extension\Template\Templates\AuthorityInfoAccessExtensionTemplate;
+use KDuma\PhpCA\Record\Extension\Template\Templates\AuthorityKeyIdentifierExtensionTemplate;
+use KDuma\PhpCA\Record\Extension\Template\Templates\BasicConstraintsExtensionTemplate;
+use KDuma\PhpCA\Record\Extension\Template\Templates\CrlDistributionPointsExtensionTemplate;
+use KDuma\PhpCA\Record\Extension\Template\Templates\ExtKeyUsageExtensionTemplate;
+use KDuma\PhpCA\Record\Extension\Template\Templates\KeyUsageExtensionTemplate;
+use KDuma\PhpCA\Record\Extension\Template\Templates\NetscapeCommentExtensionTemplate;
+use KDuma\PhpCA\Record\Extension\Template\Templates\PrivateKeyUsagePeriodExtensionTemplate;
+use KDuma\PhpCA\Record\Extension\Template\Templates\SubjectAltNameExtensionTemplate;
+use KDuma\PhpCA\Record\Extension\Template\Templates\SubjectKeyIdentifierExtensionTemplate;
 
 // --- BasicConstraintsExtensionTemplate ---
 
@@ -24,7 +24,7 @@ test('BasicConstraintsExtensionTemplate: name returns correct name', function ()
 });
 
 test('BasicConstraintsExtensionTemplate: default values', function () {
-    $template = new BasicConstraintsExtensionTemplate();
+    $template = new BasicConstraintsExtensionTemplate;
 
     expect($template->ca)->toBeFalse()
         ->and($template->pathLenConstraint)->toBeNull()
@@ -89,7 +89,7 @@ test('KeyUsageExtensionTemplate: name returns correct name', function () {
 });
 
 test('KeyUsageExtensionTemplate: default values', function () {
-    $template = new KeyUsageExtensionTemplate();
+    $template = new KeyUsageExtensionTemplate;
 
     expect($template->digitalSignature)->toBeFalse()
         ->and($template->nonRepudiation)->toBeFalse()
@@ -256,7 +256,7 @@ test('SubjectKeyIdentifierExtensionTemplate: name returns correct name', functio
 
 test('SubjectKeyIdentifierExtensionTemplate: toArray/fromArray round-trip with default resolver', function () {
     $template = new SubjectKeyIdentifierExtensionTemplate(
-        keyIdentifier: new SubjectKeyFingerprintResolver(),
+        keyIdentifier: new SubjectKeyFingerprintResolver,
     );
 
     $array = $template->toArray();
@@ -284,7 +284,7 @@ test('AuthorityKeyIdentifierExtensionTemplate: name returns correct name', funct
 
 test('AuthorityKeyIdentifierExtensionTemplate: toArray/fromArray round-trip with default resolver', function () {
     $template = new AuthorityKeyIdentifierExtensionTemplate(
-        keyIdentifier: new CaKeyFingerprintResolver(),
+        keyIdentifier: new CaKeyFingerprintResolver,
     );
 
     $array = $template->toArray();

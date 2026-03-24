@@ -12,6 +12,7 @@ use function Laravel\Prompts\text;
 class CreateCommand extends BaseCommand
 {
     protected $signature = 'ca:csr:create {--id=} {--key=} {--dn=}';
+
     protected $description = 'Create a CSR for the CA';
 
     public function handle(): int
@@ -33,6 +34,7 @@ class CreateCommand extends BaseCommand
             $csr = $builder->save();
         } catch (\Throwable $e) {
             error($e->getMessage());
+
             return self::FAILURE;
         }
 

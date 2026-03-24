@@ -54,7 +54,7 @@ class AuthorityKeyIdentifierExtensionTemplate extends BaseExtensionTemplate
 
         $resolver = isset($data['key_identifier'])
             ? ExtensionValueResolverFactory::fromMixed($data['key_identifier'])
-            : new CaKeyFingerprintResolver();
+            : new CaKeyFingerprintResolver;
 
         if (! $resolver instanceof ExtensionValueResolver) {
             throw new \InvalidArgumentException('authority-key-identifier: "key_identifier" must be a string or resolver object.');

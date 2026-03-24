@@ -28,7 +28,7 @@ readonly class HmacSha512SignerConfiguration extends BaseSignerConfiguration
 
     public static function fromArray(array $data, string $basePath): static
     {
-        $factory = new ValueProviderFactory();
+        $factory = new ValueProviderFactory;
 
         return new static(
             id: $data['id'] ?? throw new \InvalidArgumentException('HMAC signer requires "id".'),

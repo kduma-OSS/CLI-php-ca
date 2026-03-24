@@ -54,7 +54,7 @@ test('AES fromArray and toArray', function () {
     $key = random_bytes(32);
     $keyB64 = base64_encode($key);
 
-    $factory = new EncryptionAlgorithmConfigurationFactory();
+    $factory = new EncryptionAlgorithmConfigurationFactory;
     $algo = $factory->fromArray([
         'type' => 'aes',
         'id' => 'aes-test',
@@ -109,7 +109,7 @@ test('AES can encrypt and decrypt', function () {
 test('AES default mode is ctr', function () {
     $key = random_bytes(32);
 
-    $factory = new EncryptionAlgorithmConfigurationFactory();
+    $factory = new EncryptionAlgorithmConfigurationFactory;
     $algo = $factory->fromArray([
         'type' => 'aes',
         'id' => 'aes-default',
@@ -125,7 +125,7 @@ test('AES default mode is ctr', function () {
 test('RSA encryption fromArray and toArray', function () {
     $rsaKey = RSA::createKey(2048)->toString('PKCS8');
 
-    $factory = new EncryptionAlgorithmConfigurationFactory();
+    $factory = new EncryptionAlgorithmConfigurationFactory;
     $algo = $factory->fromArray([
         'type' => 'rsa',
         'id' => 'rsa-enc-test',
@@ -150,7 +150,7 @@ test('RSA encryption fromArray and toArray', function () {
 test('RSA encryption fromArray with all options', function () {
     $rsaKey = RSA::createKey(2048)->toString('PKCS8');
 
-    $factory = new EncryptionAlgorithmConfigurationFactory();
+    $factory = new EncryptionAlgorithmConfigurationFactory;
     $algo = $factory->fromArray([
         'type' => 'rsa',
         'id' => 'rsa-full',
@@ -265,7 +265,7 @@ test('SealedBox fromArray and toArray', function () {
     $pubB64 = base64_encode($publicKey);
     $secB64 = base64_encode($secretKey);
 
-    $factory = new EncryptionAlgorithmConfigurationFactory();
+    $factory = new EncryptionAlgorithmConfigurationFactory;
     $algo = $factory->fromArray([
         'type' => 'sealed-box',
         'id' => 'sb-test',
@@ -289,7 +289,7 @@ test('SealedBox fromArray without secret_key', function () {
     $publicKey = sodium_crypto_box_publickey($keypair);
     $pubB64 = base64_encode($publicKey);
 
-    $factory = new EncryptionAlgorithmConfigurationFactory();
+    $factory = new EncryptionAlgorithmConfigurationFactory;
     $algo = $factory->fromArray([
         'type' => 'sealed-box',
         'id' => 'sb-encrypt-only',
@@ -345,7 +345,7 @@ test('SealedBox can encrypt and decrypt', function () {
 test('SecretBox fromArray with string shorthand', function () {
     $key = str_repeat('x', SODIUM_CRYPTO_SECRETBOX_KEYBYTES);
 
-    $factory = new EncryptionAlgorithmConfigurationFactory();
+    $factory = new EncryptionAlgorithmConfigurationFactory;
     $algo = $factory->fromArray([
         'type' => 'secret-box',
         'id' => 'sb-shorthand',

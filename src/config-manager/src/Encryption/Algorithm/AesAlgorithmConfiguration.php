@@ -35,7 +35,7 @@ readonly class AesAlgorithmConfiguration extends BaseEncryptionAlgorithmConfigur
 
     public static function fromArray(array $data, string $basePath): static
     {
-        $factory = new ValueProviderFactory();
+        $factory = new ValueProviderFactory;
 
         return new static(
             id: $data['id'] ?? throw new \InvalidArgumentException('AES requires "id".'),

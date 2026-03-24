@@ -22,7 +22,7 @@ it('returns correct array structure', function () {
 });
 
 it('creates a FlysystemAdapter', function () {
-    $dir = sys_get_temp_dir() . '/php-ca-test-' . uniqid();
+    $dir = sys_get_temp_dir().'/php-ca-test-'.uniqid();
     mkdir($dir, 0755, true);
 
     try {

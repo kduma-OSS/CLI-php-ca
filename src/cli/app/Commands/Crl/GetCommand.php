@@ -9,6 +9,7 @@ use function Laravel\Prompts\error;
 class GetCommand extends BaseCommand
 {
     protected $signature = 'crl:get {id}';
+
     protected $description = 'Output CRL PEM';
 
     public function handle(): int
@@ -18,6 +19,7 @@ class GetCommand extends BaseCommand
 
         if ($crl === null) {
             error('CRL not found.');
+
             return self::FAILURE;
         }
 

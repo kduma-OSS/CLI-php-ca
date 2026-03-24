@@ -13,6 +13,7 @@ use function Laravel\Prompts\text;
 class IssueCommand extends BaseCommand
 {
     protected $signature = 'certificate:issue {--template=} {--key=} {--dn=} {--ca-cert=} {--ca-key=} {--var=*}';
+
     protected $description = 'Issue a certificate from a template and key';
 
     public function handle(): int
@@ -26,12 +27,14 @@ class IssueCommand extends BaseCommand
         $caCertId = $this->option('ca-cert') ?? $ca->state->getActiveCaCertificateId();
         if ($caCertId === null) {
             error('No active CA certificate. Specify --ca-cert or activate one with ca:activate.');
+
             return self::FAILURE;
         }
 
         $caCert = $ca->caCertificates->findOrNull($caCertId);
         if ($caCert === null) {
             error("CA certificate \"{$caCertId}\" not found.");
+
             return self::FAILURE;
         }
 
@@ -51,6 +54,7 @@ class IssueCommand extends BaseCommand
                 ->save();
         } catch (\Throwable $e) {
             error($e->getMessage());
+
             return self::FAILURE;
         }
 

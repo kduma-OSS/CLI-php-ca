@@ -9,10 +9,10 @@ use KDuma\PhpCA\Record\Extension\BaseExtension;
 readonly class SubjectAltNameExtension extends BaseExtension
 {
     /**
-     * @param string[] $dnsNames
-     * @param string[] $ipAddresses
-     * @param string[] $emails
-     * @param string[] $uris
+     * @param  string[]  $dnsNames
+     * @param  string[]  $ipAddresses
+     * @param  string[]  $emails
+     * @param  string[]  $uris
      */
     public function __construct(
         public array $dnsNames = [],

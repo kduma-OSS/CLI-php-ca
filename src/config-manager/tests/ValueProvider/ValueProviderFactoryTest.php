@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 use KDuma\PhpCA\ConfigManager\ValueProvider\Base64ValueProvider;
 use KDuma\PhpCA\ConfigManager\ValueProvider\EnvValueProvider;
-use KDuma\PhpCA\ConfigManager\ValueProvider\FileValueProvider;
 use KDuma\PhpCA\ConfigManager\ValueProvider\ExplodeValueProvider;
+use KDuma\PhpCA\ConfigManager\ValueProvider\FileValueProvider;
 use KDuma\PhpCA\ConfigManager\ValueProvider\FirstValueProvider;
 use KDuma\PhpCA\ConfigManager\ValueProvider\JsonValueProvider;
-use KDuma\PhpCA\ConfigManager\ValueProvider\ValueProviderFactory;
 use KDuma\PhpCA\ConfigManager\ValueProvider\StringValueProvider;
+use KDuma\PhpCA\ConfigManager\ValueProvider\ValueProviderFactory;
 
 it('discovers all key discovery types', function () {
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $types = $factory->getTypes();
 
     expect($types)->toHaveKeys(['string', 'base64', 'env', 'file', 'first', 'explode', 'json']);
 });
 
 it('creates StringValueProvider', function () {
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray(['type' => 'string', 'value' => 'my_secret'], '/base');
 
     expect($kd)->toBeInstanceOf(StringValueProvider::class)
@@ -27,7 +27,7 @@ it('creates StringValueProvider', function () {
 });
 
 it('creates Base64ValueProvider', function () {
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray(['type' => 'base64', 'value' => base64_encode('raw_bytes')], '/base');
 
     expect($kd)->toBeInstanceOf(Base64ValueProvider::class)
@@ -35,7 +35,7 @@ it('creates Base64ValueProvider', function () {
 });
 
 it('creates EnvValueProvider', function () {
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray(['type' => 'env', 'variable' => 'TEST_KEY_VAR'], '/base');
 
     expect($kd)->toBeInstanceOf(EnvValueProvider::class)
@@ -43,7 +43,7 @@ it('creates EnvValueProvider', function () {
 });
 
 it('creates FileValueProvider with resolved path', function () {
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray(['type' => 'file', 'path' => './keys/secret.key'], '/home/user');
 
     expect($kd)->toBeInstanceOf(FileValueProvider::class)
@@ -51,19 +51,19 @@ it('creates FileValueProvider with resolved path', function () {
 });
 
 it('throws on unknown type', function () {
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $factory->fromArray(['type' => 'vault'], '/base');
 })->throws(InvalidArgumentException::class, 'Unknown value provider type "vault"');
 
 it('round-trips string key discovery to plain string', function () {
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray(['type' => 'string', 'value' => 'test'], '/base');
 
     expect($kd->toArray())->toBe('test');
 });
 
 it('creates StringValueProvider from plain string', function () {
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray('my_secret', '/base');
 
     expect($kd)->toBeInstanceOf(StringValueProvider::class)
@@ -73,14 +73,14 @@ it('creates StringValueProvider from plain string', function () {
 
 it('round-trips base64 key discovery', function () {
     $encoded = base64_encode('test');
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray(['type' => 'base64', 'value' => $encoded], '/base');
 
     expect($kd->toArray())->toBe(['type' => 'base64', 'value' => $encoded]);
 });
 
 it('creates Base64ValueProvider with nested ValueProvider', function () {
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray([
         'type' => 'base64',
         'value' => ['type' => 'string', 'value' => base64_encode('nested_bytes')],
@@ -92,9 +92,9 @@ it('creates Base64ValueProvider with nested ValueProvider', function () {
 });
 
 it('creates Base64ValueProvider with nested env', function () {
-    putenv('TEST_B64_KEY=' . base64_encode('from_env'));
+    putenv('TEST_B64_KEY='.base64_encode('from_env'));
 
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray([
         'type' => 'base64',
         'value' => ['type' => 'env', 'variable' => 'TEST_B64_KEY'],
@@ -111,7 +111,7 @@ it('round-trips base64 with nested key discovery', function () {
         'value' => ['type' => 'env', 'variable' => 'MY_B64_KEY'],
     ];
 
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray($input, '/base');
 
     expect($kd->toArray())->toBe($input);
@@ -121,7 +121,7 @@ it('first key discovery resolves first successful candidate', function () {
     putenv('TEST_FIRST_A=value_a');
     putenv('TEST_FIRST_B=value_b');
 
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray([
         'type' => 'first',
         'candidates' => [
@@ -140,7 +140,7 @@ it('first key discovery resolves first successful candidate', function () {
 it('first key discovery skips failing candidates', function () {
     putenv('TEST_FIRST_FALLBACK=fallback_value');
 
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray([
         'type' => 'first',
         'candidates' => [
@@ -155,7 +155,7 @@ it('first key discovery skips failing candidates', function () {
 });
 
 it('first key discovery throws when none resolve', function () {
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray([
         'type' => 'first',
         'candidates' => [
@@ -176,14 +176,14 @@ it('round-trips first key discovery', function () {
         ],
     ];
 
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray($input, '/base');
 
     expect($kd->toArray())->toBe($input);
 });
 
 it('explode extracts part by index', function () {
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray([
         'type' => 'explode',
         'index' => 0,
@@ -196,7 +196,7 @@ it('explode extracts part by index', function () {
 });
 
 it('explode extracts second part', function () {
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray([
         'type' => 'explode',
         'index' => 1,
@@ -210,7 +210,7 @@ it('explode extracts second part', function () {
 it('explode works with nested env key discovery', function () {
     putenv('TEST_CREDENTIALS=admin:s3cret');
 
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray([
         'type' => 'explode',
         'index' => 1,
@@ -224,7 +224,7 @@ it('explode works with nested env key discovery', function () {
 });
 
 it('explode throws on out-of-bounds index', function () {
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray([
         'type' => 'explode',
         'index' => 5,
@@ -243,14 +243,14 @@ it('round-trips explode key discovery', function () {
         'value' => ['type' => 'env', 'variable' => 'CREDS'],
     ];
 
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray($input, '/base');
 
     expect($kd->toArray())->toBe($input);
 });
 
 it('round-trips explode with string shorthand value', function () {
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray([
         'type' => 'explode',
         'index' => 0,
@@ -269,7 +269,7 @@ it('round-trips explode with string shorthand value', function () {
 it('json extracts nested object value', function () {
     $json = json_encode(['credentials' => ['password' => 's3cret']]);
 
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray([
         'type' => 'json',
         'path' => 'credentials.password',
@@ -283,7 +283,7 @@ it('json extracts nested object value', function () {
 it('json extracts array index value', function () {
     $json = json_encode(['users' => [['key' => 'first'], ['key' => 'second']]]);
 
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray([
         'type' => 'json',
         'path' => 'users.1.key',
@@ -295,9 +295,9 @@ it('json extracts array index value', function () {
 
 it('json works with nested env key discovery', function () {
     $json = json_encode(['db' => ['pass' => 'from_env']]);
-    putenv('TEST_JSON_CONFIG=' . $json);
+    putenv('TEST_JSON_CONFIG='.$json);
 
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray([
         'type' => 'json',
         'path' => 'db.pass',
@@ -312,7 +312,7 @@ it('json works with nested env key discovery', function () {
 it('json throws on missing path', function () {
     $json = json_encode(['a' => 'b']);
 
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray([
         'type' => 'json',
         'path' => 'missing.path',
@@ -325,7 +325,7 @@ it('json throws on missing path', function () {
 it('json throws on non-string value at path', function () {
     $json = json_encode(['data' => ['nested' => ['a' => 1, 'b' => 2]]]);
 
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray([
         'type' => 'json',
         'path' => 'data.nested',
@@ -342,7 +342,7 @@ it('round-trips json key discovery', function () {
         'value' => ['type' => 'env', 'variable' => 'CONFIG_JSON'],
     ];
 
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray($input, '/base');
 
     expect($kd->toArray())->toBe($input);
@@ -351,7 +351,7 @@ it('round-trips json key discovery', function () {
 it('round-trips json with string shorthand value', function () {
     $json = json_encode(['key' => 'val']);
 
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray([
         'type' => 'json',
         'path' => 'key',
@@ -366,14 +366,14 @@ it('round-trips json with string shorthand value', function () {
 });
 
 it('round-trips env key discovery', function () {
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray(['type' => 'env', 'variable' => 'MY_KEY'], '/base');
 
     expect($kd->toArray())->toBe(['type' => 'env', 'variable' => 'MY_KEY']);
 });
 
 it('round-trips file key discovery', function () {
-    $factory = new ValueProviderFactory();
+    $factory = new ValueProviderFactory;
     $kd = $factory->fromArray(['type' => 'file', 'path' => '/absolute/key.pem'], '/base');
 
     expect($kd->toArray())->toBe(['type' => 'file', 'path' => '/absolute/key.pem']);

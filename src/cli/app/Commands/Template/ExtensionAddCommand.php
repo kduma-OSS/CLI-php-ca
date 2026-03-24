@@ -3,17 +3,14 @@
 namespace App\Commands\Template;
 
 use App\Commands\BaseCommand;
+use KDuma\PhpCA\Record\Extension\ExtensionRegistry;
 use KDuma\PhpCA\Record\Extension\Resolver\InputMultipleResolver;
 use KDuma\PhpCA\Record\Extension\Resolver\InputResolver;
 use KDuma\PhpCA\Record\Extension\Resolver\LiteralResolver;
-use KDuma\PhpCA\Record\Extension\Resolver\SubjectKeyFingerprintResolver;
-use KDuma\PhpCA\Record\Extension\Resolver\CaKeyFingerprintResolver;
-use KDuma\PhpCA\Record\Extension\Resolver\TemplateStringResolver;
 use KDuma\PhpCA\Record\Extension\Resolver\RelativeDateResolver;
-use KDuma\PhpCA\Record\Extension\ExtensionRegistry;
+use KDuma\PhpCA\Record\Extension\Resolver\TemplateStringResolver;
 use KDuma\PhpCA\Record\Extension\Template\BaseExtensionTemplate;
 use KDuma\PhpCA\Record\Extension\Template\Templates\AuthorityInfoAccessExtensionTemplate;
-use KDuma\PhpCA\Record\Extension\Template\Templates\AuthorityKeyIdentifierExtensionTemplate;
 use KDuma\PhpCA\Record\Extension\Template\Templates\BasicConstraintsExtensionTemplate;
 use KDuma\PhpCA\Record\Extension\Template\Templates\CertificatePoliciesExtensionTemplate;
 use KDuma\PhpCA\Record\Extension\Template\Templates\CrlDistributionPointsExtensionTemplate;
@@ -22,7 +19,6 @@ use KDuma\PhpCA\Record\Extension\Template\Templates\KeyUsageExtensionTemplate;
 use KDuma\PhpCA\Record\Extension\Template\Templates\NetscapeCommentExtensionTemplate;
 use KDuma\PhpCA\Record\Extension\Template\Templates\PrivateKeyUsagePeriodExtensionTemplate;
 use KDuma\PhpCA\Record\Extension\Template\Templates\SubjectAltNameExtensionTemplate;
-use KDuma\PhpCA\Record\Extension\Template\Templates\SubjectKeyIdentifierExtensionTemplate;
 
 use function Laravel\Prompts\confirm;
 use function Laravel\Prompts\error;
@@ -34,6 +30,7 @@ use function Laravel\Prompts\text;
 class ExtensionAddCommand extends BaseCommand
 {
     protected $signature = 'template:extension:add {id} {extension-type?} {--json=}';
+
     protected $description = 'Add an extension to a template';
 
     public function handle(): int
@@ -43,6 +40,7 @@ class ExtensionAddCommand extends BaseCommand
 
         if ($template === null) {
             error('Template not found.');
+
             return self::FAILURE;
         }
 
@@ -54,6 +52,7 @@ class ExtensionAddCommand extends BaseCommand
 
         if (! isset($types[$extensionType])) {
             error("Unknown extension type: {$extensionType}");
+
             return self::FAILURE;
         }
 
@@ -61,6 +60,7 @@ class ExtensionAddCommand extends BaseCommand
         foreach ($template->extensions as $ext) {
             if ($ext::name() === $extensionType) {
                 error("Extension \"{$extensionType}\" already exists on this template.");
+
                 return self::FAILURE;
             }
         }
@@ -70,6 +70,7 @@ class ExtensionAddCommand extends BaseCommand
             $data = json_decode($this->option('json'), true);
             if (! is_array($data)) {
                 error('Invalid JSON.');
+
                 return self::FAILURE;
             }
             $data['name'] = $extensionType;
@@ -80,6 +81,7 @@ class ExtensionAddCommand extends BaseCommand
 
         if ($extension === null) {
             error('Failed to configure extension.');
+
             return self::FAILURE;
         }
 

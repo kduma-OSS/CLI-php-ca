@@ -18,42 +18,74 @@ class CrlEntity extends BaseEntity
 {
     public string $signerKeyId {
         get => $this->signerKeyId;
-        set { if (isset($this->signerKeyId)) { throw new \LogicException('Immutable.'); } $this->signerKeyId = $value; }
+        set {
+            if (isset($this->signerKeyId)) {
+                throw new \LogicException('Immutable.');
+            } $this->signerKeyId = $value;
+        }
     }
 
     public ?string $signerCertificateId = null {
         get => $this->signerCertificateId;
-        set { if (isset($this->signerCertificateId)) { throw new \LogicException('Immutable.'); } $this->signerCertificateId = $value; }
+        set {
+            if (isset($this->signerCertificateId)) {
+                throw new \LogicException('Immutable.');
+            } $this->signerCertificateId = $value;
+        }
     }
 
     public ?string $caCertificateId = null {
         get => $this->caCertificateId;
-        set { if (isset($this->caCertificateId)) { throw new \LogicException('Immutable.'); } $this->caCertificateId = $value; }
+        set {
+            if (isset($this->caCertificateId)) {
+                throw new \LogicException('Immutable.');
+            } $this->caCertificateId = $value;
+        }
     }
 
     public CertificateSubject $issuer {
         get => $this->issuer;
-        set { if (isset($this->issuer)) { throw new \LogicException('Immutable.'); } $this->issuer = $value; }
+        set {
+            if (isset($this->issuer)) {
+                throw new \LogicException('Immutable.');
+            } $this->issuer = $value;
+        }
     }
 
     public DateTimeImmutable $thisUpdate {
         get => $this->thisUpdate;
-        set { if (isset($this->thisUpdate)) { throw new \LogicException('Immutable.'); } $this->thisUpdate = $value; }
+        set {
+            if (isset($this->thisUpdate)) {
+                throw new \LogicException('Immutable.');
+            } $this->thisUpdate = $value;
+        }
     }
 
     public ?DateTimeImmutable $nextUpdate = null {
         get => $this->nextUpdate;
-        set { if (isset($this->nextUpdate)) { throw new \LogicException('Immutable.'); } $this->nextUpdate = $value; }
+        set {
+            if (isset($this->nextUpdate)) {
+                throw new \LogicException('Immutable.');
+            } $this->nextUpdate = $value;
+        }
     }
 
     public int $crlNumber {
         get => $this->crlNumber;
-        set { if (isset($this->crlNumber)) { throw new \LogicException('Immutable.'); } $this->crlNumber = $value; }
+        set {
+            if (isset($this->crlNumber)) {
+                throw new \LogicException('Immutable.');
+            } $this->crlNumber = $value;
+        }
     }
 
     public SignatureAlgorithm $signatureAlgorithm {
         get => $this->signatureAlgorithm;
-        set { if (isset($this->signatureAlgorithm)) { throw new \LogicException('Immutable.'); } $this->signatureAlgorithm = $value; }
+        set {
+            if (isset($this->signatureAlgorithm)) {
+                throw new \LogicException('Immutable.');
+            } $this->signatureAlgorithm = $value;
+        }
     }
 
     private array $_pendingChanges = [];
@@ -63,6 +95,7 @@ class CrlEntity extends BaseEntity
             if (isset($this->_pendingChanges['crl'])) {
                 return $this->_pendingChanges['crl'];
             }
+
             return $this->attachments->get(CrlAttachment::Crl)->contents();
         }
         set {
@@ -76,7 +109,7 @@ class CrlEntity extends BaseEntity
             return false;
         }
 
-        return $this->nextUpdate < new DateTimeImmutable();
+        return $this->nextUpdate < new DateTimeImmutable;
     }
 
     public function _afterPersisted(): void
@@ -91,8 +124,8 @@ class CrlEntity extends BaseEntity
     }
 
     /**
-     * @param CrlEntity $entity
-     * @param CrlRecord $record
+     * @param  CrlEntity  $entity
+     * @param  CrlRecord  $record
      */
     protected static function _populateFromRecord(BaseEntity $entity, TypedRecord $record): void
     {
@@ -110,8 +143,8 @@ class CrlEntity extends BaseEntity
     }
 
     /**
-     * @param CrlEntity $entity
-     * @param CrlRecord $record
+     * @param  CrlEntity  $entity
+     * @param  CrlRecord  $record
      */
     protected static function _populateToRecord(BaseEntity $entity, TypedRecord $record): void
     {

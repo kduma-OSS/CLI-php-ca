@@ -44,7 +44,7 @@ readonly class JsonValueProvider extends ValueProvider
 
     public static function fromArray(array $data, string $basePath): static
     {
-        $factory = new ValueProviderFactory();
+        $factory = new ValueProviderFactory;
 
         return new static(
             path: $data['path'] ?? throw new \InvalidArgumentException('Json key discovery requires "path".'),

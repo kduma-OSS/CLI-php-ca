@@ -40,7 +40,7 @@ class AdapterConfigurationFactory
     }
 
     /**
-     * @param class-string<BaseAdapterConfiguration> $class
+     * @param  class-string<BaseAdapterConfiguration>  $class
      */
     public static function getTypeForClass(string $class): string
     {

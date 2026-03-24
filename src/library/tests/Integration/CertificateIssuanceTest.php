@@ -18,10 +18,11 @@ use KDuma\PhpCA\Record\KeyType\Enum\EdDSACurve;
 use KDuma\SimpleDAL\Adapter\Flysystem\FlysystemAdapter;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Local\LocalFilesystemAdapter;
+use phpseclib3\File\X509;
 
 function createTempCaForIssuanceTests(): CertificationAuthority
 {
-    $tempDir = sys_get_temp_dir() . '/php-ca-test-' . uniqid();
+    $tempDir = sys_get_temp_dir().'/php-ca-test-'.uniqid();
     mkdir($tempDir, 0777, true);
     $filesystem = new Filesystem(new LocalFilesystemAdapter($tempDir));
     $adapter = new FlysystemAdapter($filesystem);
@@ -81,14 +82,14 @@ test('full certificate issuance flow via CSR', function () {
     ]);
 
     // Build the CSR PEM using phpseclib
-    $x509 = new \phpseclib3\File\X509();
+    $x509 = new X509;
     $x509->setDN($csrSubject->toString());
     $x509->setPrivateKey($eeKey->getPrivateKey());
     $csrResult = $x509->signCSR();
     $csrPem = $x509->saveCSR($csrResult);
 
     // Manually create a CsrEntity (no CsrBuilder exists)
-    $csrEntity = new CsrEntity();
+    $csrEntity = new CsrEntity;
     $csrEntity->subject = $csrSubject;
     $csrEntity->keyId = $eeKey->id;
     $csrEntity->requestedExtensions = [];

@@ -14,7 +14,7 @@ beforeEach(function () {
 });
 
 test('fromStorage/toStorage round-trip with BasicConstraints extension', function () {
-    $converter = new ExtensionsConverter();
+    $converter = new ExtensionsConverter;
     $data = [
         [
             'name' => 'basic-constraints',
@@ -38,7 +38,7 @@ test('fromStorage/toStorage round-trip with BasicConstraints extension', functio
 });
 
 test('fromStorage/toStorage round-trip with KeyUsage extension', function () {
-    $converter = new ExtensionsConverter();
+    $converter = new ExtensionsConverter;
     $data = [
         [
             'name' => 'key-usage',
@@ -70,7 +70,7 @@ test('fromStorage/toStorage round-trip with KeyUsage extension', function () {
 });
 
 test('fromStorage/toStorage round-trip with multiple extensions', function () {
-    $converter = new ExtensionsConverter();
+    $converter = new ExtensionsConverter;
     $data = [
         [
             'name' => 'basic-constraints',
@@ -97,21 +97,21 @@ test('fromStorage/toStorage round-trip with multiple extensions', function () {
 });
 
 test('fromStorage() returns empty array for non-array input', function () {
-    $converter = new ExtensionsConverter();
+    $converter = new ExtensionsConverter;
 
     expect($converter->fromStorage(null))->toBe([])
         ->and($converter->fromStorage('string'))->toBe([]);
 });
 
 test('toStorage() returns empty array for non-array input', function () {
-    $converter = new ExtensionsConverter();
+    $converter = new ExtensionsConverter;
 
     expect($converter->toStorage(null))->toBe([])
         ->and($converter->toStorage('string'))->toBe([]);
 });
 
 test('fromStorage() skips entries without name key', function () {
-    $converter = new ExtensionsConverter();
+    $converter = new ExtensionsConverter;
     $data = [
         [
             'name' => 'basic-constraints',

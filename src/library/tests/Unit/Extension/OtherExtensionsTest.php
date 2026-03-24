@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use KDuma\PhpCA\Record\Extension\Extensions\CrlDistributionPointsExtension;
 use KDuma\PhpCA\Record\Extension\Extensions\AuthorityInfoAccessExtension;
+use KDuma\PhpCA\Record\Extension\Extensions\CrlDistributionPointsExtension;
 use KDuma\PhpCA\Record\Extension\Extensions\NetscapeCommentExtension;
 use KDuma\PhpCA\Record\Extension\Extensions\PrivateKeyUsagePeriodExtension;
 
@@ -141,7 +141,7 @@ test('PrivateKeyUsagePeriod: constructor sets notBefore and notAfter', function 
 });
 
 test('PrivateKeyUsagePeriod: notBefore and notAfter can be null', function () {
-    $ext = new PrivateKeyUsagePeriodExtension();
+    $ext = new PrivateKeyUsagePeriodExtension;
 
     expect($ext->notBefore)->toBeNull()
         ->and($ext->notAfter)->toBeNull();
@@ -178,7 +178,7 @@ test('PrivateKeyUsagePeriod: toArray/fromArray round-trip with both dates', func
 });
 
 test('PrivateKeyUsagePeriod: toArray/fromArray round-trip with no dates', function () {
-    $original = new PrivateKeyUsagePeriodExtension();
+    $original = new PrivateKeyUsagePeriodExtension;
     $array = $original->toArray();
     $restored = PrivateKeyUsagePeriodExtension::fromArray($array);
 

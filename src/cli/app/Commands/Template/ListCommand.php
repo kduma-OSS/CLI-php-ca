@@ -10,6 +10,7 @@ use function Laravel\Prompts\info;
 class ListCommand extends BaseCommand
 {
     protected $signature = 'template:list';
+
     protected $description = 'List all certificate templates';
 
     public function handle(): int
@@ -19,10 +20,11 @@ class ListCommand extends BaseCommand
 
         if (empty($templates)) {
             info('No templates found.');
+
             return self::SUCCESS;
         }
 
-        $converter = new DateIntervalConverter();
+        $converter = new DateIntervalConverter;
 
         $this->table(
             ['ID', 'Display Name', 'Parent', 'Validity'],

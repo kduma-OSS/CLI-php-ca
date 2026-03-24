@@ -9,6 +9,7 @@ use function Laravel\Prompts\info;
 class ListCommand extends BaseCommand
 {
     protected $signature = 'revocation:list';
+
     protected $description = 'List all revocations';
 
     public function handle(): int
@@ -18,6 +19,7 @@ class ListCommand extends BaseCommand
 
         if (empty($revocations)) {
             info('No revocations found.');
+
             return self::SUCCESS;
         }
 

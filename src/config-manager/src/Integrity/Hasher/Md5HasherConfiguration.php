@@ -13,12 +13,12 @@ readonly class Md5HasherConfiguration extends BaseHasherConfiguration
 {
     public function createHasher(): HashingAlgorithmInterface
     {
-        return new Md5HashingAlgorithm();
+        return new Md5HashingAlgorithm;
     }
 
     public static function fromArray(array $data): static
     {
-        return new static();
+        return new static;
     }
 
     public function toArray(): array

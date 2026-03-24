@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 use KDuma\PhpCA\ConfigManager\CaConfigurationLoader;
 use KDuma\PhpCA\ConfigManager\CaConfigurationPersister;
-use KDuma\PhpCA\ConfigManager\Integrity\IntegrityConfiguration;
 use KDuma\PhpCA\ConfigManager\Encryption\EncryptionConfiguration;
+use KDuma\PhpCA\ConfigManager\Integrity\IntegrityConfiguration;
 
 it('loads config with all sections', function () {
-    $loader = new CaConfigurationLoader();
+    $loader = new CaConfigurationLoader;
     $config = $loader->load([
         'adapter' => ['type' => 'directory', 'path' => '/data'],
         'integrity' => [
@@ -32,7 +32,7 @@ it('loads config with all sections', function () {
 });
 
 it('loads config with adapter only', function () {
-    $loader = new CaConfigurationLoader();
+    $loader = new CaConfigurationLoader;
     $config = $loader->load(['adapter' => ['type' => 'directory', 'path' => '/data']], '/base');
 
     expect($config->integrity)->toBeNull()
@@ -64,10 +64,10 @@ it('round-trips full config', function () {
         ],
     ];
 
-    $loader = new CaConfigurationLoader();
+    $loader = new CaConfigurationLoader;
     $config = $loader->load($data, '/unused');
 
-    $persister = new CaConfigurationPersister();
+    $persister = new CaConfigurationPersister;
     $output = $persister->toArray($config);
 
     expect($output)->toBe($data);

@@ -10,6 +10,7 @@ use function Laravel\Prompts\info;
 class SetChainCommand extends BaseCommand
 {
     protected $signature = 'ca:set-chain {id} {chain? : Path to chain PEM file (reads stdin if omitted)} {--clear : Remove the chain}';
+
     protected $description = 'Set or clear the upstream CA chain on a CA certificate';
 
     public function handle(): int
@@ -19,6 +20,7 @@ class SetChainCommand extends BaseCommand
 
         if ($cert === null) {
             error('CA certificate not found.');
+
             return self::FAILURE;
         }
 
@@ -26,6 +28,7 @@ class SetChainCommand extends BaseCommand
             $cert->chain = null;
             $ca->caCertificates->save($cert);
             info('Chain removed from CA certificate.');
+
             return self::SUCCESS;
         }
 
@@ -33,6 +36,7 @@ class SetChainCommand extends BaseCommand
         if ($path) {
             if (! file_exists($path)) {
                 error("File not found: {$path}");
+
                 return self::FAILURE;
             }
             $chainPem = file_get_contents($path);
@@ -42,6 +46,7 @@ class SetChainCommand extends BaseCommand
 
         if (! $chainPem || ! str_contains($chainPem, '-----BEGIN CERTIFICATE-----')) {
             error('No valid PEM certificate data provided.');
+
             return self::FAILURE;
         }
 

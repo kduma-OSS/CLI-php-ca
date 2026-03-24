@@ -38,7 +38,7 @@ class DsaCommand extends Command
 
         $parameters = $this->option('parameters');
 
-        if (!$parameters) {
+        if (! $parameters) {
             $parameters = select(
                 label: 'Select DSA parameter size',
                 options: array_map(fn (DsaParameterSize $case) => $case->value, DsaParameterSize::cases()),
@@ -55,7 +55,7 @@ class DsaCommand extends Command
 
         $ca->keys->save($entity);
 
-        info("DSA key created successfully.");
+        info('DSA key created successfully.');
 
         $this->output->writeln($entity->id);
 

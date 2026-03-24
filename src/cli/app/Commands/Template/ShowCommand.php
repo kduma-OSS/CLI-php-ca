@@ -10,6 +10,7 @@ use function Laravel\Prompts\error;
 class ShowCommand extends BaseCommand
 {
     protected $signature = 'template:show {id}';
+
     protected $description = 'Show template details';
 
     public function handle(): int
@@ -19,10 +20,11 @@ class ShowCommand extends BaseCommand
 
         if ($template === null) {
             error('Template not found.');
+
             return self::FAILURE;
         }
 
-        $converter = new DateIntervalConverter();
+        $converter = new DateIntervalConverter;
 
         $effectiveValidity = $template->getEffectiveValidity($ca->templates);
         $effectiveExtensions = $template->getEffectiveExtensions($ca->templates);

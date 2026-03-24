@@ -38,7 +38,7 @@ class EcdsaCommand extends Command
 
         $curve = $this->option('curve');
 
-        if (!$curve) {
+        if (! $curve) {
             $curve = select(
                 label: 'Select EC curve',
                 options: array_column(EcCurve::cases(), 'value'),
@@ -55,7 +55,7 @@ class EcdsaCommand extends Command
 
         $ca->keys->save($entity);
 
-        info("ECDSA key created successfully.");
+        info('ECDSA key created successfully.');
 
         $this->output->writeln($entity->id);
 

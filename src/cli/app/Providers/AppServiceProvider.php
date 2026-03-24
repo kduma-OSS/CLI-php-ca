@@ -18,8 +18,8 @@ class AppServiceProvider extends ServiceProvider
         ExtensionRegistry::registerDefaults();
 
         if (\Phar::running() !== '') {
-            $pharOpenSslConf = \Phar::running() . '/vendor/phpseclib/phpseclib/phpseclib/openssl.cnf';
-            $tmpConf = sys_get_temp_dir() . '/phpseclib_openssl.cnf';
+            $pharOpenSslConf = \Phar::running().'/vendor/phpseclib/phpseclib/phpseclib/openssl.cnf';
+            $tmpConf = sys_get_temp_dir().'/phpseclib_openssl.cnf';
 
             if (! file_exists($tmpConf) || md5_file($tmpConf) !== md5_file($pharOpenSslConf)) {
                 copy($pharOpenSslConf, $tmpConf);

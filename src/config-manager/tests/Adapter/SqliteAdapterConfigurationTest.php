@@ -22,7 +22,7 @@ it('returns correct array structure', function () {
 });
 
 it('creates a DatabaseAdapter', function () {
-    $path = sys_get_temp_dir() . '/php-ca-test-' . uniqid() . '.sqlite';
+    $path = sys_get_temp_dir().'/php-ca-test-'.uniqid().'.sqlite';
 
     try {
         $adapter = new SqliteAdapterConfiguration(path: $path);

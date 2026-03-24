@@ -38,7 +38,7 @@ readonly class EcSignerConfiguration extends BaseSignerConfiguration
 
     public static function fromArray(array $data, string $basePath): static
     {
-        $factory = new ValueProviderFactory();
+        $factory = new ValueProviderFactory;
 
         return new static(
             id: $data['id'] ?? throw new \InvalidArgumentException('EC signer requires "id".'),

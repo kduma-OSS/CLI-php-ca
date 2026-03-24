@@ -2,18 +2,26 @@
 
 declare(strict_types=1);
 
+use KDuma\PhpCA\CertificationAuthority;
 use KDuma\PhpCA\Entity\CACsrBuilder;
 use KDuma\PhpCA\Entity\CACsrEntity;
+use KDuma\PhpCA\Entity\KeyBuilder;
 use KDuma\PhpCA\Record\CertificateSubject\CertificateSubject;
 use KDuma\PhpCA\Record\CertificateSubject\DN\CommonName;
 use KDuma\PhpCA\Record\CertificateSubject\DN\Country;
 use KDuma\PhpCA\Record\CertificateSubject\DN\Organization;
+use KDuma\PhpCA\Record\Extension\ExtensionRegistry;
 use KDuma\PhpCA\Record\Extension\Extensions\BasicConstraintsExtension;
+use KDuma\PhpCA\Record\KeyType\EdDSAKeyType;
+use KDuma\PhpCA\Record\KeyType\Enum\EdDSACurve;
+use KDuma\SimpleDAL\Adapter\Flysystem\FlysystemAdapter;
+use League\Flysystem\Filesystem;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 
 // --- CACsrEntity immutability and property tests ---
 
 test('CACsrEntity: subject property is immutable after set', function () {
-    $entity = new CACsrEntity();
+    $entity = new CACsrEntity;
     $subject = new CertificateSubject([new CommonName('First')]);
     $entity->subject = $subject;
 
@@ -24,7 +32,7 @@ test('CACsrEntity: subject property is immutable after set', function () {
 });
 
 test('CACsrEntity: keyId property is immutable after set', function () {
-    $entity = new CACsrEntity();
+    $entity = new CACsrEntity;
     $entity->keyId = 'key-1';
 
     expect($entity->keyId)->toBe('key-1');
@@ -34,7 +42,7 @@ test('CACsrEntity: keyId property is immutable after set', function () {
 });
 
 test('CACsrEntity: fingerprint property is immutable after set', function () {
-    $entity = new CACsrEntity();
+    $entity = new CACsrEntity;
     $entity->fingerprint = 'fp-1';
 
     expect($entity->fingerprint)->toBe('fp-1');
@@ -44,7 +52,7 @@ test('CACsrEntity: fingerprint property is immutable after set', function () {
 });
 
 test('CACsrEntity: requestedExtensions is immutable after set with non-empty value', function () {
-    $entity = new CACsrEntity();
+    $entity = new CACsrEntity;
     $ext = new BasicConstraintsExtension(ca: true);
     $entity->requestedExtensions = [$ext];
 
@@ -55,7 +63,7 @@ test('CACsrEntity: requestedExtensions is immutable after set with non-empty val
 });
 
 test('CACsrEntity: caCertificateId is mutable', function () {
-    $entity = new CACsrEntity();
+    $entity = new CACsrEntity;
     $entity->caCertificateId = 'cert-1';
     $entity->caCertificateId = 'cert-2';
 
@@ -63,19 +71,19 @@ test('CACsrEntity: caCertificateId is mutable', function () {
 });
 
 test('CACsrEntity: caCertificateId defaults to null', function () {
-    $entity = new CACsrEntity();
+    $entity = new CACsrEntity;
 
     expect($entity->caCertificateId)->toBeNull();
 });
 
 test('CACsrEntity: requestedExtensions defaults to empty array', function () {
-    $entity = new CACsrEntity();
+    $entity = new CACsrEntity;
 
     expect($entity->requestedExtensions)->toBe([]);
 });
 
 test('CACsrEntity: getSubjectString returns subject toString', function () {
-    $entity = new CACsrEntity();
+    $entity = new CACsrEntity;
     $entity->subject = new CertificateSubject([
         new CommonName('Test CA'),
         new Organization('Test Org'),
@@ -85,27 +93,27 @@ test('CACsrEntity: getSubjectString returns subject toString', function () {
 });
 
 test('CACsrEntity: csr property can be set before persistence', function () {
-    $entity = new CACsrEntity();
+    $entity = new CACsrEntity;
     $entity->csr = '-----BEGIN CERTIFICATE REQUEST-----test-----END CERTIFICATE REQUEST-----';
 
     expect($entity->csr)->toContain('CERTIFICATE REQUEST');
 });
 
 test('CACsrEntity: id can be set before persistence', function () {
-    $entity = new CACsrEntity();
+    $entity = new CACsrEntity;
     $entity->id = 'custom-id';
 
     expect($entity->id)->toBe('custom-id');
 });
 
 test('CACsrEntity: persisted is false for new entity', function () {
-    $entity = new CACsrEntity();
+    $entity = new CACsrEntity;
 
     expect($entity->persisted)->toBeFalse();
 });
 
 test('CACsrEntity: multiple properties can be set', function () {
-    $entity = new CACsrEntity();
+    $entity = new CACsrEntity;
     $subject = new CertificateSubject([
         new CommonName('Multi-prop CA'),
         new Organization('Test Org'),
@@ -155,10 +163,10 @@ test('CACsrBuilder: save requires key', function () {
 test('CACsrBuilder: save requires subject', function () {
     $ca = createMinimalCa();
 
-    $keyType = new \KDuma\PhpCA\Record\KeyType\EdDSAKeyType(
-        curve: \KDuma\PhpCA\Record\KeyType\Enum\EdDSACurve::Ed25519,
+    $keyType = new EdDSAKeyType(
+        curve: EdDSACurve::Ed25519,
     );
-    $keyEntity = \KDuma\PhpCA\Entity\KeyBuilder::fresh($keyType)->make();
+    $keyEntity = KeyBuilder::fresh($keyType)->make();
     $ca->keys->save($keyEntity);
 
     $builder = new CACsrBuilder($ca);
@@ -166,15 +174,15 @@ test('CACsrBuilder: save requires subject', function () {
     $builder->save();
 })->throws(LogicException::class, 'Subject is required');
 
-function createMinimalCa(): \KDuma\PhpCA\CertificationAuthority
+function createMinimalCa(): CertificationAuthority
 {
-    $tempDir = sys_get_temp_dir() . '/php-ca-test-' . uniqid();
+    $tempDir = sys_get_temp_dir().'/php-ca-test-'.uniqid();
     mkdir($tempDir, 0777, true);
-    $filesystem = new \League\Flysystem\Filesystem(
-        new \League\Flysystem\Local\LocalFilesystemAdapter($tempDir)
+    $filesystem = new Filesystem(
+        new LocalFilesystemAdapter($tempDir)
     );
-    $adapter = new \KDuma\SimpleDAL\Adapter\Flysystem\FlysystemAdapter($filesystem);
-    \KDuma\PhpCA\Record\Extension\ExtensionRegistry::registerDefaults();
+    $adapter = new FlysystemAdapter($filesystem);
+    ExtensionRegistry::registerDefaults();
 
-    return new \KDuma\PhpCA\CertificationAuthority($adapter);
+    return new CertificationAuthority($adapter);
 }

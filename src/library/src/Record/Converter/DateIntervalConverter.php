@@ -32,28 +32,28 @@ class DateIntervalConverter implements FieldConverterInterface
         $parts = 'P';
 
         if ($interval->y > 0) {
-            $parts .= $interval->y . 'Y';
+            $parts .= $interval->y.'Y';
         }
         if ($interval->m > 0) {
-            $parts .= $interval->m . 'M';
+            $parts .= $interval->m.'M';
         }
         if ($interval->d > 0) {
-            $parts .= $interval->d . 'D';
+            $parts .= $interval->d.'D';
         }
 
         $timeParts = '';
         if ($interval->h > 0) {
-            $timeParts .= $interval->h . 'H';
+            $timeParts .= $interval->h.'H';
         }
         if ($interval->i > 0) {
-            $timeParts .= $interval->i . 'M';
+            $timeParts .= $interval->i.'M';
         }
         if ($interval->s > 0) {
-            $timeParts .= $interval->s . 'S';
+            $timeParts .= $interval->s.'S';
         }
 
         if ($timeParts !== '') {
-            $parts .= 'T' . $timeParts;
+            $parts .= 'T'.$timeParts;
         }
 
         return $parts === 'P' ? 'P0D' : $parts;

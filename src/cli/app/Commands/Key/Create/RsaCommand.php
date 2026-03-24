@@ -37,7 +37,7 @@ class RsaCommand extends Command
 
         $size = $this->option('size');
 
-        if (!$size) {
+        if (! $size) {
             $size = select(
                 label: 'Select key size',
                 options: ['384', '512', '1024', '2048', '3072', '4096', '8192'],
@@ -54,7 +54,7 @@ class RsaCommand extends Command
 
         $ca->keys->save($entity);
 
-        info("RSA key created successfully.");
+        info('RSA key created successfully.');
 
         $this->output->writeln($entity->id);
 

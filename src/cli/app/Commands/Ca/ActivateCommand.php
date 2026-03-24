@@ -10,6 +10,7 @@ use function Laravel\Prompts\info;
 class ActivateCommand extends BaseCommand
 {
     protected $signature = 'ca:activate {id}';
+
     protected $description = 'Set the active CA certificate';
 
     public function handle(): int
@@ -19,6 +20,7 @@ class ActivateCommand extends BaseCommand
 
         if (! $ca->caCertificates->has($id)) {
             error("CA certificate \"{$id}\" not found.");
+
             return self::FAILURE;
         }
 

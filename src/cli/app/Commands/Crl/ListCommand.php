@@ -9,6 +9,7 @@ use function Laravel\Prompts\info;
 class ListCommand extends BaseCommand
 {
     protected $signature = 'crl:list';
+
     protected $description = 'List all CRLs';
 
     public function handle(): int
@@ -18,6 +19,7 @@ class ListCommand extends BaseCommand
 
         if (empty($crls)) {
             info('No CRLs found.');
+
             return self::SUCCESS;
         }
 

@@ -4,15 +4,9 @@ declare(strict_types=1);
 
 use KDuma\PhpCA\Record\Extension\ExtensionRegistry;
 use KDuma\PhpCA\Record\Extension\Extensions\BasicConstraintsExtension;
-use KDuma\PhpCA\Record\Extension\Extensions\KeyUsageExtension;
 use KDuma\PhpCA\Record\Extension\Extensions\ExtKeyUsageExtension;
+use KDuma\PhpCA\Record\Extension\Extensions\KeyUsageExtension;
 use KDuma\PhpCA\Record\Extension\Extensions\SubjectAltNameExtension;
-use KDuma\PhpCA\Record\Extension\Extensions\CrlDistributionPointsExtension;
-use KDuma\PhpCA\Record\Extension\Extensions\AuthorityInfoAccessExtension;
-use KDuma\PhpCA\Record\Extension\Extensions\SubjectKeyIdentifierExtension;
-use KDuma\PhpCA\Record\Extension\Extensions\AuthorityKeyIdentifierExtension;
-use KDuma\PhpCA\Record\Extension\Extensions\PrivateKeyUsagePeriodExtension;
-use KDuma\PhpCA\Record\Extension\Extensions\NetscapeCommentExtension;
 
 beforeEach(function () {
     ExtensionRegistry::reset();

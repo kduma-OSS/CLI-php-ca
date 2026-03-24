@@ -3,13 +3,13 @@
 declare(strict_types=1);
 
 use KDuma\PhpCA\Record\KeyType\BaseKeyType;
-use KDuma\PhpCA\Record\KeyType\RSAKeyType;
 use KDuma\PhpCA\Record\KeyType\DSAKeyType;
 use KDuma\PhpCA\Record\KeyType\ECDSAKeyType;
 use KDuma\PhpCA\Record\KeyType\EdDSAKeyType;
 use KDuma\PhpCA\Record\KeyType\Enum\DsaParameterSize;
 use KDuma\PhpCA\Record\KeyType\Enum\EcCurve;
 use KDuma\PhpCA\Record\KeyType\Enum\EdDSACurve;
+use KDuma\PhpCA\Record\KeyType\RSAKeyType;
 
 test('fromArray() dispatches to RSAKeyType for type "rsa"', function () {
     $key = BaseKeyType::fromArray(['type' => 'rsa', 'size' => 2048]);

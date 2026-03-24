@@ -9,6 +9,7 @@ use function Laravel\Prompts\error;
 class ShowCommand extends BaseCommand
 {
     protected $signature = 'certificate:show {id}';
+
     protected $description = 'Show certificate details';
 
     public function handle(): int
@@ -18,6 +19,7 @@ class ShowCommand extends BaseCommand
 
         if ($cert === null) {
             error('Certificate not found.');
+
             return self::FAILURE;
         }
 

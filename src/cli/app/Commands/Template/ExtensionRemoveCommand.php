@@ -11,6 +11,7 @@ use function Laravel\Prompts\select;
 class ExtensionRemoveCommand extends BaseCommand
 {
     protected $signature = 'template:extension:remove {id} {extension-type?}';
+
     protected $description = 'Remove an extension from a template';
 
     public function handle(): int
@@ -20,11 +21,13 @@ class ExtensionRemoveCommand extends BaseCommand
 
         if ($template === null) {
             error('Template not found.');
+
             return self::FAILURE;
         }
 
         if (empty($template->extensions)) {
             error('Template has no extensions.');
+
             return self::FAILURE;
         }
 
@@ -41,14 +44,17 @@ class ExtensionRemoveCommand extends BaseCommand
             function ($ext) use ($extensionType, &$found) {
                 if ($ext::name() === $extensionType && ! $found) {
                     $found = true;
+
                     return false;
                 }
+
                 return true;
             },
         ));
 
         if (! $found) {
             error("Extension \"{$extensionType}\" not found on this template.");
+
             return self::FAILURE;
         }
 

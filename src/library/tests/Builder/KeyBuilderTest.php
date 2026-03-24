@@ -7,14 +7,15 @@ use KDuma\PhpCA\Entity\KeyBuilder;
 use KDuma\PhpCA\Entity\KeyEntity;
 use KDuma\PhpCA\Record\KeyType\ECDSAKeyType;
 use KDuma\PhpCA\Record\KeyType\EdDSAKeyType;
-use KDuma\PhpCA\Record\KeyType\RSAKeyType;
 use KDuma\PhpCA\Record\KeyType\Enum\EcCurve;
 use KDuma\PhpCA\Record\KeyType\Enum\EdDSACurve;
+use KDuma\PhpCA\Record\KeyType\RSAKeyType;
 use KDuma\PhpCA\Tests\Support\InMemoryStorageAdapter;
 
 function createTempCa(): CertificationAuthority
 {
-    $adapter = new InMemoryStorageAdapter();
+    $adapter = new InMemoryStorageAdapter;
+
     return new CertificationAuthority($adapter);
 }
 

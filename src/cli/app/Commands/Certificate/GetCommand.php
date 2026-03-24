@@ -9,6 +9,7 @@ use function Laravel\Prompts\error;
 class GetCommand extends BaseCommand
 {
     protected $signature = 'certificate:get {id}';
+
     protected $description = 'Output certificate PEM';
 
     public function handle(): int
@@ -18,6 +19,7 @@ class GetCommand extends BaseCommand
 
         if ($cert === null) {
             error('Certificate not found.');
+
             return self::FAILURE;
         }
 

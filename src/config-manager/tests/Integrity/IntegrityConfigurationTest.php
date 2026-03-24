@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-use KDuma\PhpCA\ConfigManager\Integrity\IntegrityConfiguration;
 use KDuma\PhpCA\ConfigManager\Integrity\Hasher\Sha256HasherConfiguration;
+use KDuma\PhpCA\ConfigManager\Integrity\IntegrityConfiguration;
 use KDuma\PhpCA\ConfigManager\Integrity\Signer\HmacSha256SignerConfiguration;
 use KDuma\PhpCA\ConfigManager\ValueProvider\StringValueProvider;
 use KDuma\SimpleDAL\Integrity\FailureMode;
+use KDuma\SimpleDAL\Integrity\IntegrityConfig;
 
 it('loads from array with hasher only', function () {
     $config = IntegrityConfiguration::fromArray([
@@ -63,7 +64,7 @@ it('round-trips integrity configuration', function () {
 
 it('creates IntegrityConfig object', function () {
     $config = new IntegrityConfiguration(
-        hasher: new Sha256HasherConfiguration(),
+        hasher: new Sha256HasherConfiguration,
         signer: new HmacSha256SignerConfiguration(
             id: 'test',
             secret: new StringValueProvider('my_secret'),
@@ -72,7 +73,7 @@ it('creates IntegrityConfig object', function () {
 
     $integrityConfig = $config->createIntegrityConfig();
 
-    expect($integrityConfig)->toBeInstanceOf(\KDuma\SimpleDAL\Integrity\IntegrityConfig::class)
+    expect($integrityConfig)->toBeInstanceOf(IntegrityConfig::class)
         ->and($integrityConfig->detachedAttachments)->toBeTrue();
 });
 

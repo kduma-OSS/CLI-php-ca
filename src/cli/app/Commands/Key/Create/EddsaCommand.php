@@ -38,7 +38,7 @@ class EddsaCommand extends Command
 
         $curve = $this->option('curve');
 
-        if (!$curve) {
+        if (! $curve) {
             $curve = select(
                 label: 'Select EdDSA curve',
                 options: array_map(fn (EdDSACurve $case) => $case->value, EdDSACurve::cases()),
@@ -55,7 +55,7 @@ class EddsaCommand extends Command
 
         $ca->keys->save($entity);
 
-        info("EdDSA key created successfully.");
+        info('EdDSA key created successfully.');
 
         $this->output->writeln($entity->id);
 

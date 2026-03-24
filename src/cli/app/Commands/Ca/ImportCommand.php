@@ -10,6 +10,7 @@ use function Laravel\Prompts\info;
 class ImportCommand extends BaseCommand
 {
     protected $signature = 'ca:import {pem?} {--id=} {--key=} {--activate}';
+
     protected $description = 'Import an existing CA certificate';
 
     public function handle(): int
@@ -20,6 +21,7 @@ class ImportCommand extends BaseCommand
         if ($path) {
             if (! file_exists($path)) {
                 error("File not found: {$path}");
+
                 return self::FAILURE;
             }
             $pem = file_get_contents($path);
@@ -29,6 +31,7 @@ class ImportCommand extends BaseCommand
 
         if (! $pem) {
             error('No PEM data provided.');
+
             return self::FAILURE;
         }
 
@@ -46,6 +49,7 @@ class ImportCommand extends BaseCommand
             $cert = $builder->save();
         } catch (\Throwable $e) {
             error($e->getMessage());
+
             return self::FAILURE;
         }
 

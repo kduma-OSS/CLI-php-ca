@@ -14,6 +14,7 @@ use function Laravel\Prompts\select;
 class RevokeCommand extends BaseCommand
 {
     protected $signature = 'certificate:revoke {id} {--reason=unspecified}';
+
     protected $description = 'Revoke a certificate';
 
     public function handle(): int
@@ -24,6 +25,7 @@ class RevokeCommand extends BaseCommand
         $cert = $ca->certificates->findOrNull($certId);
         if ($cert === null) {
             error("Certificate \"{$certId}\" not found.");
+
             return self::FAILURE;
         }
 
@@ -35,10 +37,10 @@ class RevokeCommand extends BaseCommand
             $reason = RevocationReason::from($reasonStr);
         }
 
-        $revocation = new RevocationEntity();
+        $revocation = new RevocationEntity;
         $revocation->certificateId = $certId;
         $revocation->serialNumber = $cert->serialNumber;
-        $revocation->revokedAt = new DateTimeImmutable();
+        $revocation->revokedAt = new DateTimeImmutable;
         $revocation->reason = $reason;
         $revocation->caCertificateId = $cert->caCertificateId;
 

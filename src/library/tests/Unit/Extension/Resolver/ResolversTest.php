@@ -57,7 +57,7 @@ test('SubjectKeyFingerprintResolver: type returns correct type', function () {
 });
 
 test('SubjectKeyFingerprintResolver: toArray returns type only', function () {
-    $resolver = new SubjectKeyFingerprintResolver();
+    $resolver = new SubjectKeyFingerprintResolver;
     expect($resolver->toArray())->toBe(['type' => 'subject-key-fingerprint']);
 });
 
@@ -69,7 +69,7 @@ test('SubjectKeyFingerprintResolver: fromArray creates instance', function () {
 test('SubjectKeyFingerprintResolver: resolves to subject key fingerprint', function () {
     $context = createMockIssuanceContext(subjectKeyFingerprint: 'subject-fp-abc');
 
-    $resolver = new SubjectKeyFingerprintResolver();
+    $resolver = new SubjectKeyFingerprintResolver;
     expect($resolver->resolve($context))->toBe('subject-fp-abc');
 });
 
@@ -80,7 +80,7 @@ test('CaKeyFingerprintResolver: type returns correct type', function () {
 });
 
 test('CaKeyFingerprintResolver: toArray returns type only', function () {
-    $resolver = new CaKeyFingerprintResolver();
+    $resolver = new CaKeyFingerprintResolver;
     expect($resolver->toArray())->toBe(['type' => 'ca-key-fingerprint']);
 });
 
@@ -92,7 +92,7 @@ test('CaKeyFingerprintResolver: fromArray creates instance', function () {
 test('CaKeyFingerprintResolver: resolves to CA key fingerprint', function () {
     $context = createMockIssuanceContext(caKeyFingerprint: 'ca-key-fp-xyz');
 
-    $resolver = new CaKeyFingerprintResolver();
+    $resolver = new CaKeyFingerprintResolver;
     expect($resolver->resolve($context))->toBe('ca-key-fp-xyz');
 });
 
@@ -245,7 +245,7 @@ test('RelativeDateResolver: resolves now base', function () {
     $resolver = new RelativeDateResolver(base: 'now');
     $result = $resolver->resolve($context);
 
-    expect($result->format('Y-m-d'))->toBe((new DateTimeImmutable())->format('Y-m-d'));
+    expect($result->format('Y-m-d'))->toBe((new DateTimeImmutable)->format('Y-m-d'));
 });
 
 test('RelativeDateResolver: throws for unknown base', function () {
@@ -531,14 +531,14 @@ function createMockIssuanceContext(
     $notAfter ??= new DateTimeImmutable('2025-01-01');
 
     // Create minimal mock objects using real classes with reflection to bypass immutability
-    $subjectKey = new KeyEntity();
+    $subjectKey = new KeyEntity;
     $ref = new ReflectionProperty(KeyEntity::class, 'fingerprint');
     $ref->setValue($subjectKey, $subjectKeyFingerprint);
 
-    $caKey = new KeyEntity();
+    $caKey = new KeyEntity;
     $ref->setValue($caKey, $caKeyFingerprint);
 
-    $caCert = new CACertificateEntity();
+    $caCert = new CACertificateEntity;
     $caCertRef = new ReflectionProperty(CACertificateEntity::class, 'fingerprint');
     $caCertRef->setValue($caCert, $caCertFingerprint);
 

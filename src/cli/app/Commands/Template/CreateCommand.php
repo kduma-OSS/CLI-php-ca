@@ -12,6 +12,7 @@ use function Laravel\Prompts\text;
 class CreateCommand extends BaseCommand
 {
     protected $signature = 'template:create {id} {--display-name=} {--parent=} {--validity=}';
+
     protected $description = 'Create a new certificate template';
 
     public function handle(): int
@@ -21,6 +22,7 @@ class CreateCommand extends BaseCommand
 
         if ($ca->templates->has($id)) {
             error("Template \"{$id}\" already exists.");
+
             return self::FAILURE;
         }
 
@@ -34,6 +36,7 @@ class CreateCommand extends BaseCommand
             $parentId = $this->option('parent');
             if (! $ca->templates->has($parentId)) {
                 error("Parent template \"{$parentId}\" not found.");
+
                 return self::FAILURE;
             }
             $builder->parent($parentId);
@@ -45,6 +48,7 @@ class CreateCommand extends BaseCommand
                 $builder->validity(new DateInterval($validityStr));
             } catch (\Exception) {
                 error("Invalid validity interval: {$validityStr}");
+
                 return self::FAILURE;
             }
         } elseif (! $this->option('parent')) {
@@ -54,6 +58,7 @@ class CreateCommand extends BaseCommand
                 $builder->validity(new DateInterval($validityStr));
             } catch (\Exception) {
                 error("Invalid validity interval: {$validityStr}");
+
                 return self::FAILURE;
             }
         }

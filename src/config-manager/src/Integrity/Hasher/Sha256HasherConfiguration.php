@@ -13,12 +13,12 @@ readonly class Sha256HasherConfiguration extends BaseHasherConfiguration
 {
     public function createHasher(): HashingAlgorithmInterface
     {
-        return new Sha256HashingAlgorithm();
+        return new Sha256HashingAlgorithm;
     }
 
     public static function fromArray(array $data): static
     {
-        return new static();
+        return new static;
     }
 
     public function toArray(): array

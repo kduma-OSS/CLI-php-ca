@@ -42,7 +42,7 @@ class ValueProviderFactory
     }
 
     /**
-     * @param class-string<ValueProvider> $class
+     * @param  class-string<ValueProvider>  $class
      */
     public static function getTypeForClass(string $class): string
     {

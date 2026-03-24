@@ -28,7 +28,7 @@ readonly class Base64ValueProvider extends ValueProvider
         $value = $data['value'] ?? throw new \InvalidArgumentException('Base64 key discovery requires "value".');
 
         if (is_array($value)) {
-            $value = (new ValueProviderFactory())->fromArray($value, $basePath);
+            $value = (new ValueProviderFactory)->fromArray($value, $basePath);
         }
 
         return new static(value: $value);

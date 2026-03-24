@@ -17,7 +17,6 @@ use KDuma\PhpCA\Record\Extension\Extensions\SubjectAltNameExtension;
 use KDuma\PhpCA\Record\Extension\Extensions\SubjectKeyIdentifierExtension;
 use KDuma\PhpCA\Record\Extension\Template\BaseExtensionTemplate;
 use KDuma\PhpCA\Record\Extension\Template\Templates\AuthorityInfoAccessExtensionTemplate;
-use KDuma\PhpCA\Record\Extension\Template\Templates\AuthorityKeyIdentifierExtensionTemplate;
 use KDuma\PhpCA\Record\Extension\Template\Templates\BasicConstraintsExtensionTemplate;
 use KDuma\PhpCA\Record\Extension\Template\Templates\CertificatePoliciesExtensionTemplate;
 use KDuma\PhpCA\Record\Extension\Template\Templates\CrlDistributionPointsExtensionTemplate;
@@ -26,7 +25,6 @@ use KDuma\PhpCA\Record\Extension\Template\Templates\KeyUsageExtensionTemplate;
 use KDuma\PhpCA\Record\Extension\Template\Templates\NetscapeCommentExtensionTemplate;
 use KDuma\PhpCA\Record\Extension\Template\Templates\PrivateKeyUsagePeriodExtensionTemplate;
 use KDuma\PhpCA\Record\Extension\Template\Templates\SubjectAltNameExtensionTemplate;
-use KDuma\PhpCA\Record\Extension\Template\Templates\SubjectKeyIdentifierExtensionTemplate;
 use LogicException;
 
 class ExtensionRegistry
@@ -40,8 +38,8 @@ class ExtensionRegistry
     private static bool $defaultsRegistered = false;
 
     /**
-     * @param class-string<BaseExtension> $class
-     * @param class-string<BaseExtensionTemplate>|null $templateClass
+     * @param  class-string<BaseExtension>  $class
+     * @param  class-string<BaseExtensionTemplate>|null  $templateClass
      */
     public static function register(string $class, ?string $templateClass = null): void
     {
@@ -53,7 +51,7 @@ class ExtensionRegistry
     }
 
     /**
-     * @param class-string<BaseExtensionTemplate> $class
+     * @param  class-string<BaseExtensionTemplate>  $class
      */
     public static function registerTemplate(string $class): void
     {

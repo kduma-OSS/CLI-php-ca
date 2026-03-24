@@ -13,12 +13,12 @@ readonly class Crc32HasherConfiguration extends BaseHasherConfiguration
 {
     public function createHasher(): HashingAlgorithmInterface
     {
-        return new Crc32HashingAlgorithm();
+        return new Crc32HashingAlgorithm;
     }
 
     public static function fromArray(array $data): static
     {
-        return new static();
+        return new static;
     }
 
     public function toArray(): array

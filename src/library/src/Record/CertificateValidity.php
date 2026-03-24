@@ -16,14 +16,14 @@ readonly class CertificateValidity
 
     public function isValid(?DateTimeImmutable $at = null): bool
     {
-        $at ??= new DateTimeImmutable();
+        $at ??= new DateTimeImmutable;
 
         return $at >= $this->notBefore && $at <= $this->notAfter;
     }
 
     public function isExpired(?DateTimeImmutable $at = null): bool
     {
-        $at ??= new DateTimeImmutable();
+        $at ??= new DateTimeImmutable;
 
         return $at > $this->notAfter;
     }

@@ -9,7 +9,7 @@ use RuntimeException;
 class PresetInputProvider implements InputProviderInterface
 {
     /**
-     * @param array<string, string|string[]> $answers Keyed by alias
+     * @param  array<string, string|string[]>  $answers  Keyed by alias
      */
     public function __construct(
         private readonly array $answers = [],

@@ -9,7 +9,7 @@ use KDuma\PhpCA\Record\Extension\BaseExtension;
 readonly class CrlDistributionPointsExtension extends BaseExtension
 {
     /**
-     * @param string[] $uris
+     * @param  string[]  $uris
      */
     public function __construct(
         public array $uris,

@@ -54,7 +54,7 @@ class SubjectKeyIdentifierExtensionTemplate extends BaseExtensionTemplate
 
         $resolver = isset($data['key_identifier'])
             ? ExtensionValueResolverFactory::fromMixed($data['key_identifier'])
-            : new SubjectKeyFingerprintResolver();
+            : new SubjectKeyFingerprintResolver;
 
         if (! $resolver instanceof ExtensionValueResolver) {
             throw new \InvalidArgumentException('subject-key-identifier: "key_identifier" must be a string or resolver object.');

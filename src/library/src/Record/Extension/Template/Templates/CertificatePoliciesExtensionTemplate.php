@@ -13,7 +13,7 @@ use KDuma\PhpCA\Record\Extension\Template\BaseExtensionTemplate;
 class CertificatePoliciesExtensionTemplate extends BaseExtensionTemplate
 {
     /**
-     * @param array $policies Each: ['oid' => string, 'cps' => Resolver|string|null, 'notice' => Resolver|string|null, 'noticeRef' => ['organization' => Resolver|string, 'noticeNumbers' => int[]]|null]
+     * @param  array  $policies  Each: ['oid' => string, 'cps' => Resolver|string|null, 'notice' => Resolver|string|null, 'noticeRef' => ['organization' => Resolver|string, 'noticeNumbers' => int[]]|null]
      */
     public function __construct(
         public readonly array $policies = [],
@@ -104,6 +104,7 @@ class CertificatePoliciesExtensionTemplate extends BaseExtensionTemplate
         foreach (($data['policies'] ?? []) as $i => $policy) {
             if (is_string($policy)) {
                 $policies[] = ['oid' => $policy];
+
                 continue;
             }
 

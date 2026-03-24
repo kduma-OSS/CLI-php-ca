@@ -1,11 +1,12 @@
 <?php
 
 declare(strict_types=1);
+use Tests\TestCase;
 
-uses(Tests\TestCase::class);
+uses(TestCase::class);
 
 beforeEach(function () {
-    $this->configPath = sys_get_temp_dir() . '/php-ca-test-' . uniqid() . '.json';
+    $this->configPath = sys_get_temp_dir().'/php-ca-test-'.uniqid().'.json';
     file_put_contents($this->configPath, json_encode([
         'adapter' => ['type' => 'directory', 'path' => './data'],
         'integrity' => ['hasher' => ['type' => 'sha256']],

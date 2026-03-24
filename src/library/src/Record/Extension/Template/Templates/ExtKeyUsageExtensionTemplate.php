@@ -56,7 +56,7 @@ class ExtKeyUsageExtensionTemplate extends BaseExtensionTemplate
                 throw new \InvalidArgumentException('ext-key-usage: each usage must be a string.');
             }
             if (! in_array($usage, self::VALID_USAGES, true)) {
-                throw new \InvalidArgumentException("ext-key-usage: unknown usage \"{$usage}\". Valid: " . implode(', ', self::VALID_USAGES));
+                throw new \InvalidArgumentException("ext-key-usage: unknown usage \"{$usage}\". Valid: ".implode(', ', self::VALID_USAGES));
             }
         }
 

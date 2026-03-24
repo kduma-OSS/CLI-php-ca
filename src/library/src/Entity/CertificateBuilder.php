@@ -7,30 +7,38 @@ namespace KDuma\PhpCA\Entity;
 use DateTimeImmutable;
 use KDuma\PhpCA\CertificationAuthority;
 use KDuma\PhpCA\Helpers\FingerprintHelper;
+use KDuma\PhpCA\Helpers\KeyHelper;
+use KDuma\PhpCA\Helpers\X509ExtensionApplier;
 use KDuma\PhpCA\Record\CertificateSubject\CertificateSubject;
 use KDuma\PhpCA\Record\CertificateValidity;
 use KDuma\PhpCA\Record\Enum\SignatureAlgorithm;
-use KDuma\PhpCA\Helpers\KeyHelper;
-use KDuma\PhpCA\Helpers\X509ExtensionApplier;
 use KDuma\PhpCA\Record\Extension\BaseExtension;
 use KDuma\PhpCA\Record\Extension\Resolver\InputProviderInterface;
 use KDuma\PhpCA\Record\Extension\Resolver\IssuanceContext;
 use KDuma\PhpCA\Record\Extension\Resolver\PresetInputProvider;
-use phpseclib3\Crypt\Common\PrivateKey;
 use phpseclib3\File\X509;
 
 class CertificateBuilder
 {
     private string|CertificateTemplateEntity|null $template = null;
+
     private string|KeyEntity|null $key = null;
+
     private ?CertificateSubject $subject = null;
+
     private string|CACertificateEntity|null $caCert = null;
+
     private string|KeyEntity|null $caKey = null;
+
     private string|CsrEntity|null $csr = null;
+
     private bool $useSubjectFromCsr = true;
+
     private bool $useExtensionsFromCsr = true;
+
     /** @var BaseExtension[] */
     private array $additionalExtensions = [];
+
     private ?InputProviderInterface $inputProvider = null;
 
     public function __construct(
@@ -117,7 +125,7 @@ class CertificateBuilder
         // Build certificate
         $sequence = $this->ca->state->nextSequence();
 
-        $notBefore = new DateTimeImmutable();
+        $notBefore = new DateTimeImmutable;
         $effectiveValidity = $templateEntity->getEffectiveValidity($this->ca->templates);
         if ($effectiveValidity === null) {
             throw new \LogicException('Template has no validity (and no parent with validity).');
@@ -135,7 +143,7 @@ class CertificateBuilder
             validity: $validity,
             sequence: $sequence,
             serialNumber: '', // will be set after signing
-            inputProvider: $this->inputProvider ?? new PresetInputProvider(),
+            inputProvider: $this->inputProvider ?? new PresetInputProvider,
         );
 
         $extensions = array_map(
@@ -148,15 +156,15 @@ class CertificateBuilder
         }
         $extensions = array_merge($extensions, $this->additionalExtensions);
 
-        $issuerX509 = new X509();
+        $issuerX509 = new X509;
         $issuerX509->loadX509($caCertEntity->certificate);
         $issuerX509->setPrivateKey(KeyHelper::prepareForSigning($caPrivateKey));
 
-        $subjectX509 = new X509();
+        $subjectX509 = new X509;
         $subjectX509->setDN($subject->toString());
         $subjectX509->setPublicKey(KeyHelper::preparePublicKey($subjectPublicKey));
 
-        $x509 = new X509();
+        $x509 = new X509;
         $x509->setStartDate($notBefore);
         $x509->setEndDate($notAfter);
 
@@ -169,14 +177,14 @@ class CertificateBuilder
         $certPem = $x509->saveX509($result);
 
         // Parse back the signed cert for fields
-        $parsedX509 = new X509();
+        $parsedX509 = new X509;
         $parsedX509->loadX509($certPem);
         $cert = $parsedX509->getCurrentCert();
         $tbs = $cert['tbsCertificate'];
 
         $serialNumber = $tbs['serialNumber']->toHex();
 
-        $entity = new CertificateEntity();
+        $entity = new CertificateEntity;
         $entity->id = "{$sequence}-{$serialNumber}";
         $entity->version = 3;
         $entity->serialNumber = $serialNumber;

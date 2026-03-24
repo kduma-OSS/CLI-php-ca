@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace KDuma\PhpCA\Entity;
 
 use KDuma\SimpleDAL\Contracts\Query\FilterInterface;
-use KDuma\SimpleDAL\Contracts\RecordInterface;
 use KDuma\SimpleDAL\Typed\Contracts\TypedRecord;
 use KDuma\SimpleDAL\Typed\Store\TypedCollectionEntity;
-use KDuma\SimpleDAL\Typed\TypedRecordHydrator;
 
 /**
  * @template TEntity of BaseEntity
@@ -22,9 +20,7 @@ abstract class BaseEntityCollection
         get;
     }
 
-    public function __construct(protected TypedCollectionEntity $inner)
-    {
-    }
+    public function __construct(protected TypedCollectionEntity $inner) {}
 
     /**
      * @return TEntity
@@ -70,11 +66,11 @@ abstract class BaseEntityCollection
     }
 
     /**
-     * @param TEntity $entity
+     * @param  TEntity  $entity
      */
     public function save(BaseEntity $entity): void
     {
-        if (!$entity->persisted) {
+        if (! $entity->persisted) {
             $record = $entity->_getNewRecord($this->inner->make());
             $record = $this->inner->create($record, $entity->id);
         } else {
@@ -97,7 +93,6 @@ abstract class BaseEntityCollection
     }
 
     /**
-     * @param TypedRecord $record
      * @return TEntity
      */
     protected function wrapRecord(TypedRecord $record): BaseEntity

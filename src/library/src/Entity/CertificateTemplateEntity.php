@@ -74,8 +74,8 @@ class CertificateTemplateEntity extends BaseEntity
     }
 
     /**
-     * @param CertificateTemplateEntity $entity
-     * @param CertificateTemplateRecord $record
+     * @param  CertificateTemplateEntity  $entity
+     * @param  CertificateTemplateRecord  $record
      */
     protected static function _populateFromRecord(BaseEntity $entity, TypedRecord $record): void
     {
@@ -89,8 +89,8 @@ class CertificateTemplateEntity extends BaseEntity
     }
 
     /**
-     * @param CertificateTemplateEntity $entity
-     * @param CertificateTemplateRecord $record
+     * @param  CertificateTemplateEntity  $entity
+     * @param  CertificateTemplateRecord  $record
      */
     protected static function _populateToRecord(BaseEntity $entity, TypedRecord $record): void
     {

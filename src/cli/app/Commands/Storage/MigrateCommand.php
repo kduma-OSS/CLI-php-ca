@@ -11,6 +11,7 @@ use function Laravel\Prompts\info;
 class MigrateCommand extends BaseCommand
 {
     protected $signature = 'storage:migrate';
+
     protected $description = 'Migrate storage to match current integrity and encryption configuration';
 
     private const array ENTITY_NAMES = [

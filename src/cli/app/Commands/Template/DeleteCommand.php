@@ -11,6 +11,7 @@ use function Laravel\Prompts\info;
 class DeleteCommand extends BaseCommand
 {
     protected $signature = 'template:delete {id} {--force}';
+
     protected $description = 'Delete a certificate template';
 
     public function handle(): int
@@ -20,6 +21,7 @@ class DeleteCommand extends BaseCommand
 
         if (! $ca->templates->has($id)) {
             error("Template \"{$id}\" not found.");
+
             return self::FAILURE;
         }
 

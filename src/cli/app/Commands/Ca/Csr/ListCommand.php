@@ -9,6 +9,7 @@ use function Laravel\Prompts\info;
 class ListCommand extends BaseCommand
 {
     protected $signature = 'ca:csr:list';
+
     protected $description = 'List all CA CSRs';
 
     public function handle(): int
@@ -18,6 +19,7 @@ class ListCommand extends BaseCommand
 
         if (empty($csrs)) {
             info('No CA CSRs found.');
+
             return self::SUCCESS;
         }
 

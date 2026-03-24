@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
+use KDuma\PhpCA\ConfigManager\Adapter\DirectoryAdapterConfiguration;
+use KDuma\PhpCA\ConfigManager\Adapter\SqliteAdapterConfiguration;
 use KDuma\PhpCA\ConfigManager\CaConfiguration;
 use KDuma\PhpCA\ConfigManager\CaConfigurationLoader;
 use KDuma\PhpCA\ConfigManager\CaConfigurationPersister;
-use KDuma\PhpCA\ConfigManager\Adapter\DirectoryAdapterConfiguration;
-use KDuma\PhpCA\ConfigManager\Adapter\SqliteAdapterConfiguration;
 
 it('persists directory config to array', function () {
     $config = new CaConfiguration(
         adapter: new DirectoryAdapterConfiguration(path: '/data/certs'),
     );
 
-    $persister = new CaConfigurationPersister();
+    $persister = new CaConfigurationPersister;
     $array = $persister->toArray($config);
 
     expect($array)->toBe([
@@ -29,7 +29,7 @@ it('persists sqlite config to array', function () {
         adapter: new SqliteAdapterConfiguration(path: '/data/ca.sqlite'),
     );
 
-    $persister = new CaConfigurationPersister();
+    $persister = new CaConfigurationPersister;
     $array = $persister->toArray($config);
 
     expect($array)->toBe([
@@ -48,10 +48,10 @@ it('round-trips through loader and persister', function () {
         ],
     ];
 
-    $loader = new CaConfigurationLoader();
+    $loader = new CaConfigurationLoader;
     $config = $loader->load($input, '/unused');
 
-    $persister = new CaConfigurationPersister();
+    $persister = new CaConfigurationPersister;
     $output = $persister->toArray($config);
 
     expect($output)->toBe($input);

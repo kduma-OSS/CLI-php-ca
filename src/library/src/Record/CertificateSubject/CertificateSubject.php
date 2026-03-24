@@ -64,7 +64,7 @@ class CertificateSubject
     ];
 
     /**
-     * @param BaseDN[] $components
+     * @param  BaseDN[]  $components
      */
     public function __construct(
         public array $components,
@@ -73,7 +73,7 @@ class CertificateSubject
     public function toString(): string
     {
         return implode(', ', array_map(
-            fn (BaseDN $dn) => $dn::shortName() . '=' . $dn->value,
+            fn (BaseDN $dn) => $dn::shortName().'='.$dn->value,
             $this->components,
         ));
     }

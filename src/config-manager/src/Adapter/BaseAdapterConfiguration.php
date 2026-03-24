@@ -25,7 +25,7 @@ abstract readonly class BaseAdapterConfiguration
             return $path;
         }
 
-        $resolved = rtrim($basePath, '/') . '/' . $path;
+        $resolved = rtrim($basePath, '/').'/'.$path;
 
         // Normalize /./ sequences
         while (str_contains($resolved, '/./')) {

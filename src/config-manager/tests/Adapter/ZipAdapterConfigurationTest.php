@@ -22,7 +22,7 @@ it('returns correct array structure', function () {
 });
 
 it('creates a FlysystemAdapter', function () {
-    $path = sys_get_temp_dir() . '/php-ca-test-' . uniqid() . '.zip';
+    $path = sys_get_temp_dir().'/php-ca-test-'.uniqid().'.zip';
 
     $adapter = new ZipAdapterConfiguration(path: $path);
     expect($adapter->createAdapter())->toBeInstanceOf(FlysystemAdapter::class);

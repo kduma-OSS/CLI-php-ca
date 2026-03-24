@@ -38,13 +38,21 @@ class CertificationAuthority
     private readonly TypedDataStore $store;
 
     private ?KeyEntityCollection $_keys = null;
+
     private ?CertificateTemplateEntityCollection $_templates = null;
+
     private ?CertificateEntityCollection $_certificates = null;
+
     private ?CsrEntityCollection $_csrs = null;
+
     private ?CACsrEntityCollection $_caCsrs = null;
+
     private ?CACertificateEntityCollection $_caCertificates = null;
+
     private ?RevocationEntityCollection $_revocations = null;
+
     private ?CrlEntityCollection $_crls = null;
+
     private ?CaStateEntity $_state = null;
 
     public function __construct(StorageAdapterInterface $adapter)

@@ -19,7 +19,7 @@ class RelativeDateResolver extends ExtensionValueResolver
         $date = match ($this->base) {
             'not-before', 'notBefore' => $context->validity->notBefore,
             'not-after', 'notAfter' => $context->validity->notAfter,
-            'now' => new DateTimeImmutable(),
+            'now' => new DateTimeImmutable,
             default => throw new \InvalidArgumentException("Unknown date base: {$this->base}"),
         };
 

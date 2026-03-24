@@ -2,24 +2,21 @@
 
 declare(strict_types=1);
 
-use KDuma\PhpCA\ConfigManager\Integrity\Signer\DsaSignerConfiguration;
-use KDuma\PhpCA\ConfigManager\Integrity\Signer\EcSignerConfiguration;
 use KDuma\PhpCA\ConfigManager\Integrity\Signer\Ed25519SignerConfiguration;
 use KDuma\PhpCA\ConfigManager\Integrity\Signer\HmacSha1SignerConfiguration;
 use KDuma\PhpCA\ConfigManager\Integrity\Signer\HmacSha256SignerConfiguration;
 use KDuma\PhpCA\ConfigManager\Integrity\Signer\HmacSha512SignerConfiguration;
-use KDuma\PhpCA\ConfigManager\Integrity\Signer\RsaSignerConfiguration;
 use KDuma\PhpCA\ConfigManager\Integrity\Signer\SignerConfigurationFactory;
 
 it('discovers all signer types', function () {
-    $factory = new SignerConfigurationFactory();
+    $factory = new SignerConfigurationFactory;
     $types = $factory->getTypes();
 
     expect($types)->toHaveKeys(['hmac-sha1', 'hmac-sha256', 'hmac-sha512', 'ed25519', 'rsa', 'ec', 'dsa']);
 });
 
 it('creates HMAC signer from array', function (string $type, string $expectedClass) {
-    $factory = new SignerConfigurationFactory();
+    $factory = new SignerConfigurationFactory;
     $signer = $factory->fromArray([
         'type' => $type,
         'id' => 'test-signer',
@@ -34,7 +31,7 @@ it('creates HMAC signer from array', function (string $type, string $expectedCla
 ]);
 
 it('creates Ed25519 signer from array', function () {
-    $factory = new SignerConfigurationFactory();
+    $factory = new SignerConfigurationFactory;
     $signer = $factory->fromArray([
         'type' => 'ed25519',
         'id' => 'ed-signer',
@@ -46,7 +43,7 @@ it('creates Ed25519 signer from array', function () {
 });
 
 it('round-trips HMAC signer', function () {
-    $factory = new SignerConfigurationFactory();
+    $factory = new SignerConfigurationFactory;
     $signer = $factory->fromArray([
         'type' => 'hmac-sha256',
         'id' => 'test',
@@ -61,7 +58,7 @@ it('round-trips HMAC signer', function () {
 });
 
 it('round-trips HMAC signer with string shorthand', function () {
-    $factory = new SignerConfigurationFactory();
+    $factory = new SignerConfigurationFactory;
     $signer = $factory->fromArray([
         'type' => 'hmac-sha256',
         'id' => 'test',
@@ -76,6 +73,6 @@ it('round-trips HMAC signer with string shorthand', function () {
 });
 
 it('throws on unknown signer type', function () {
-    $factory = new SignerConfigurationFactory();
+    $factory = new SignerConfigurationFactory;
     $factory->fromArray(['type' => 'chacha20'], '/base');
 })->throws(InvalidArgumentException::class, 'Unknown signer type "chacha20"');

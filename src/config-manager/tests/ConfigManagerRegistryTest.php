@@ -190,7 +190,7 @@ test('register adds a single value provider type', function () {
 });
 
 test('register throws on unrecognized class', function () {
-    ConfigManagerRegistry::register(\stdClass::class);
+    ConfigManagerRegistry::register(stdClass::class);
 })->throws(LogicException::class, 'does not have a recognized configuration attribute');
 
 test('getter methods return empty arrays initially', function () {

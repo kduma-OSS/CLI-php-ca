@@ -9,6 +9,7 @@ use function Laravel\Prompts\error;
 class GetCommand extends BaseCommand
 {
     protected $signature = 'csr:get {id}';
+
     protected $description = 'Output CSR PEM';
 
     public function handle(): int
@@ -18,6 +19,7 @@ class GetCommand extends BaseCommand
 
         if ($csr === null) {
             error('CSR not found.');
+
             return self::FAILURE;
         }
 

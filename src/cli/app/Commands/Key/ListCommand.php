@@ -40,7 +40,7 @@ class ListCommand extends Command
         $entities = $ca->keys->all();
 
         if (empty($entities)) {
-            info("No keys found.");
+            info('No keys found.');
 
             return self::SUCCESS;
         }
@@ -48,7 +48,7 @@ class ListCommand extends Command
         $rows = [];
 
         foreach ($entities as $entity) {
-            $typeStr = match(true) {
+            $typeStr = match (true) {
                 $entity->type instanceof RSAKeyType => 'RSA',
                 $entity->type instanceof DSAKeyType => 'DSA',
                 $entity->type instanceof ECDSAKeyType => 'ECDSA',
@@ -56,8 +56,8 @@ class ListCommand extends Command
                 default => 'Unknown',
             };
 
-            $details = match(true) {
-                $entity->type instanceof RSAKeyType => $entity->type->size . ' bits',
+            $details = match (true) {
+                $entity->type instanceof RSAKeyType => $entity->type->size.' bits',
                 $entity->type instanceof DSAKeyType => $entity->type->parameters->value,
                 $entity->type instanceof ECDSAKeyType => $entity->type->curve->value,
                 $entity->type instanceof EdDSAKeyType => $entity->type->curve->value,

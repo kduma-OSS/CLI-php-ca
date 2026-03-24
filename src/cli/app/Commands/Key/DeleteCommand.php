@@ -36,7 +36,7 @@ class DeleteCommand extends Command
         $id = $this->argument('id');
 
         if (! $ca->keys->has($id)) {
-            error("Key not found.");
+            error('Key not found.');
 
             return self::FAILURE;
         }
@@ -45,7 +45,7 @@ class DeleteCommand extends Command
             $entity = $ca->keys->find($id);
 
             if (! $entity->hasPrivateKey) {
-                error("Key does not have a private key.");
+                error('Key does not have a private key.');
 
                 return self::FAILURE;
             }
@@ -57,7 +57,7 @@ class DeleteCommand extends Command
             $entity->hasPrivateKey = false;
             $ca->keys->save($entity);
 
-            info("Private key removed.");
+            info('Private key removed.');
         } else {
             if (! $this->option('force') && ! confirm('Are you sure you want to delete this key?')) {
                 return self::FAILURE;
@@ -65,7 +65,7 @@ class DeleteCommand extends Command
 
             $ca->keys->delete($id);
 
-            info("Key deleted.");
+            info('Key deleted.');
         }
 
         return self::SUCCESS;

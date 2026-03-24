@@ -4,12 +4,12 @@ namespace App\Commands\Ca;
 
 use App\Commands\BaseCommand;
 
-use function Laravel\Prompts\info;
 use function Laravel\Prompts\warning;
 
 class StatusCommand extends BaseCommand
 {
     protected $signature = 'ca:status';
+
     protected $description = 'Show CA status';
 
     public function handle(): int

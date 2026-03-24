@@ -9,7 +9,7 @@ use KDuma\PhpCA\Record\Extension\BaseExtension;
 readonly class ExtKeyUsageExtension extends BaseExtension
 {
     /**
-     * @param string[] $usages OID short names: serverAuth, clientAuth, codeSigning, emailProtection, timeStamping, OCSPSigning
+     * @param  string[]  $usages  OID short names: serverAuth, clientAuth, codeSigning, emailProtection, timeStamping, OCSPSigning
      */
     public function __construct(
         public array $usages,

@@ -17,12 +17,20 @@ class CACsrEntity extends BaseEntity
 {
     public CertificateSubject $subject {
         get => $this->subject;
-        set { if (isset($this->subject)) { throw new \LogicException('Immutable.'); } $this->subject = $value; }
+        set {
+            if (isset($this->subject)) {
+                throw new \LogicException('Immutable.');
+            } $this->subject = $value;
+        }
     }
 
     public string $keyId {
         get => $this->keyId;
-        set { if (isset($this->keyId)) { throw new \LogicException('Immutable.'); } $this->keyId = $value; }
+        set {
+            if (isset($this->keyId)) {
+                throw new \LogicException('Immutable.');
+            } $this->keyId = $value;
+        }
     }
 
     public ?string $caCertificateId = null; // mutable — updated when CA cert is imported
@@ -30,12 +38,20 @@ class CACsrEntity extends BaseEntity
     /** @var BaseExtension[] */
     public array $requestedExtensions = [] {
         get => $this->requestedExtensions;
-        set { if ($this->requestedExtensions !== []) { throw new \LogicException('Immutable.'); } $this->requestedExtensions = $value; }
+        set {
+            if ($this->requestedExtensions !== []) {
+                throw new \LogicException('Immutable.');
+            } $this->requestedExtensions = $value;
+        }
     }
 
     public string $fingerprint {
         get => $this->fingerprint;
-        set { if (isset($this->fingerprint)) { throw new \LogicException('Immutable.'); } $this->fingerprint = $value; }
+        set {
+            if (isset($this->fingerprint)) {
+                throw new \LogicException('Immutable.');
+            } $this->fingerprint = $value;
+        }
     }
 
     private array $_pendingChanges = [];
@@ -45,6 +61,7 @@ class CACsrEntity extends BaseEntity
             if (isset($this->_pendingChanges['csr'])) {
                 return $this->_pendingChanges['csr'];
             }
+
             return $this->attachments->get(CACsrAttachment::Csr)->contents();
         }
         set {

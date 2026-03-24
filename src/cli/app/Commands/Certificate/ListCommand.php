@@ -9,6 +9,7 @@ use function Laravel\Prompts\info;
 class ListCommand extends BaseCommand
 {
     protected $signature = 'certificate:list';
+
     protected $description = 'List all issued certificates';
 
     public function handle(): int
@@ -18,6 +19,7 @@ class ListCommand extends BaseCommand
 
         if (empty($certs)) {
             info('No certificates found.');
+
             return self::SUCCESS;
         }
 
@@ -26,7 +28,7 @@ class ListCommand extends BaseCommand
             array_map(fn ($c) => [
                 $c->id,
                 $c->getSubjectString(),
-                substr($c->serialNumber, 0, 16) . '...',
+                substr($c->serialNumber, 0, 16).'...',
                 $c->templateId ?? '-',
                 $c->validity->notAfter->format('Y-m-d'),
             ], $certs),

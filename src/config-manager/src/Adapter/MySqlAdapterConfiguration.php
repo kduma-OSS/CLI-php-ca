@@ -23,7 +23,7 @@ readonly class MySqlAdapterConfiguration extends BaseAdapterConfiguration
 
     public static function fromArray(array $data, string $basePath): static
     {
-        $factory = new ValueProviderFactory();
+        $factory = new ValueProviderFactory;
 
         return new static(
             host: $data['host'] ?? '127.0.0.1',

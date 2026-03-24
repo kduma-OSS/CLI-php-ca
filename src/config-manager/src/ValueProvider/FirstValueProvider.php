@@ -11,7 +11,7 @@ use RuntimeException;
 readonly class FirstValueProvider extends ValueProvider
 {
     /**
-     * @param ValueProvider[] $candidates
+     * @param  ValueProvider[]  $candidates
      */
     public function __construct(
         public array $candidates,
@@ -36,7 +36,7 @@ readonly class FirstValueProvider extends ValueProvider
 
     public static function fromArray(array $data, string $basePath): static
     {
-        $factory = new ValueProviderFactory();
+        $factory = new ValueProviderFactory;
 
         $candidates = array_map(
             fn (array $item) => $factory->fromArray($item, $basePath),

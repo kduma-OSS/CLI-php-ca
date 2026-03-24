@@ -36,7 +36,7 @@ class ValidateCommand extends Command
         }
 
         try {
-            $loader = new CaConfigurationLoader();
+            $loader = new CaConfigurationLoader;
             $loader->load($data, dirname($this->getCaConfigPath()));
         } catch (\Throwable $e) {
             error("Validation failed: {$e->getMessage()}");

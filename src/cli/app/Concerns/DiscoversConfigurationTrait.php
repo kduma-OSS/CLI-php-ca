@@ -5,7 +5,6 @@ namespace App\Concerns;
 use KDuma\PhpCA\CertificationAuthority;
 use KDuma\PhpCA\ConfigManager\CaConfiguration;
 use KDuma\PhpCA\ConfigManager\CaConfigurationLoader;
-use KDuma\SimpleDAL\Adapter\Contracts\StorageAdapterInterface;
 use Symfony\Component\Console\Input\InputOption;
 
 trait DiscoversConfigurationTrait
@@ -29,11 +28,11 @@ trait DiscoversConfigurationTrait
     {
         $path = $this->option('ca-config-file');
 
-        if (!$path) {
+        if (! $path) {
             $path = $this->discoverConfigFile();
         }
 
-        if (!file_exists($path)) {
+        if (! file_exists($path)) {
             throw new \InvalidArgumentException("CA configuration file not found at: $path");
         }
 
@@ -50,7 +49,7 @@ trait DiscoversConfigurationTrait
             throw new \InvalidArgumentException("CA configuration file is not valid JSON: {$e->getMessage()}");
         }
 
-        $loader = new CaConfigurationLoader();
+        $loader = new CaConfigurationLoader;
 
         return $loader->load($data, dirname($path));
     }
@@ -65,7 +64,7 @@ trait DiscoversConfigurationTrait
         $directory = getcwd();
 
         while (true) {
-            $candidate = $directory . '/' . self::CONFIG_FILE_NAME;
+            $candidate = $directory.'/'.self::CONFIG_FILE_NAME;
 
             if (file_exists($candidate)) {
                 return $candidate;
@@ -74,7 +73,7 @@ trait DiscoversConfigurationTrait
             $parent = dirname($directory);
 
             if ($parent === $directory) {
-                throw new \InvalidArgumentException("CA configuration file not found");
+                throw new \InvalidArgumentException('CA configuration file not found');
             }
 
             $directory = $parent;

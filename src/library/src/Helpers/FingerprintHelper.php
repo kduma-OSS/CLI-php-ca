@@ -15,6 +15,7 @@ class FingerprintHelper
             return self::fromPhpSecLib($publicKey->getFingerprint('sha256'));
         } catch (\Exception) {
             $pem = $publicKey->toString('PKCS8');
+
             return hash('sha256', $pem);
         }
     }
@@ -31,7 +32,7 @@ class FingerprintHelper
 
     public static function computeCertificateFingerprint(string $pem): string
     {
-        $x509 = new X509();
+        $x509 = new X509;
         $x509->loadX509($pem);
         $der = $x509->saveX509($x509->getCurrentCert(), X509::FORMAT_DER);
 

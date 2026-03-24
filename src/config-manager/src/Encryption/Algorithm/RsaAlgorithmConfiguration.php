@@ -56,7 +56,7 @@ readonly class RsaAlgorithmConfiguration extends BaseEncryptionAlgorithmConfigur
 
     public static function fromArray(array $data, string $basePath): static
     {
-        $factory = new ValueProviderFactory();
+        $factory = new ValueProviderFactory;
 
         return new static(
             id: $data['id'] ?? throw new \InvalidArgumentException('RSA encryption requires "id".'),

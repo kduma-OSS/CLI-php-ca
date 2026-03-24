@@ -23,8 +23,7 @@ class X509ExtensionApplier
      * Apply BaseExtension[] to a phpseclib X509 object before signing.
      * SKI and AKI are NOT applied here — they are auto-computed by phpseclib.
      *
-     * @param X509 $x509
-     * @param BaseExtension[] $extensions
+     * @param  BaseExtension[]  $extensions
      */
     public static function apply(X509 $x509, array $extensions): void
     {
@@ -57,15 +56,33 @@ class X509ExtensionApplier
     private static function applyKeyUsage(X509 $x509, KeyUsageExtension $ext): void
     {
         $usages = [];
-        if ($ext->digitalSignature) $usages[] = 'digitalSignature';
-        if ($ext->nonRepudiation) $usages[] = 'nonRepudiation';
-        if ($ext->keyEncipherment) $usages[] = 'keyEncipherment';
-        if ($ext->dataEncipherment) $usages[] = 'dataEncipherment';
-        if ($ext->keyAgreement) $usages[] = 'keyAgreement';
-        if ($ext->keyCertSign) $usages[] = 'keyCertSign';
-        if ($ext->cRLSign) $usages[] = 'cRLSign';
-        if ($ext->encipherOnly) $usages[] = 'encipherOnly';
-        if ($ext->decipherOnly) $usages[] = 'decipherOnly';
+        if ($ext->digitalSignature) {
+            $usages[] = 'digitalSignature';
+        }
+        if ($ext->nonRepudiation) {
+            $usages[] = 'nonRepudiation';
+        }
+        if ($ext->keyEncipherment) {
+            $usages[] = 'keyEncipherment';
+        }
+        if ($ext->dataEncipherment) {
+            $usages[] = 'dataEncipherment';
+        }
+        if ($ext->keyAgreement) {
+            $usages[] = 'keyAgreement';
+        }
+        if ($ext->keyCertSign) {
+            $usages[] = 'keyCertSign';
+        }
+        if ($ext->cRLSign) {
+            $usages[] = 'cRLSign';
+        }
+        if ($ext->encipherOnly) {
+            $usages[] = 'encipherOnly';
+        }
+        if ($ext->decipherOnly) {
+            $usages[] = 'decipherOnly';
+        }
 
         if (! empty($usages)) {
             $x509->setExtensionValue('id-ce-keyUsage', $usages, $ext->isCritical());

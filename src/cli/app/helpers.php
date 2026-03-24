@@ -17,7 +17,7 @@ if (! function_exists('stdErr')) {
 
             return $callback();
         } finally {
-            Prompt::setOutput(new ConsoleOutput());
+            Prompt::setOutput(new ConsoleOutput);
         }
     }
 }

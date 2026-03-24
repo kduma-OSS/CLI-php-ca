@@ -15,23 +15,27 @@ use KDuma\PhpCA\Record\CertificateValidity;
 use KDuma\PhpCA\Record\Enum\SignatureAlgorithm;
 use KDuma\PhpCA\Record\Extension\BaseExtension;
 use KDuma\PhpCA\Record\Extension\Extensions\AuthorityInfoAccessExtension;
-use KDuma\PhpCA\Record\Extension\Extensions\AuthorityKeyIdentifierExtension;
 use KDuma\PhpCA\Record\Extension\Extensions\BasicConstraintsExtension;
 use KDuma\PhpCA\Record\Extension\Extensions\CertificatePoliciesExtension;
 use KDuma\PhpCA\Record\Extension\Extensions\CrlDistributionPointsExtension;
 use KDuma\PhpCA\Record\Extension\Extensions\ExtKeyUsageExtension;
 use KDuma\PhpCA\Record\Extension\Extensions\KeyUsageExtension;
-use KDuma\PhpCA\Record\Extension\Extensions\SubjectKeyIdentifierExtension;
 use phpseclib3\File\X509;
 
 class CACertificateBuilder
 {
     private ?string $customId = null;
+
     private bool $selfSigned = false;
+
     private ?string $importPem = null;
+
     private string|KeyEntity|null $key = null;
+
     private ?CertificateSubject $subject = null;
+
     private ?DateInterval $validity = null;
+
     /** @var BaseExtension[] */
     private array $extensions = [];
 
@@ -130,18 +134,18 @@ class CACertificateBuilder
             throw new \LogicException('Self-signed certificate requires a private key.');
         }
 
-        $notBefore = new DateTimeImmutable();
+        $notBefore = new DateTimeImmutable;
         $notAfter = $notBefore->add($this->validity);
 
-        $issuer = new X509();
+        $issuer = new X509;
         $issuer->setDN($this->subject->toString());
         $issuer->setPrivateKey(KeyHelper::prepareForSigning($privateKey));
 
-        $subject = new X509();
+        $subject = new X509;
         $subject->setDN($this->subject->toString());
         $subject->setPublicKey(KeyHelper::preparePublicKey($keyEntity->getPublicKey()));
 
-        $x509 = new X509();
+        $x509 = new X509;
         $x509->setStartDate($notBefore);
         $x509->setEndDate($notAfter);
 
@@ -165,7 +169,7 @@ class CACertificateBuilder
 
     private function buildEntityFromPem(string $certPem, KeyEntity $keyEntity): CACertificateEntity
     {
-        $x509 = new X509();
+        $x509 = new X509;
         $x509->loadX509($certPem);
 
         $cert = $x509->getCurrentCert();
@@ -188,7 +192,7 @@ class CACertificateBuilder
         // Parse extensions from the certificate
         $extensions = $this->parseExtensionsFromCert($x509);
 
-        $entity = new CACertificateEntity();
+        $entity = new CACertificateEntity;
         $entity->id = $this->customId;
         $entity->version = $version;
         $entity->serialNumber = $tbs['serialNumber']->toHex();
@@ -339,7 +343,7 @@ class CACertificateBuilder
             return $this->resolveKey();
         }
 
-        $x509 = new X509();
+        $x509 = new X509;
         $x509->loadX509($certPem);
         $publicKey = $x509->getPublicKey();
         $fingerprint = FingerprintHelper::compute($publicKey);

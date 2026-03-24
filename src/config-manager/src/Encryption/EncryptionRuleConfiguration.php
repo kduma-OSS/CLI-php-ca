@@ -7,8 +7,8 @@ namespace KDuma\PhpCA\ConfigManager\Encryption;
 readonly class EncryptionRuleConfiguration
 {
     /**
-     * @param string[]|null $attachmentNames
-     * @param string[]|null $recordIds
+     * @param  string[]|null  $attachmentNames
+     * @param  string[]|null  $recordIds
      */
     public function __construct(
         public string $keyId,

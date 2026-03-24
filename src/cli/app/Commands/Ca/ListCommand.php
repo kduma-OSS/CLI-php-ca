@@ -9,6 +9,7 @@ use function Laravel\Prompts\info;
 class ListCommand extends BaseCommand
 {
     protected $signature = 'ca:list';
+
     protected $description = 'List all CA certificates';
 
     public function handle(): int
@@ -18,6 +19,7 @@ class ListCommand extends BaseCommand
 
         if (empty($certs)) {
             info('No CA certificates found.');
+
             return self::SUCCESS;
         }
 
@@ -29,7 +31,7 @@ class ListCommand extends BaseCommand
                 $c->id,
                 $c->getSubjectString(),
                 $c->isSelfSigned ? 'Yes' : 'No',
-                substr($c->fingerprint, 0, 16) . '...',
+                substr($c->fingerprint, 0, 16).'...',
                 $c->id === $activeId ? '*' : '',
             ], $certs),
         );

@@ -23,7 +23,9 @@ use phpseclib3\Crypt\RSA;
 class KeyBuilder
 {
     private PrivateKey|PublicKey $key;
+
     private BaseKeyType $type;
+
     private bool $hasPrivateKey;
 
     private function __construct() {}
@@ -34,7 +36,7 @@ class KeyBuilder
             $key = PublicKeyLoader::load($key);
         }
 
-        $builder = new static();
+        $builder = new static;
         $builder->key = self::normalizeRsaPadding($key);
         $builder->hasPrivateKey = $key instanceof PrivateKey;
         $builder->type = self::detectKeyType($builder->key);
@@ -44,7 +46,7 @@ class KeyBuilder
 
     public static function fresh(BaseKeyType $type): static
     {
-        $builder = new static();
+        $builder = new static;
         $builder->type = $type;
         $builder->hasPrivateKey = true;
         $builder->key = self::generateKey($type);
@@ -58,7 +60,7 @@ class KeyBuilder
             ? $this->key->getPublicKey()
             : $this->key;
 
-        $entity = new KeyEntity();
+        $entity = new KeyEntity;
         $entity->type = $this->type;
         $entity->fingerprint = FingerprintHelper::compute($publicKey);
         $entity->hasPrivateKey = $this->hasPrivateKey;
@@ -81,6 +83,7 @@ class KeyBuilder
 
         if ($key instanceof DSA\PrivateKey || $key instanceof DSA\PublicKey) {
             $length = $key->getLength();
+
             return new DSAKeyType(
                 parameters: DsaParameterSize::fromParameters($length['L'], $length['N']),
             );
@@ -99,7 +102,7 @@ class KeyBuilder
             };
         }
 
-        throw new \InvalidArgumentException('Unsupported key type: ' . get_class($key));
+        throw new \InvalidArgumentException('Unsupported key type: '.get_class($key));
     }
 
     /**
@@ -126,7 +129,7 @@ class KeyBuilder
             $type instanceof DSAKeyType => DSA::createKey($type->parameters->L(), $type->parameters->N()),
             $type instanceof ECDSAKeyType => EC::createKey($type->curve->value),
             $type instanceof EdDSAKeyType => EC::createKey($type->curve->value),
-            default => throw new \InvalidArgumentException('Unsupported key type: ' . get_class($type)),
+            default => throw new \InvalidArgumentException('Unsupported key type: '.get_class($type)),
         };
     }
 }

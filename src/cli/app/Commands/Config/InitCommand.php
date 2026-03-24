@@ -16,10 +16,10 @@ use function Laravel\Prompts\warning;
 
 class InitCommand extends Command
 {
+    use DiscoversConfigurationTrait;
     use ManagesConfigFileTrait {
         ManagesConfigFileTrait::validateConfig as traitValidateConfig;
     }
-    use DiscoversConfigurationTrait;
 
     protected $signature = 'config:init {--force : Overwrite existing config file}';
 
@@ -33,7 +33,7 @@ class InitCommand extends Command
 
     public function handle(): int
     {
-        $path = getcwd() . '/' . self::CONFIG_FILE_NAME;
+        $path = getcwd().'/'.self::CONFIG_FILE_NAME;
 
         if (file_exists($path) && ! $this->option('force')) {
             error("Configuration file already exists at {$path}. Use --force to overwrite.");
@@ -41,7 +41,7 @@ class InitCommand extends Command
             return self::FAILURE;
         }
 
-        $adapterFactory = new AdapterConfigurationFactory();
+        $adapterFactory = new AdapterConfigurationFactory;
         $adapterTypes = array_keys($adapterFactory->getAdapterTypes());
 
         $type = select(
@@ -70,13 +70,13 @@ class InitCommand extends Command
             ],
         ];
 
-        $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . "\n";
+        $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)."\n";
         file_put_contents($path, $json);
 
         info("Configuration file created at {$path}");
 
         try {
-            $loader = new CaConfigurationLoader();
+            $loader = new CaConfigurationLoader;
             $loader->load($data, dirname($path));
         } catch (\Throwable $e) {
             warning("Warning: {$e->getMessage()}");

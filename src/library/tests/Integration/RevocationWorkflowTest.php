@@ -18,10 +18,11 @@ use KDuma\PhpCA\Record\KeyType\Enum\EdDSACurve;
 use KDuma\SimpleDAL\Adapter\Flysystem\FlysystemAdapter;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Local\LocalFilesystemAdapter;
+use phpseclib3\File\X509;
 
 function createTempCaForRevocationTests(): CertificationAuthority
 {
-    $tempDir = sys_get_temp_dir() . '/php-ca-test-' . uniqid();
+    $tempDir = sys_get_temp_dir().'/php-ca-test-'.uniqid();
     mkdir($tempDir, 0777, true);
     $filesystem = new Filesystem(new LocalFilesystemAdapter($tempDir));
     $adapter = new FlysystemAdapter($filesystem);
@@ -72,13 +73,13 @@ function setupCaWithIssuedCert(): array
         new Organization('Example Corp'),
     ]);
 
-    $x509 = new \phpseclib3\File\X509();
+    $x509 = new X509;
     $x509->setDN($csrSubject->toString());
     $x509->setPrivateKey($eeKey->getPrivateKey());
     $csrResult = $x509->signCSR();
     $csrPem = $x509->saveCSR($csrResult);
 
-    $csrEntity = new CsrEntity();
+    $csrEntity = new CsrEntity;
     $csrEntity->subject = $csrSubject;
     $csrEntity->keyId = $eeKey->id;
     $csrEntity->requestedExtensions = [];
@@ -100,10 +101,10 @@ test('revoke a certificate and verify revocation entity', function () {
     [$ca, $caKey, $caCert, $cert] = setupCaWithIssuedCert();
 
     // Create a revocation entity
-    $revocation = new RevocationEntity();
+    $revocation = new RevocationEntity;
     $revocation->certificateId = $cert->id;
     $revocation->serialNumber = $cert->serialNumber;
-    $revocation->revokedAt = new DateTimeImmutable();
+    $revocation->revokedAt = new DateTimeImmutable;
     $revocation->reason = RevocationReason::KeyCompromise;
     $revocation->caCertificateId = $caCert->id;
 
@@ -126,10 +127,10 @@ test('revoke a certificate and verify revocation entity', function () {
 test('find revocations for a specific certificate', function () {
     [$ca, $caKey, $caCert, $cert] = setupCaWithIssuedCert();
 
-    $revocation = new RevocationEntity();
+    $revocation = new RevocationEntity;
     $revocation->certificateId = $cert->id;
     $revocation->serialNumber = $cert->serialNumber;
-    $revocation->revokedAt = new DateTimeImmutable();
+    $revocation->revokedAt = new DateTimeImmutable;
     $revocation->reason = RevocationReason::Superseded;
     $revocation->caCertificateId = $caCert->id;
 
@@ -146,10 +147,10 @@ test('generate CRL after revoking a certificate', function () {
     [$ca, $caKey, $caCert, $cert] = setupCaWithIssuedCert();
 
     // Revoke the certificate
-    $revocation = new RevocationEntity();
+    $revocation = new RevocationEntity;
     $revocation->certificateId = $cert->id;
     $revocation->serialNumber = $cert->serialNumber;
-    $revocation->revokedAt = new DateTimeImmutable();
+    $revocation->revokedAt = new DateTimeImmutable;
     $revocation->reason = RevocationReason::KeyCompromise;
     $revocation->caCertificateId = $caCert->id;
 

@@ -35,7 +35,7 @@ class PrivateCommand extends Command
         $entity = $ca->keys->find($id);
 
         if (! $entity->hasPrivateKey) {
-            error("Private key not found.");
+            error('Private key not found.');
 
             return self::FAILURE;
         }

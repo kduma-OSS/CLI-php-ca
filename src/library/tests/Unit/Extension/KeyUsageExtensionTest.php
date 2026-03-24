@@ -42,7 +42,7 @@ test('multiple usages combined', function () {
 });
 
 test('isCritical defaults to true', function () {
-    $ext = new KeyUsageExtension();
+    $ext = new KeyUsageExtension;
 
     expect($ext->isCritical())->toBeTrue();
 });

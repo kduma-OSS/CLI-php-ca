@@ -12,8 +12,8 @@ use KDuma\SimpleDAL\Encryption\EncryptionRule;
 readonly class EncryptionConfiguration
 {
     /**
-     * @param BaseEncryptionAlgorithmConfiguration[] $keys
-     * @param EncryptionRuleConfiguration[] $rules
+     * @param  BaseEncryptionAlgorithmConfiguration[]  $keys
+     * @param  EncryptionRuleConfiguration[]  $rules
      */
     public function __construct(
         public array $keys,
@@ -45,7 +45,7 @@ readonly class EncryptionConfiguration
 
     public static function fromArray(array $data, string $basePath): static
     {
-        $algorithmFactory = new EncryptionAlgorithmConfigurationFactory();
+        $algorithmFactory = new EncryptionAlgorithmConfigurationFactory;
 
         $keys = array_map(
             fn (array $keyData) => $algorithmFactory->fromArray($keyData, $basePath),

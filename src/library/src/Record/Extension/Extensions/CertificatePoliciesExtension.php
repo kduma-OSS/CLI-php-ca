@@ -9,7 +9,7 @@ use KDuma\PhpCA\Record\Extension\BaseExtension;
 readonly class CertificatePoliciesExtension extends BaseExtension
 {
     /**
-     * @param array<array{oid: string, cps?: ?string, notice?: ?string, noticeRef?: ?array{organization: string, noticeNumbers: int[]}}> $policies
+     * @param  array<array{oid: string, cps?: ?string, notice?: ?string, noticeRef?: ?array{organization: string, noticeNumbers: int[]}}>  $policies
      */
     public function __construct(
         public array $policies,
