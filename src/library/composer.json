@@ -16,7 +16,7 @@
     "type": "library",
     "require": {
         "php": "^8.4",
-        "kduma/php-ca-contracts": "dev-master",
+        "kduma/php-ca-contracts": "^0.1.0",
         "kduma/simple-dal": "^v0.2",
         "kduma/simple-dal-adapter-contracts": "^v0.2",
         "kduma/simple-dal-typed": "^v0.2",
